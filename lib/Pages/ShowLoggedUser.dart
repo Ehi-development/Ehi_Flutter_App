@@ -1,0 +1,275 @@
+import 'dart:ui';
+
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:hey_flutter/UtilityClass/BordedButton.dart';
+import 'package:hey_flutter/UtilityClass/GetListEvent.dart';
+import 'package:hey_flutter/UtilityClass/StatusBarCleaner.dart';
+import 'package:hey_flutter/UtilityClass/UtilityTools.dart';
+import 'package:hey_flutter/UtilityClass/__EventiProva.dart';
+import 'package:intl/intl.dart';
+import '../UtilityClass/DINOAppBar.dart';
+import '../UtilityClass/UserClass.dart';
+import '../UtilityClass/Theme.dart';
+import 'dart:convert';
+
+class ShowLoggedUser extends StatefulWidget{
+
+  @override
+  ShowLoggedUserState createState() => ShowLoggedUserState();
+}
+
+class ShowLoggedUserState extends State<ShowLoggedUser> {
+
+  var buildcontext;
+
+  @override
+  Widget build(BuildContext context) {
+    return StatusBarCleaner(
+      color: MoobTheme.darkBackgroundColor,
+      child: CustomScrollView(
+        slivers: [
+          // Richiamo l'AppBar che presenta un pulsante per tornare indietro e uno per le impostazioni
+          BackSetting_Appbar_LoggedUser(color:MoobTheme.darkBackgroundColor,),
+          SliverList(
+            delegate: SliverChildListDelegate(
+              [
+                FutureBuilder<UserClass>(
+                  future: UtilityTools.getLoggedUserFromServer(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      return getUserPage(snapshot.data);
+                    } else if (snapshot.hasError) {
+                      return Text("${snapshot.error}");
+                    }
+                    // Di default mostra un CircularProgressIndicator
+                    return Padding(
+                      padding: const EdgeInsets.only(top:48.0),
+                      child: Center(child:Container(child:CircularProgressIndicator(),)),
+                    );
+                  },
+                ),
+              ]
+            )
+          ),
+        ]
+      ),
+    );
+  }
+
+  getUserPage(UserClass user){
+    List<Widget> PageContents = [];
+    PageContents.add(ProfileImageAndLittleMore(user));
+    PageContents.add(SocialNumberBar(user));
+    PageContents.add(DettailOfUser(user));
+    PageContents.add(CreatedEvent(user));
+    return Column(children: PageContents);
+  }
+}
+
+ProfileImageAndLittleMore(UserClass user){
+  return Container(
+    color: Colors.transparent,
+    height:140+2*MoobTheme.paddingHorizontal,
+    child: Padding(
+      padding: const EdgeInsets.symmetric(horizontal: MoobTheme.paddingHorizontal,vertical: MoobTheme.paddingHorizontal),
+      child: Row(
+        mainAxisSize: MainAxisSize.max,
+        children: <Widget>[
+          AspectRatio(
+            aspectRatio: 1/1,
+            child: Container(
+              padding: const EdgeInsets.all(2),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(MoobTheme.radius*100)),
+                border: Border.all(color: Colors.white,width: 2),
+                image: DecorationImage(image: user.photo!="" && user.photo!="None" && user.photo!="NONE"?MemoryImage(base64.decode(user.photo)):NetworkImage("http://www.omnia-studio.it/wp-content/uploads/2017/10/profile-placeholder.png")),
+              ),
+            ),
+          ),
+          Flexible(
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: MoobTheme.paddingHorizontal),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  Flexible(flex:1,child: Container(),),
+                  AutoSizeText("${user.name} ${user.surname}", style: TextStyle(color: Colors.white), minFontSize: 22, maxFontSize: 24,),
+                  Text("@${user.username}", style: TextStyle(fontSize: 16,color: Colors.white),),
+                  Flexible(flex:4,child: Container(),),
+                  Center(child: BordedButton(child: Text("Modifica profilo",style: TextStyle(color: Colors.white,fontSize: 14),),gradient: MoobTheme.primaryGradient, internalColor: MoobTheme.darkBackgroundColor,)),
+                  Flexible(flex:1,child: Container(),),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    ),
+  );
+}
+
+SocialNumberBar(UserClass user){
+  return Padding(
+    padding: const EdgeInsets.only(bottom: 16.0,),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: <Widget>[
+        Container(
+          width: 100,
+          child: Column(
+            // TODO: Aggiungere numeri dal server
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text("12",style: TextStyle(color: Colors.white, fontSize: 32, fontWeight: FontWeight.bold),),
+              ),
+              Text("Eventi",style: TextStyle(color: Colors.white, fontSize: 14), )
+            ],
+          ),
+        ),
+        Container(
+          width: 100,
+          child: Column(
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text("26",style: TextStyle(color: Colors.white, fontSize: 32, fontWeight: FontWeight.bold),),
+              ),
+              Text("Segui",style: TextStyle(color: Colors.white, fontSize: 14), )
+            ],
+          ),
+        ),
+        Container(
+          width: 100,
+          child: Column(
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text("185",style: TextStyle(color: Colors.white, fontSize: 32, fontWeight: FontWeight.bold),),
+              ),
+              Text("Ti Seguono",style: TextStyle(color: Colors.white, fontSize: 14), )
+            ],
+          ),
+        ),
+      ],
+    ),
+  );
+}
+
+DettailOfUser(UserClass user) {
+  var birthDate;
+  try{
+    birthDate = new DateFormat("dd/MM/yyyy").parse(user.birth);
+  }
+  catch(e){
+    birthDate = new DateFormat("dd/MM/yyyy").parse("1/1/1901");
+  }
+
+  return Container(
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.only(topLeft: Radius.circular(MoobTheme.radius),topRight: Radius.circular(MoobTheme.radius),),
+      border: Border.all(color: MoobTheme.middleBackgroundColor,width: 0),
+      color: MoobTheme.middleBackgroundColor,
+    ),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.only(top:MoobTheme.paddingHorizontal*2,left: MoobTheme.paddingHorizontal*2),
+          child: Row(
+            mainAxisSize: MainAxisSize.max,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Icon(Icons.calendar_today, color: Colors.white, size: 26,),
+              Container(
+                width: MoobTheme.paddingHorizontal,
+              ),
+              Column(
+                  mainAxisSize: MainAxisSize.max,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    Text("${birthDate.day} ${UtilityTools.MonthNumberToLongString(birthDate.month)} ${birthDate.year}", style: TextStyle(color: Colors.white,fontSize: 16),),
+                    Text("Data di Nascita", style: TextStyle(color: Colors.white,fontSize: 10),),
+                  ],
+                ),
+            ],
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(top:MoobTheme.paddingHorizontal,left: MoobTheme.paddingHorizontal*2),
+          child: Row(
+            mainAxisSize: MainAxisSize.max,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Icon(Icons.place, color: Colors.white, size: 26,),
+              Container(
+                width: MoobTheme.paddingHorizontal,
+              ),
+              Column(
+                mainAxisSize: MainAxisSize.max,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  Text("${user.place}", style: TextStyle(color: Colors.white,fontSize: 16),),
+                  Text("Località", style: TextStyle(color: Colors.white,fontSize: 10),),
+                ],
+              ),
+            ],
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(top:MoobTheme.paddingHorizontal,left: MoobTheme.paddingHorizontal*2),
+          child: Row(
+            mainAxisSize: MainAxisSize.max,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Flexible(
+                flex: 1,
+                child:Icon(Icons.star, color: Colors.white, size: 26,),
+              ),
+              Container(
+                width: MoobTheme.paddingHorizontal,
+              ),
+              Flexible(
+                flex: 3,
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    Text("Sport, Musica, Cibo", style: TextStyle(color: Colors.white,fontSize: 16),),
+                    Text("Preferenze", style: TextStyle(color: Colors.white,fontSize: 10),),
+                  ],
+                ),
+              )
+            ],
+          ),
+        ),
+        Padding(
+          padding: user.bio!=null && user.bio!=" "? const EdgeInsets.only(top: MoobTheme.paddingHorizontal*2, bottom: MoobTheme.paddingHorizontal, left: MoobTheme.paddingHorizontal*2, right: MoobTheme.paddingHorizontal*2):const EdgeInsets.symmetric(),
+          child: Text(user.bio,style: TextStyle(color: Colors.white,), textAlign: TextAlign.center,),
+        ),
+      ],
+    ),
+  );
+}
+
+CreatedEvent(UserClass user){
+  return Container(
+    color: MoobTheme.middleBackgroundColor,
+    alignment: Alignment.topCenter,
+    padding: EdgeInsets.symmetric(vertical: MoobTheme.paddingHorizontal, horizontal: MoobTheme.paddingHorizontal),
+    child: Column(
+        children: [
+          Text("Eventi Creati", style: TextStyle(fontSize: 18,color: Colors.white,fontWeight: FontWeight.bold)),
+          Padding(padding: EdgeInsets.only(bottom: MoobTheme.paddingHorizontal),),
+          EventToColumn(listForUser),
+      ]
+    )
+  );
+}
