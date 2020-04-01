@@ -5,19 +5,18 @@ import 'package:hey_flutter/Pages/FavoritePage.dart';
 import 'package:hey_flutter/UtilityClass/BordedButton.dart';
 import 'package:hey_flutter/UtilityClass/RouteBuilder.dart';
 
-import '../Pages/FetchUser.dart';
-import '../FragmentManager.dart';
 import '../Pages/Home.dart';
 import 'Theme.dart';
 
 class MoobNavigation extends StatelessWidget
 {
   MoobNavigation({Key key, this.position}) : super(key: key);
+
   final int position;
-  GlobalKey homeButton = GlobalKey();
-  GlobalKey preferenceButton = GlobalKey();
-  GlobalKey notificationButton = GlobalKey();
-  GlobalKey messageButton = GlobalKey();
+  final GlobalKey homeButton = GlobalKey();
+  final GlobalKey preferenceButton = GlobalKey();
+  final GlobalKey notificationButton = GlobalKey();
+  final GlobalKey messageButton = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +57,7 @@ class MoobNavigation extends StatelessWidget
                   icon: Icon(Icons.star_border,size: 28,
                     color:position==2?Colors.white:Colors.grey[600],
                   ),
-                  onPressed: (){Navigator.of(context).push(CircularRevealRoute(widget: Preference(),position:getContainerPosition(preferenceButton)));}
+                  onPressed: (){Navigator.of(context).push(CircularRevealRoute(widget: FavoritePage(),position:getContainerPosition(preferenceButton)));}
 
                 ),
                 Padding(
@@ -89,7 +88,7 @@ class MoobNavigation extends StatelessWidget
                   icon: Icon(Icons.chat_bubble_outline,size: 28,
                     color:position==4?Colors.white:Colors.grey[600],
                   ),
-                  onPressed: (){Navigator.of(context).push(CircularRevealRoute(widget: Message(),position:getContainerPosition(messageButton)));}
+                  onPressed: (){Navigator.of(context).push(CircularRevealRoute(widget: MessagePage(),position:getContainerPosition(messageButton)));}
 
                 ),
               ],

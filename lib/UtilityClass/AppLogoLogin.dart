@@ -8,7 +8,7 @@ class AppLogoLogin extends StatelessWidget{
         height: 150,
         width: 150,
         child: Center(child: SvgPicture.asset("assets/image/ehi_logo_login.svg",color: Colors.white,))
-    ); 
+    );
   }
 }
 

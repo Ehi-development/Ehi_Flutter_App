@@ -6,12 +6,12 @@ import 'package:hey_flutter/UtilityClass/StatusBarCleaner.dart';
 import '../UtilityClass/DINOAppBar.dart';
 import '../UtilityClass/Theme.dart';
 
-class RegistrationResult extends StatefulWidget {
+class RegistrationResultPage extends StatefulWidget {
   @override
-  RegistrationResultState createState() => RegistrationResultState();
+  RegistrationResultPageState createState() => RegistrationResultPageState();
 }
 
-class RegistrationResultState extends State<RegistrationResult> {
+class RegistrationResultPageState extends State<RegistrationResultPage> {
 
   //Data di oggi per il calendario
   DateTime today = DateTime.now();

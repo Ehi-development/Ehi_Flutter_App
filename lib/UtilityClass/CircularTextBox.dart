@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class CircularTextBox extends StatelessWidget{
   final Color color;
   final Gradient gradinet;

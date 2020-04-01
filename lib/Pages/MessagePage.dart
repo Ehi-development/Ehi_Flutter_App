@@ -5,13 +5,13 @@ import '../UtilityClass/MoobNavigation.dart';
 import '../UtilityClass/DINOAppBar.dart';
 import '../UtilityClass/Theme.dart';
 
-class Message extends StatefulWidget {
+class MessagePage extends StatefulWidget {
 
   @override
-  MessageState createState() => MessageState();
+  MessagePageState createState() => MessagePageState();
 }
 
-class MessageState extends State<Message> {
+class MessagePageState extends State<MessagePage> {
 
   //Data di oggi per il calendario
   DateTime today = DateTime.now();

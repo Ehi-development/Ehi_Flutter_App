@@ -55,7 +55,6 @@ class UserServer {
           prefs.setString('photo', digestResponse["user"]['photo']);
         }
 
-
         return UserClass(
           result: digestResponse['result'],
           username: digestResponse["user"]['username'],
@@ -73,6 +72,10 @@ class UserServer {
             result: digestResponse['result']
         );
       }
+    }else{
+      return UserClass(
+          result: 1
+      );
     }
   }
 }

@@ -1,18 +1,11 @@
 import 'dart:async';
-import 'dart:convert';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:hey_flutter/Pages/Home.dart';
-import 'package:hey_flutter/Pages/IconPageLoader.dart';
-import 'package:hey_flutter/Pages/LorRScreen.dart';
-import 'package:hey_flutter/Pages/ShowLoggedUser.dart';
+import 'package:hey_flutter/Pages/LRPage.dart';
+import 'package:hey_flutter/Pages/ShowLoggedUserPage.dart';
 import 'package:hey_flutter/UtilityClass/AccountImage.dart';
 import 'package:hey_flutter/UtilityClass/AppLogoLogin.dart';
-import 'package:hey_flutter/UtilityClass/FlushBar.dart';
-import 'package:hey_flutter/UtilityClass/ContactServerWithAlert.dart';
 import 'package:hey_flutter/UtilityClass/UtilityTools.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import '../Pages/LoginScreen.dart';
+import '../Pages/LoginPage.dart';
 import 'RouteBuilder.dart';
 import '../Pages/SearchPage.dart';
 import 'UserClass.dart';
@@ -21,8 +14,8 @@ import '../main.dart';
 import 'Theme.dart';
 
 class SearchAvatar_Appbar extends StatelessWidget{
-  GlobalKey searchButton = GlobalKey();
-  GlobalKey loginPhotoButton = GlobalKey();
+  final GlobalKey searchButton = GlobalKey();
+  final GlobalKey loginPhotoButton = GlobalKey();
 
   final Color color;
   final Color iconColor;
@@ -58,7 +51,7 @@ class SearchAvatar_Appbar extends StatelessWidget{
 
 
 class BackAvatar_Appbar extends StatelessWidget{
-  GlobalKey searchButton = GlobalKey();
+  final GlobalKey searchButton = GlobalKey();
 
   final Color color;
   final Color iconColor;
@@ -108,7 +101,7 @@ Widget generateUserImageButton(){
                       child: InkWell(
                         key: loginPhotoButton,
                         onTap: (){
-                          Navigator.of(context).push(CircularRevealRoute(widget: ShowLoggedUser(),position:getContainerPosition(loginPhotoButton)));
+                          Navigator.of(context).push(CircularRevealRoute(widget: ShowLoggedUserPage(),position:getContainerPosition(loginPhotoButton)));
                         },
                         child: AccountImage(photo: snapshot.data.photo, format: 64,)
                       ),
@@ -143,7 +136,7 @@ Widget generateUserImageButton(){
               child: InkWell(
                 key: loginPhotoButton,
                 onTap: (){
-                  Navigator.of(context).push(CircularRevealRoute(widget: ShowLoggedUser(),position:getContainerPosition(loginPhotoButton)));
+                  Navigator.of(context).push(CircularRevealRoute(widget: ShowLoggedUserPage(),position:getContainerPosition(loginPhotoButton)));
                 },
                 child: AccountImage(photo: snapshot.data[1], format: 64,)
               ),
@@ -298,7 +291,7 @@ class BackSetting_Appbar_LoggedUser extends StatelessWidget{
                   onTap: (){
                     UtilityTools.logoutUser();
                     //Navigator.of(context)..pop(true);
-                    Navigator.of(context).pushReplacement(CircularRevealRoute(widget: LorRScreen(),position:Offset(50,50)));
+                    Navigator.of(context).pushReplacement(CircularRevealRoute(widget: LRPage(),position:Offset(50,50)));
                   },
                 ),
               ],

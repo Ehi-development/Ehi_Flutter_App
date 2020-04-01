@@ -1,22 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:hey_flutter/UtilityClass/AppLogoLogin.dart';
-import 'package:hey_flutter/UtilityClass/ProgressButton.dart';
 import 'package:hey_flutter/UtilityClass/RouteBuilder.dart';
 import 'package:hey_flutter/UtilityClass/StatusBarCleaner.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import '../UtilityClass/Theme.dart';
-import '../main.dart';
-import 'LoginScreen.dart';
-import 'RegistrationScreen.dart';
+import 'LoginPage.dart';
+import 'RegistrationPage.dart';
 
-class LorRScreen extends StatefulWidget {
-  LorRScreen({Key key}) : super(key: key);
+class LRPage extends StatefulWidget {
+  LRPage({Key key}) : super(key: key);
 
   @override
-  LorRScreenState createState() => new LorRScreenState();
+  LRPageState createState() => new LRPageState();
 }
 
-class LorRScreenState extends State<LorRScreen> with SingleTickerProviderStateMixin {
+class LRPageState extends State<LRPage> with SingleTickerProviderStateMixin {
 
   GlobalKey registrationButton = GlobalKey();
   GlobalKey loginButton = GlobalKey();
@@ -56,7 +53,7 @@ class LorRScreenState extends State<LorRScreen> with SingleTickerProviderStateMi
                       textColor: Colors.white,
                       padding: EdgeInsets.all(8.0),
                       onPressed: () {
-                        Navigator.of(context).push(CircularRevealRoute(widget: RegistrationScreen(),position:getContainerPosition(registrationButton)));
+                        Navigator.of(context).push(CircularRevealRoute(widget: RegistrationPage(),position:getContainerPosition(registrationButton)));
                       },
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: MoobTheme.paddingHorizontal*2, vertical: 4),

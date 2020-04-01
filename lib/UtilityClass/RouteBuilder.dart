@@ -15,7 +15,7 @@ class CircularRevealRoute extends PageRouteBuilder {
         return CircularRevealAnimation(
           child: child,
           animation: animation.drive(tween),
-          center: position,
+          centerOffset: position,
         );
       }
   );
@@ -25,7 +25,7 @@ getContainerPosition(GlobalKey _containerKey) {
   final RenderBox containerRenderBox =
   _containerKey.currentContext.findRenderObject();
 
-  final containerPosition = containerRenderBox.localToGlobal(Offset.zero)+Offset(containerRenderBox.size.width/2,containerRenderBox.size.height/2);;
+  final containerPosition = containerRenderBox.localToGlobal(Offset.zero)+Offset(containerRenderBox.size.width/2,containerRenderBox.size.height/2);
 
   return containerPosition;
 }

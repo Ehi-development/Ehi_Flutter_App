@@ -2,15 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:hey_flutter/Pages/IconPageLoader.dart';
 import 'package:hey_flutter/UtilityClass/AppLogoLogin.dart';
 import 'package:hey_flutter/UtilityClass/BordedButton.dart';
-import 'package:hey_flutter/UtilityClass/FlushBar.dart';
 import 'package:hey_flutter/UtilityClass/ProgressButton.dart';
 import 'package:hey_flutter/UtilityClass/RouteBuilder.dart';
 import 'package:hey_flutter/UtilityClass/StatusBarCleaner.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../UtilityClass/Theme.dart';
 import '../UtilityClass/CircularTextBox.dart';
-import '../main.dart';
 import '../UtilityClass/ContactServerWithAlert.dart';
 
 class LoginPage extends StatefulWidget {

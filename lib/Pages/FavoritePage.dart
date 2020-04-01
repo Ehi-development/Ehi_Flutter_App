@@ -5,13 +5,13 @@ import '../UtilityClass/MoobNavigation.dart';
 import '../UtilityClass/DINOAppBar.dart';
 import '../UtilityClass/Theme.dart';
 
-class Preference extends StatefulWidget {
+class FavoritePage extends StatefulWidget {
 
   @override
-  PreferenceState createState() => PreferenceState();
+  FavoritePageState createState() => FavoritePageState();
 }
 
-class PreferenceState extends State<Preference> {
+class FavoritePageState extends State<FavoritePage> {
 
   //Data di oggi per il calendario
   DateTime today = DateTime.now();

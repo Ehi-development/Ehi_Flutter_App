@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hey_flutter/UtilityClass/Theme.dart';
 
+// ignore: must_be_immutable
 class ProgressButton extends StatefulWidget{
   final Function onPressed;
   final String text;
@@ -75,6 +76,8 @@ class ProgressButtonState extends State<ProgressButton> with TickerProviderState
       return Center(child:Icon(Icons.check, color: widget.textColor));
     }else if (widget.state == 3) {
       return Center(child:Icon(Icons.error_outline, color: Colors.red));
+    }else{
+      return Container();
     }
   }
 

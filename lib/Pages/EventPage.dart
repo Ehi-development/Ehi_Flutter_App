@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import '../UtilityClass/EventClass.dart';
 import '../UtilityClass/EventServer.dart';
 
-class EventFragment extends StatelessWidget{
+class EventPage extends StatelessWidget{
   final String event_id;
 
-  const EventFragment({Key key,this.event_id,});
+  const EventPage({Key key,this.event_id,});
 
   @override
   Widget build(BuildContext context) {

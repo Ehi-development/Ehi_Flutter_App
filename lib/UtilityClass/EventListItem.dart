@@ -3,7 +3,6 @@ import 'package:hey_flutter/UtilityClass/Theme.dart';
 import 'package:hey_flutter/UtilityClass/UtilityTools.dart';
 
 import 'EventClass.dart';
-import 'FlushBar.dart';
 
 
 class EventListItem extends StatelessWidget{

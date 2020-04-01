@@ -10,7 +10,7 @@ import '../UtilityClass/Theme.dart';
 import '../UtilityClass/UserClass.dart';
 import 'package:http/http.dart' as http;
 import '../UtilityClass/UtilityTools.dart';
-import 'FetchUser.dart';
+import 'FetchUserPage.dart';
 import '../UtilityClass/CircularTextBox.dart';
 
 class SearchPage extends StatefulWidget{
@@ -117,7 +117,7 @@ class SearchPageState extends State<SearchPage> {
             photo: user["photo"],
             bio: user["bio"],
         ));
-      };
+      }
       return usersList;
     }
     else{
@@ -134,7 +134,7 @@ class SearchPageState extends State<SearchPage> {
         padding: const EdgeInsets.all(8.0),
         child: InkWell(
             onTap: (){
-              Navigator.of(context).push(CircularRevealRoute(widget: FetchUser(user.username),position:getContainerPosition(CircleAvatarButton)));
+              Navigator.of(context).push(CircularRevealRoute(widget: FetchUserPage(user.username),position:getContainerPosition(CircleAvatarButton)));
               },
             child: Padding(
               padding: const EdgeInsets.all(4.0),

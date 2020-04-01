@@ -1,7 +1,5 @@
 import 'dart:ui';
-
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hey_flutter/UtilityClass/AccountImage.dart';
@@ -14,15 +12,14 @@ import 'package:intl/intl.dart';
 import '../UtilityClass/DINOAppBar.dart';
 import '../UtilityClass/UserClass.dart';
 import '../UtilityClass/Theme.dart';
-import 'dart:convert';
 
-class ShowLoggedUser extends StatefulWidget{
+class ShowLoggedUserPage extends StatefulWidget{
 
   @override
-  ShowLoggedUserState createState() => ShowLoggedUserState();
+  ShowLoggedUserPageState createState() => ShowLoggedUserPageState();
 }
 
-class ShowLoggedUserState extends State<ShowLoggedUser> {
+class ShowLoggedUserPageState extends State<ShowLoggedUserPage> {
 
   var buildcontext;
 

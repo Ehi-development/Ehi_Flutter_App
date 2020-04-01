@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hey_flutter/UtilityClass/Theme.dart';
 
 class BordedButton extends StatelessWidget {
   final _GradientPainter _painter;

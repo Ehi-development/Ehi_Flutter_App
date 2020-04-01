@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hey_flutter/Pages/LorRScreen.dart';
+import 'package:hey_flutter/Pages/LRPage.dart';
 import 'package:hey_flutter/UtilityClass/RouteBuilder.dart';
 import 'package:hey_flutter/UtilityClass/StatusBarCleaner.dart';
 import 'package:hey_flutter/UtilityClass/UtilityTools.dart';
@@ -33,7 +33,7 @@ class IconPageLoaderState extends State<IconPageLoader> {
 void LoadContent(context, view) async {
   UtilityTools.getLoggedUser().then((result){
     if(result[0]==""){
-      Navigator.of(context).pushReplacement(CircularRevealRoute(widget: LorRScreen(),position:getContainerPosition(view)));
+      Navigator.of(context).pushReplacement(CircularRevealRoute(widget: LRPage(),position:getContainerPosition(view)));
     }else{
       Navigator.of(context).pushReplacement(CircularRevealRoute(widget: Home(),position:getContainerPosition(view)));
     }

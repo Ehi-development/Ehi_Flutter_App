@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hey_flutter/Pages/AddDetailPage.dart';
-import 'package:hey_flutter/Pages/RegistrationResult.dart';
+import 'package:hey_flutter/Pages/RegistrationPage.dart';
 import 'package:hey_flutter/UtilityClass/ProgressButton.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'FlushBar.dart';
 import 'LoginManager.dart';
 import 'RouteBuilder.dart';
 import 'UserClass.dart';
@@ -119,7 +118,7 @@ class ContactServerWithAlert {
           });
 
           //showFlushbar(context:context,title:"Complimenti",message:"Sei stato correttamente registrato",icon:Icons.check_circle_outline,color: Colors.lightBlue);
-          Navigator.of(context).pushReplacement(CircularRevealRoute(widget: RegistrationResult(),position:getContainerPosition(ProgressButtonKey)));
+          Navigator.of(context).pushReplacement(CircularRevealRoute(widget: RegistrationPage(),position:getContainerPosition(ProgressButtonKey)));
 
           return 0;
         } else if (result == 1) {

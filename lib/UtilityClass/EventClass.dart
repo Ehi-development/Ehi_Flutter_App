@@ -1,11 +1,3 @@
-import 'dart:convert';
-import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'UtilityTools.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import '../FragmentManager.dart';
-
-
 class EventClass {
   final int result;
   final String coordinate;
@@ -66,6 +58,8 @@ String toShortMonth(int number){
     case 12:
       return "Dic";
       break;
+    default:
+      return "Mese";
   }
 }
 
@@ -107,5 +101,7 @@ String toLongMonth(int number){
     case 12:
       return "Dicembre";
       break;
+    default:
+      return "Mese";
   }
 }

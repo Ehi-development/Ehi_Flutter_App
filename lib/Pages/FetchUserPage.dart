@@ -9,16 +9,16 @@ import '../UtilityClass/UserServer.dart';
 import '../UtilityClass/Theme.dart';
 import 'dart:convert';
 
-class FetchUser extends StatefulWidget{
-  String username;
+class FetchUserPage extends StatefulWidget{
+  final String username;
 
-  FetchUser(this.username);
+  FetchUserPage(this.username);
 
   @override
-  FetchUserState createState() => FetchUserState();
+  FetchUserPageState createState() => FetchUserPageState();
 }
 
-class FetchUserState extends State<FetchUser> {
+class FetchUserPageState extends State<FetchUserPage> {
 
   var buildcontext;
 

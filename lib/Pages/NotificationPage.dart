@@ -7,10 +7,10 @@ import '../UtilityClass/Theme.dart';
 class NotificationPage extends StatefulWidget {
 
   @override
-  NotificationState createState() => NotificationState();
+  NotificationPageState createState() => NotificationPageState();
 }
 
-class NotificationState extends State<NotificationPage> {
+class NotificationPageState extends State<NotificationPage> {
 
   //Data di oggi per il calendario
   DateTime today = DateTime.now();

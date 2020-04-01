@@ -34,6 +34,10 @@ class EventServer{
             result: digestResponse['result']
         );
       }
+    }else{
+      return EventClass(
+          result: 1
+      );
     }
   }
 }

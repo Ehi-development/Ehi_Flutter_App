@@ -1,23 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:hey_flutter/UtilityClass/AppLogoLogin.dart';
-import 'package:hey_flutter/UtilityClass/FlushBar.dart';
 import 'package:hey_flutter/UtilityClass/ProgressButton.dart';
 import 'package:hey_flutter/UtilityClass/StatusBarCleaner.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../UtilityClass/Theme.dart';
 import '../UtilityClass/CircularTextBox.dart';
-import '../main.dart';
 import '../UtilityClass/ContactServerWithAlert.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
-class RegistrationScreen extends StatefulWidget {
-  RegistrationScreen({Key key}) : super(key: key);
+class RegistrationPage extends StatefulWidget {
+  RegistrationPage({Key key}) : super(key: key);
 
   @override
-  RegistrationScreenState createState() => new RegistrationScreenState();
+  RegistrationPageState createState() => new RegistrationPageState();
 }
 
-class RegistrationScreenState extends State<RegistrationScreen> with SingleTickerProviderStateMixin {
+class RegistrationPageState extends State<RegistrationPage> with SingleTickerProviderStateMixin {
 
   GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
