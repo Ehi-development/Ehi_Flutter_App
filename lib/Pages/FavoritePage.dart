@@ -58,17 +58,21 @@ class PreferenceState extends State<Preference> {
                           Padding(padding: EdgeInsets.only(bottom: MoobTheme.paddingHorizontal*2),),
                           Center(
                             child: BordedButton(
+                              strokeWidth: 2,
+                              radius: 24,
                               child: Text("Torna alla Home",style: TextStyle(color: Colors.white),),
-                              internalColor: MoobTheme.middleBackgroundColor,
                               gradient: MoobTheme.primaryGradient,
+                              onPressed: (){},
                             ),
                           ),
                           Padding(padding: EdgeInsets.only(bottom: MoobTheme.paddingHorizontal),),
                           Center(
                             child: BordedButton(
+                              strokeWidth: 2,
+                              radius: 24,
                               child: Text("Trova amici",style: TextStyle(color: Colors.white),),
-                              internalColor: MoobTheme.middleBackgroundColor,
                               gradient: MoobTheme.primaryGradient,
+                              onPressed: (){},
                             ),
                           ),
                         ],

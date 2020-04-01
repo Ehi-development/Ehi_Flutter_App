@@ -89,7 +89,7 @@ class CropImageState extends State<CropImage> {
                   ),
                   onPressed: () => _cropImage().then((image){
                     List<int> imageBytes = image.readAsBytesSync();
-                    Navigator.of(context).pushReplacement(CircularRevealRoute(widget: AddDetailPage(username: widget.username, password: widget.password, B64image: base64.encode(imageBytes),),position:widget.position));
+                    Navigator.of(context).pushReplacement(CircularRevealRoute(widget: AddDetailPage(username: widget.username, password: widget.password, image: base64.encode(imageBytes),),position:widget.position));
                   })
               ),
             ],

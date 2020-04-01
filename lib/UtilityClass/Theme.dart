@@ -39,9 +39,10 @@ class MoobTheme {
   );
 
   static const backgroundGradient = const LinearGradient(
-    colors: const [darkBackgroundColor, lightBackgroundColor],
+    colors: const [darkBackgroundColor, darkBackgroundColor],
     stops: const [0.0, 1.0],
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
+    tileMode: TileMode.repeated,
   );
 }

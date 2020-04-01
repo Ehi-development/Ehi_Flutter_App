@@ -57,8 +57,9 @@ class RegistrationResultState extends State<RegistrationResult> {
                           Center(
                             child: BordedButton(
                               key: buttonKey,
+                              strokeWidth: 2,
+                              radius: 24,
                               child: Text("Torna alla Home",style: TextStyle(color: Colors.white)),
-                              internalColor: MoobTheme.middleBackgroundColor,
                               gradient: MoobTheme.primaryGradient,
                               onPressed: (){
                                 Navigator.of(context).pushReplacement(CircularRevealRoute(widget: Home(),position:getContainerPosition(buttonKey)));

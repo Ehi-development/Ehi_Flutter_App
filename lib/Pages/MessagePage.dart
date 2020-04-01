@@ -53,9 +53,11 @@ class MessageState extends State<Message> {
                           Padding(padding: EdgeInsets.only(bottom: MoobTheme.paddingHorizontal*2),),
                           Center(
                             child: BordedButton(
+                              strokeWidth: 2,
+                              radius: 24,
                               child: Text("Invia un messaggio",style: TextStyle(color: Colors.white),),
-                              internalColor: MoobTheme.middleBackgroundColor,
                               gradient: MoobTheme.primaryGradient,
+                              onPressed: (){},
                             ),
                           )
                         ],

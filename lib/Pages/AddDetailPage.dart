@@ -15,7 +15,7 @@ class AddDetailPage extends StatefulWidget {
 
   String username;
   String password;
-  final String B64image;
+  final String image;
   String name;
   String surname;
   String email;
@@ -24,7 +24,7 @@ class AddDetailPage extends StatefulWidget {
   String place;
   int gender = 1;
 
-  AddDetailPage({Key key, this.username, this.password, this.B64image}) : super(key: key);
+  AddDetailPage({Key key, this.username, this.password, this.image}) : super(key: key);
 
   @override
   AddDetailPageState createState() => AddDetailPageState();
@@ -73,13 +73,13 @@ class AddDetailPageState extends State<AddDetailPage> {
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               border: Border.all(color: Colors.white,width: 2),
-              image: widget.B64image==null?
+              image: widget.image==null?
               null
-                  :DecorationImage(image: MemoryImage(base64.decode(widget.B64image)),
+                  :DecorationImage(image: MemoryImage(base64.decode(widget.image)),
                   fit: BoxFit.cover,
               ),
             ),
-            child: Center(child: widget.B64image==null?Icon(Icons.camera_alt,size: 35,color: Colors.white,):null),
+            child: Center(child: widget.image==null?Icon(Icons.camera_alt,size: 35,color: Colors.white,):null),
           ),
         ),
       ),
@@ -353,7 +353,7 @@ class AddDetailPageState extends State<AddDetailPage> {
               password: widget.password,
               surname: widget.surname,
               name: widget.name,
-              photo: widget.B64image,
+              photo: widget.image,
               email: widget.email,
               bio: widget.bio,
               place: widget.place,

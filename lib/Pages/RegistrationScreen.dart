@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hey_flutter/UtilityClass/AppLogoLogin.dart';
 import 'package:hey_flutter/UtilityClass/FlushBar.dart';
 import 'package:hey_flutter/UtilityClass/ProgressButton.dart';
 import 'package:hey_flutter/UtilityClass/StatusBarCleaner.dart';
@@ -36,7 +37,7 @@ class RegistrationScreenState extends State<RegistrationScreen> with SingleTicke
           Container(
             padding: EdgeInsets.symmetric(vertical: MoobTheme.paddingHorizontal*1.5),
             child: Center(
-              child: SvgPicture.asset("images/Hey_logo.svg"),
+              child: AppLogoLogin()
             ),
           ),
           Expanded(

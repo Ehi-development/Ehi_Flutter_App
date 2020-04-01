@@ -63,13 +63,17 @@ class MoobNavigation extends StatelessWidget
                 ),
                 Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: BordedButton(
-                      child: Icon(Icons.add,color: Colors.white,size: 28,),
-                      internalColor: MoobTheme.lightBackgroundColor,
-                      internalPadding: EdgeInsets.all(0),
+                    child: SizedBox(
                       height: 45,
                       width: 45,
-                      gradient: MoobTheme.primaryGradient,
+                      child: BordedButton(
+                        spacing: 0.0,
+                        child: Icon(Icons.add,color: Colors.white,size: 28,),
+                        gradient: MoobTheme.primaryGradient,
+                        strokeWidth: 2,
+                        radius: 24,
+                        onPressed: (){},
+                      ),
                     )
                 ),
                 IconButton(

@@ -1,8 +1,10 @@
 import 'dart:ui';
 
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:hey_flutter/UtilityClass/AccountImage.dart';
 import 'package:hey_flutter/UtilityClass/BordedButton.dart';
 import 'package:hey_flutter/UtilityClass/GetListEvent.dart';
 import 'package:hey_flutter/UtilityClass/StatusBarCleaner.dart';
@@ -79,14 +81,7 @@ ProfileImageAndLittleMore(UserClass user){
         children: <Widget>[
           AspectRatio(
             aspectRatio: 1/1,
-            child: Container(
-              padding: const EdgeInsets.all(2),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(MoobTheme.radius*100)),
-                border: Border.all(color: Colors.white,width: 2),
-                image: DecorationImage(image: user.photo!="" && user.photo!="None" && user.photo!="NONE"?MemoryImage(base64.decode(user.photo)):NetworkImage("http://www.omnia-studio.it/wp-content/uploads/2017/10/profile-placeholder.png")),
-              ),
-            ),
+            child: AccountImage(photo: user.photo,),
           ),
           Flexible(
             child: Container(
@@ -100,7 +95,15 @@ ProfileImageAndLittleMore(UserClass user){
                   AutoSizeText("${user.name} ${user.surname}", style: TextStyle(color: Colors.white), minFontSize: 22, maxFontSize: 24,),
                   Text("@${user.username}", style: TextStyle(fontSize: 16,color: Colors.white),),
                   Flexible(flex:4,child: Container(),),
-                  Center(child: BordedButton(child: Text("Modifica profilo",style: TextStyle(color: Colors.white,fontSize: 14),),gradient: MoobTheme.primaryGradient, internalColor: MoobTheme.darkBackgroundColor,)),
+                  Center(
+                    child: BordedButton(
+                      strokeWidth: 2,
+                      radius: 24,
+                      child: Text("Modifica profilo",style: TextStyle(color: Colors.white,fontSize: 14),),
+                      gradient: MoobTheme.primaryGradient,
+                      onPressed: (){},
+                    )
+                  ),
                   Flexible(flex:1,child: Container(),),
                 ],
               ),

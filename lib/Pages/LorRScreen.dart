@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hey_flutter/UtilityClass/AppLogoLogin.dart';
 import 'package:hey_flutter/UtilityClass/ProgressButton.dart';
 import 'package:hey_flutter/UtilityClass/RouteBuilder.dart';
 import 'package:hey_flutter/UtilityClass/StatusBarCleaner.dart';
@@ -37,7 +38,7 @@ class LorRScreenState extends State<LorRScreen> with SingleTickerProviderStateMi
               alignment: Alignment.topCenter,
               child: Padding(
                 padding: EdgeInsets.symmetric(vertical: MoobTheme.paddingHorizontal*1.5),
-                child: SvgPicture.asset("images/Hey_logo.svg"),
+                child: AppLogoLogin()
               ),
             ),
             Align(

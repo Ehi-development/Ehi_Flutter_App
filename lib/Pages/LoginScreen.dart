@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hey_flutter/Pages/IconPageLoader.dart';
+import 'package:hey_flutter/UtilityClass/AppLogoLogin.dart';
+import 'package:hey_flutter/UtilityClass/BordedButton.dart';
 import 'package:hey_flutter/UtilityClass/FlushBar.dart';
 import 'package:hey_flutter/UtilityClass/ProgressButton.dart';
 import 'package:hey_flutter/UtilityClass/RouteBuilder.dart';
@@ -37,7 +39,7 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
           Container(
             padding: EdgeInsets.symmetric(vertical: MoobTheme.paddingHorizontal*1.5),
             child: Center(
-              child: SvgPicture.asset("images/Hey_logo.svg"),
+              child: AppLogoLogin(),
             ),
           ),
           Expanded(
@@ -91,26 +93,29 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
             child: Center(child: Text("Hai dimenticato la tua password?",style: TextStyle(color: Colors.white.withOpacity(0.4)),)),
             onTap: (){
               //TODO: Aggiungere "hai dimenticato la password?"
-              //showFlushbar(context:context,title:"TODO",message:"hai dimenticato la tua password?",icon:Icons.code,color: Colors.green);
+              //showFlushbar(context:context,title:"",message:"hai dimenticato la tua password?",icon:Icons.code,color: Colors.green);
             },
           ),
           Padding(
               padding: EdgeInsets.symmetric(horizontal: MoobTheme.paddingHorizontal,vertical: 32.0),
-              child: ProgressButton(
-                key: loginProgressButtonKey,
-                text: "Accedi",
-                textColor: Colors.black,
-                onPressed: (){ContactServerWithAlert.checkLogin(
-                    context:context,
-                    ProgressButtonKey:loginProgressButtonKey,
-                    username:usernameValue,
-                    password: passwordValue).then((result){
+              child: Center(
+                  child: BordedButton(
+                    key: loginProgressButtonKey,
+                    child: Text("Login",style: TextStyle(color: Colors.white,fontSize: 14),),
+                    gradient: MoobTheme.primaryGradient,
+                    strokeWidth: 2,
+                    radius: 24,
+                    onPressed: (){ContactServerWithAlert.checkLogin(
+                        context:context,
+                        username:usernameValue,
+                        password: passwordValue).then((result){
                       if(result==0){
                         Navigator.of(context).pushReplacement(CircularRevealRoute(widget: IconPageLoader(),position:getContainerPosition(loginProgressButtonKey)));
                       }
                     });
-                },
-              )
+                    },
+                  )
+              ),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: MoobTheme.paddingHorizontal*3),

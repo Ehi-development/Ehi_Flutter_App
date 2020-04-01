@@ -1,10 +1,13 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:hey_flutter/Pages/Home.dart';
 import 'package:hey_flutter/Pages/IconPageLoader.dart';
 import 'package:hey_flutter/Pages/LorRScreen.dart';
 import 'package:hey_flutter/Pages/ShowLoggedUser.dart';
+import 'package:hey_flutter/UtilityClass/AccountImage.dart';
+import 'package:hey_flutter/UtilityClass/AppLogoLogin.dart';
 import 'package:hey_flutter/UtilityClass/FlushBar.dart';
 import 'package:hey_flutter/UtilityClass/ContactServerWithAlert.dart';
 import 'package:hey_flutter/UtilityClass/UtilityTools.dart';
@@ -43,7 +46,7 @@ class SearchAvatar_Appbar extends StatelessWidget{
             },
           ),
           centerTitle: true,
-          title: Text(DINO().title,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 25,color: iconColor,fontFamily: "LemonMilk")),
+          title: AppLogo(),
           automaticallyImplyLeading: false,
           actions: <Widget>[
             generateUserImageButton()
@@ -77,7 +80,7 @@ class BackAvatar_Appbar extends StatelessWidget{
           onPressed: () {Navigator.pop(context, false);},
         ),
         centerTitle: true,
-        title: Text(DINO().title,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 25,color: iconColor,fontFamily: "LemonMilk")),
+        title: AppLogo(),
         automaticallyImplyLeading: false,
         actions: <Widget>[
           generateUserImageButton(),
@@ -107,16 +110,7 @@ Widget generateUserImageButton(){
                         onTap: (){
                           Navigator.of(context).push(CircularRevealRoute(widget: ShowLoggedUser(),position:getContainerPosition(loginPhotoButton)));
                         },
-                        child: Container(
-                          padding: const EdgeInsets.all(2),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.all(Radius.circular(MoobTheme.radius*4)),
-                              border: Border.all(color: Colors.white,width: 2),
-                              color: Colors.white,
-                              image: DecorationImage(image:snapshot.data.photo!="" && snapshot.data.photo!="None"?MemoryImage(base64.decode(snapshot.data.photo)):NetworkImage("http://www.omnia-studio.it/wp-content/uploads/2017/10/profile-placeholder.png"),
-                                  fit: BoxFit.cover)
-                          ),
-                        ),
+                        child: AccountImage(photo: snapshot.data.photo, format: 64,)
                       ),
                       aspectRatio: 1/1,
                     ),
@@ -151,16 +145,7 @@ Widget generateUserImageButton(){
                 onTap: (){
                   Navigator.of(context).push(CircularRevealRoute(widget: ShowLoggedUser(),position:getContainerPosition(loginPhotoButton)));
                 },
-                child: Container(
-                  padding: const EdgeInsets.all(2),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(MoobTheme.radius*4)),
-                      border: Border.all(color: Colors.white,width: 2),
-                      color: Colors.white,
-                      image: DecorationImage(image:snapshot.data[1]!="" && snapshot.data[1]!="None"?MemoryImage(base64.decode(snapshot.data[1])):NetworkImage("http://www.omnia-studio.it/wp-content/uploads/2017/10/profile-placeholder.png"),
-                          fit: BoxFit.cover)
-                  ),
-                ),
+                child: AccountImage(photo: snapshot.data[1], format: 64,)
               ),
               aspectRatio: 1/1,
             ),
@@ -198,7 +183,7 @@ class BackSetting_Appbar extends StatelessWidget{
           onPressed: () {Navigator.pop(context, false);},
         ),
         centerTitle: true,
-        title: Text(DINO().title,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 25,color: iconColor,fontFamily: "LemonMilk")),
+        title: AppLogo(),
         automaticallyImplyLeading: false,
         actions: <Widget>[
           IconButton(
@@ -238,7 +223,7 @@ class BackSetting_Appbar_LoggedUser extends StatelessWidget{
           onPressed: () {Navigator.pop(context, false);},
         ),
         centerTitle: true,
-        title: Text(DINO().title,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 25,color: iconColor,fontFamily: "LemonMilk")),
+        title: AppLogo(),
         automaticallyImplyLeading: false,
         actions: <Widget>[
           IconButton(

@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:hey_flutter/UtilityClass/AccountImage.dart';
 import 'package:hey_flutter/UtilityClass/DINOAppBar.dart';
 import 'package:hey_flutter/UtilityClass/StatusBarCleaner.dart';
 import '../UtilityClass/RouteBuilder.dart';
@@ -139,8 +140,7 @@ class SearchPageState extends State<SearchPage> {
               padding: const EdgeInsets.all(4.0),
               child: ListTile(
                 title: Text(user.name+" "+user.surname),
-                leading: CircleAvatar(
-                    key:CircleAvatarButton, radius: 25.0,backgroundImage:user.photo!=""&&user.photo!=" "?MemoryImage(base64.decode(user.photo)):NetworkImage("https://profilepicturesdp.com/wp-content/uploads/2018/07/facebook-dp-for-boys-anonymous-4.jpg")),
+                leading: AccountImage(photo: user.photo,),
                 trailing: Icon(Icons.keyboard_arrow_right),
               ),
             ),
