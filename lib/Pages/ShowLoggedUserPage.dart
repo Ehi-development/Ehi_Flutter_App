@@ -7,7 +7,6 @@ import 'package:hey_flutter/UtilityClass/BordedButton.dart';
 import 'package:hey_flutter/UtilityClass/GetListEvent.dart';
 import 'package:hey_flutter/UtilityClass/StatusBarCleaner.dart';
 import 'package:hey_flutter/UtilityClass/UtilityTools.dart';
-import 'package:hey_flutter/UtilityClass/__EventiProva.dart';
 import 'package:intl/intl.dart';
 import '../UtilityClass/DINOAppBar.dart';
 import '../UtilityClass/UserClass.dart';
@@ -121,7 +120,6 @@ SocialNumberBar(UserClass user) {
         Container(
           width: 100,
           child: Column(
-            // TODO: Aggiungere numeri dal server
             children: <Widget>[
               Padding(
                 padding: const EdgeInsets.all(8.0),

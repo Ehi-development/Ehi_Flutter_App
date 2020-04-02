@@ -10,7 +10,6 @@ import 'RouteBuilder.dart';
 import '../Pages/SearchPage.dart';
 import 'UserClass.dart';
 import 'UserServer.dart';
-import '../main.dart';
 import 'Theme.dart';
 
 class SearchAvatar_Appbar extends StatelessWidget{
@@ -89,8 +88,7 @@ Widget generateUserImageButton(){
   return FutureBuilder<List<String>>(
       future: UtilityTools.getLoggedUser(),
       builder: (context, snapshot) {
-        if (snapshot.hasData && (DINO.isFistAccess || snapshot.data[1]=="")) {
-          DINO.isFistAccess = false;
+        if (snapshot.hasData ) {
           return FutureBuilder<UserClass>(
               future: UserServer.fromServer(snapshot.data[0]),
               builder: (context, snapshot) {
@@ -129,20 +127,6 @@ Widget generateUserImageButton(){
                   );
 
                 }});
-        }else if(snapshot.hasData && !DINO.isFistAccess ){
-          return Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: AspectRatio(
-              child: InkWell(
-                key: loginPhotoButton,
-                onTap: (){
-                  Navigator.of(context).push(CircularRevealRoute(widget: ShowLoggedUserPage(),position:getContainerPosition(loginPhotoButton)));
-                },
-                child: AccountImage(photo: snapshot.data[1], format: 64,)
-              ),
-              aspectRatio: 1/1,
-            ),
-          );
         }else{
           return AspectRatio(
             child:Padding(

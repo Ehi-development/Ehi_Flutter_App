@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hey_flutter/Pages/Home.dart';
+import 'package:hey_flutter/Pages/LoginPage.dart';
 import 'package:hey_flutter/UtilityClass/BordedButton.dart';
 import 'package:hey_flutter/UtilityClass/RouteBuilder.dart';
 import 'package:hey_flutter/UtilityClass/StatusBarCleaner.dart';
@@ -59,10 +59,10 @@ class RegistrationResultPageState extends State<RegistrationResultPage> {
                               key: buttonKey,
                               strokeWidth: 2,
                               radius: 24,
-                              child: Text("Torna alla Home",style: TextStyle(color: Colors.white)),
+                              child: Text("Torna al Login",style: TextStyle(color: Colors.white)),
                               gradient: MoobTheme.primaryGradient,
                               onPressed: (){
-                                Navigator.of(context).pushReplacement(CircularRevealRoute(widget: Home(),position:getContainerPosition(buttonKey)));
+                                Navigator.of(context).pushReplacement(CircularRevealRoute(widget: LoginPage(),position:getContainerPosition(buttonKey)));
                               },
                             ),
                           )

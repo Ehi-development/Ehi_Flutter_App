@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:hey_flutter/Pages/RegistrationResultPage.dart';
 import 'package:hey_flutter/UtilityClass/DINOAppBar.dart';
 import 'package:hey_flutter/UtilityClass/ProgressButton.dart';
 import 'package:hey_flutter/UtilityClass/UserClass.dart';
@@ -9,8 +10,6 @@ import 'package:hey_flutter/UtilityClass/RouteBuilder.dart';
 import 'package:hey_flutter/UtilityClass/StatusBarCleaner.dart';
 import 'package:hey_flutter/UtilityClass/Theme.dart';
 import 'package:hey_flutter/UtilityClass/ContactServerWithAlert.dart';
-
-import 'RegistrationPage.dart';
 
 // ignore: must_be_immutable
 class AddDetailPage extends StatefulWidget {
@@ -369,7 +368,7 @@ class AddDetailPageState extends State<AddDetailPage> {
               user: user,
           ).then((result){
             if(result==0){
-              Navigator.of(context).pushReplacement(CircularRevealRoute(widget: RegistrationPage(),position:getContainerPosition(progressButtonRegistrationKey)));
+              Navigator.of(context).pushReplacement(CircularRevealRoute(widget: RegistrationResultPage(),position:getContainerPosition(progressButtonRegistrationKey)));
             }else if(result==1){
               //Navigator.pop(context, false);
             }else if(result==2){

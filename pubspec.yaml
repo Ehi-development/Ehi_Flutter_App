@@ -10,25 +10,25 @@ dependencies:
   flutter:
     sdk: flutter
 
-  animator: ^0.1.4
-  flutter_statusbarcolor: ^0.2.1
-  http: ^0.12.0+2
-  shared_preferences: ^0.5.3+4
-  auto_size_text: ^2.0.2+1
-  font_awesome_flutter: ^8.5.0
-  circular_reveal_animation: ^1.0.6
+  animator:
+  flutter_statusbarcolor:
+  shared_preferences:
+  auto_size_text:
+  font_awesome_flutter:
+  circular_reveal_animation:
   cached_network_image:
   uni_links:
   dio:
+  fluttertoast:
 
-  loading: ^1.0.2
-  flutter_svg: ^0.17.1
+  loading:
+  flutter_svg:
 
-  image_picker: ^0.6.1+4
-  image_crop: ^0.3.1
-  page_indicator: ^0.3.0
-  animated_background: ^1.0.5
-  intl: ^0.16.0
+  image_picker:
+  image_crop:
+  page_indicator:
+  animated_background:
+  intl:
 
   flutter_launcher_icons:
 

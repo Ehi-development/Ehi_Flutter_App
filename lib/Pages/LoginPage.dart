@@ -104,7 +104,7 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                     radius: 24,
                     onPressed: (){ContactServerWithAlert.checkLogin(
                         context:context,
-                        username:usernameValue,
+                        username:usernameValue.toLowerCase(),
                         password: passwordValue).then((result){
                       if(result==0){
                         Navigator.of(context).pushReplacement(CircularRevealRoute(widget: IconPageLoader(),position:getContainerPosition(loginProgressButtonKey)));

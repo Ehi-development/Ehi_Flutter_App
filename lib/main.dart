@@ -14,7 +14,6 @@ void main() {
 // ignore: must_be_immutable
 class DINO extends StatelessWidget {
   String title="DINO";
-  static bool isFistAccess = true;
 
   @override
   Widget build(BuildContext context) {

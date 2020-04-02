@@ -2,20 +2,20 @@ import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'UserClass.dart';
-import 'dart:convert';
-import 'package:http/http.dart' as http;
 import 'UtilityTools.dart';
 
 class UserServer {
   static Future<int> loginUser(username,password) async {
-    var response = await http.post(UtilityTools.getServerUrl()+"login",body: {'username':username,'password':password});
-    final digestResponse = json.decode(response.body);
-    return digestResponse["result"];
+    var dio = new Dio();
+    var response = await dio.post(UtilityTools.getServerUrl()+"login",data: {'username':username,'password':password});
+    return response.data["result"];
   }
 
   static Future<int> registerUser ({
     UserClass user,
   }) async {
+    var dio = new Dio();
+
     if(user.username==null){user.username="NONE";}
     if(user.password==null){user.password="NONE";}
     if(user.email==null){user.email="NONE";}
@@ -27,7 +27,7 @@ class UserServer {
     if(user.birth==null){user.birth="NONE";}
     if(user.gender==null){user.gender="NONE";}
 
-    var response = await http.post(UtilityTools.getServerUrl()+"signin",body: {
+    var response = await dio.post(UtilityTools.getServerUrl()+"signin",data: {
       'username':user.username,
       'password':user.password,
       'name':user.name,
@@ -39,38 +39,36 @@ class UserServer {
       'birth': user.birth,
       'gender': user.gender,
     });
-    print(response.body);
-    final digestResponse = json.decode(response.body);
-    return digestResponse["result"];
+    return response.data["result"];
   }
 
   static Future<UserClass> fromServer(String username) async {
+    var dio = new Dio();
     final response =
-    await http.get(UtilityTools.getServerUrl()+'getuserdata/$username');
+    await dio.get(UtilityTools.getServerUrl()+'getuserdata/$username');
 
     if (response.statusCode == 200) {
-      final digestResponse = json.decode(response.body);
-      if(digestResponse['result']==0) {
+      if(response.data['result']==0) {
         final prefs = await SharedPreferences.getInstance();
         if(username==prefs.getString("username")??""){
-          prefs.setString('photo', digestResponse["user"]['photo']);
+          prefs.setString('photo', response.data["user"]['photo']);
         }
 
         return UserClass(
-          result: digestResponse['result'],
-          username: digestResponse["user"]['username'],
-          name: digestResponse["user"]['name'],
-          surname: digestResponse["user"]['surname'],
-          bio: digestResponse["user"]['bio'],
-          photo: digestResponse["user"]['photo'],
-          email: digestResponse["user"]['email'],
-          birth: digestResponse["user"]['birth'],
-          place: digestResponse["user"]['place'],
+          result: response.data['result'],
+          username: response.data["user"]['username'],
+          name: response.data["user"]['name'],
+          surname: response.data["user"]['surname'],
+          bio: response.data["user"]['bio'],
+          photo: response.data["user"]['photo'],
+          email: response.data["user"]['email'],
+          birth: response.data["user"]['birth'],
+          place: response.data["user"]['place'],
         );
       }
       else{
         return UserClass(
-            result: digestResponse['result']
+            result: response.data['result']
         );
       }
     }else{
