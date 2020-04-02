@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'UserClass.dart';
@@ -12,7 +13,7 @@ class UserServer {
     return digestResponse["result"];
   }
 
-  static Future<int> registerUser({
+  static Future<int> registerUser ({
     UserClass user,
   }) async {
     if(user.username==null){user.username="NONE";}
@@ -78,4 +79,24 @@ class UserServer {
       );
     }
   }
+
+  static Future<int> getFollowerNumber_FromServer(username) async {
+    var dio = new Dio();
+    var result = await dio.get("${UtilityTools.getServerUrl()}getnumberfollowers/${username}");
+    return result.data["n_followers"];
+  }
+
+  static Future<int> getFollowingNumber_FromServer(username) async{
+    var dio = new Dio();
+    var result = await dio.get("${UtilityTools.getServerUrl()}getnumberfollowings/${username}");
+    return result.data["n_followings"];
+  }
+
+  static Future<int> getEventNumber_FromServer() async {
+    return await getZero();
+  }
+}
+
+Future<int> getZero() async {
+  return 0;
 }

@@ -112,7 +112,7 @@ ProfileImageAndLittleMore(UserClass user){
   );
 }
 
-SocialNumberBar(UserClass user){
+SocialNumberBar(UserClass user) {
   return Padding(
     padding: const EdgeInsets.only(bottom: 16.0,),
     child: Row(
@@ -125,7 +125,16 @@ SocialNumberBar(UserClass user){
             children: <Widget>[
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Text("12",style: TextStyle(color: Colors.white, fontSize: 32, fontWeight: FontWeight.bold),),
+                child: FutureBuilder(
+                  future: user.getEventCratedNumber(),
+                  builder: (context,snapshot){
+                    if(snapshot.hasData){
+                      return Text(snapshot.data.toString(),style: TextStyle(color: Colors.white, fontSize: 32, fontWeight: FontWeight.bold),);
+                    }else{
+                      return Center(child:Container(child:CircularProgressIndicator(),));
+                    }
+                  },
+                )
               ),
               Text("Eventi",style: TextStyle(color: Colors.white, fontSize: 14), )
             ],
@@ -137,7 +146,16 @@ SocialNumberBar(UserClass user){
             children: <Widget>[
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Text("26",style: TextStyle(color: Colors.white, fontSize: 32, fontWeight: FontWeight.bold),),
+                child: FutureBuilder(
+                  future: user.getFollowingNumber(),
+                  builder: (context,snapshot){
+                    if(snapshot.hasData){
+                      return Text(snapshot.data.toString(),style: TextStyle(color: Colors.white, fontSize: 32, fontWeight: FontWeight.bold),);
+                    }else{
+                      return Center(child:Container(child:CircularProgressIndicator(),));
+                    }
+                  },
+                )
               ),
               Text("Segui",style: TextStyle(color: Colors.white, fontSize: 14), )
             ],
@@ -149,7 +167,16 @@ SocialNumberBar(UserClass user){
             children: <Widget>[
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Text("185",style: TextStyle(color: Colors.white, fontSize: 32, fontWeight: FontWeight.bold),),
+                child: FutureBuilder(
+                  future: user.getFollowerNumber(),
+                  builder: (context,snapshot){
+                    if(snapshot.hasData){
+                      return Text(snapshot.data.toString(),style: TextStyle(color: Colors.white, fontSize: 32, fontWeight: FontWeight.bold),);
+                    }else{
+                      return Center(child:Container(child:CircularProgressIndicator(),));
+                    }
+                  },
+                )
               ),
               Text("Ti Seguono",style: TextStyle(color: Colors.white, fontSize: 14), )
             ],
@@ -268,7 +295,7 @@ CreatedEvent(UserClass user){
         children: [
           Text("Eventi Creati", style: TextStyle(fontSize: 18,color: Colors.white,fontWeight: FontWeight.bold)),
           Padding(padding: EdgeInsets.only(bottom: MoobTheme.paddingHorizontal),),
-          EventToColumn(listForUser),
+          GetListEvent().home(),
       ]
     )
   );

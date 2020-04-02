@@ -19,6 +19,7 @@ dependencies:
   circular_reveal_animation: ^1.0.6
   cached_network_image:
   uni_links:
+  dio:
 
   loading: ^1.0.2
   flutter_svg: ^0.17.1

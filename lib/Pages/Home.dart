@@ -6,7 +6,6 @@ import '../UtilityClass/GetListEvent.dart';
 import '../UtilityClass/MoobNavigation.dart';
 import '../UtilityClass/DINOAppBar.dart';
 import '../UtilityClass/Theme.dart';
-import '../UtilityClass/__EventiProva.dart';
 
 class Home extends StatefulWidget {
 
@@ -57,7 +56,7 @@ class HomeState extends State<Home> {
                                         padding: const EdgeInsets.only(left:MoobTheme.paddingHorizontal,bottom:MoobTheme.paddingHorizontal),
                                         child: Text("Tutti gli Eventi",style: TextStyle(fontSize: 18,color: Colors.white,fontWeight: FontWeight.bold)),
                                       ),
-                                      EventToColumn(listOfItem)
+                                      GetListEvent().home()
                                     ],
                                 )
                               ),
