@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:hey_flutter/UtilityClass/AccountImage.dart';
 import 'package:hey_flutter/UtilityClass/StatusBarCleaner.dart';
 import '../UtilityClass/DINOAppBar.dart';
 import '../UtilityClass/UserClass.dart';
@@ -9,16 +10,16 @@ import '../UtilityClass/UserServer.dart';
 import '../UtilityClass/Theme.dart';
 import 'dart:convert';
 
-class FetchUserPage extends StatefulWidget{
+class ShowOthersUserPage extends StatefulWidget{
   final String username;
 
-  FetchUserPage(this.username);
+  ShowOthersUserPage(this.username);
 
   @override
-  FetchUserPageState createState() => FetchUserPageState();
+  ShowOthersUserPageState createState() => ShowOthersUserPageState();
 }
 
-class FetchUserPageState extends State<FetchUserPage> {
+class ShowOthersUserPageState extends State<ShowOthersUserPage> {
 
   var buildcontext;
 
@@ -74,14 +75,9 @@ class FetchUserPageState extends State<FetchUserPage> {
         child: Row(
           mainAxisSize: MainAxisSize.max,
           children: <Widget>[
-            ClipRRect(
-              borderRadius: BorderRadius.all(Radius.circular(MoobTheme.radius)),
-              child: Container(
-                  child: AspectRatio(
-                    child: Image(image: user.photo!=""?MemoryImage(base64.decode(user.photo)):NetworkImage("https://profilepicturesdp.com/wp-content/uploads/2018/07/facebook-dp-for-boys-anonymous-4.jpg")),
-                    aspectRatio: 1/1,
-                  )
-              ),
+            AspectRatio(
+              child: AccountImage(photo: user.photo),
+              aspectRatio: 1/1,
             ),
             Flexible(
               child: Padding(
