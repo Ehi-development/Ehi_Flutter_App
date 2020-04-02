@@ -7,7 +7,10 @@ import 'UtilityTools.dart';
 class UserServer {
   static Future<int> loginUser(username,password) async {
     var dio = new Dio();
-    var response = await dio.post(UtilityTools.getServerUrl()+"login",data: {'username':username,'password':password});
+    var form = FormData.fromMap({
+      'username':username,'password':password,
+    });
+    var response = await dio.post(UtilityTools.getServerUrl()+"login",data: form);
     return response.data["result"];
   }
 
@@ -27,7 +30,7 @@ class UserServer {
     if(user.birth==null){user.birth="NONE";}
     if(user.gender==null){user.gender="NONE";}
 
-    var response = await dio.post(UtilityTools.getServerUrl()+"signin",data: {
+    var form = FormData.fromMap({
       'username':user.username,
       'password':user.password,
       'name':user.name,
@@ -39,6 +42,8 @@ class UserServer {
       'birth': user.birth,
       'gender': user.gender,
     });
+
+    var response = await dio.post(UtilityTools.getServerUrl()+"signin",data: form);
     return response.data["result"];
   }
 
