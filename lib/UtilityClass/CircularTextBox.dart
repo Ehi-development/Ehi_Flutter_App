@@ -19,7 +19,7 @@ class CircularTextBox extends StatelessWidget{
   final double elevation;
   final String text;
   final bool isEnable;
-  final Widget othersideIcon;
+  final Widget othersideIcon; 
 
   @required final context;
 
