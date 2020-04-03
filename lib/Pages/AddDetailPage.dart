@@ -49,7 +49,7 @@ class AddDetailPageState extends State<AddDetailPage> {
         child: CustomScrollView(
             slivers: [
               // Richiamo l'AppBar che presenta un pulsante per tornare indietro e uno per le impostazioni
-              BackSetting_Appbar(color:MoobTheme.darkBackgroundColor,),
+              BackName_Appbar(color:MoobTheme.darkBackgroundColor, name: "Crea profilo"),
               SliverList(
                   delegate: SliverChildListDelegate(
                       [

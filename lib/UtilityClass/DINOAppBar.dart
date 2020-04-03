@@ -25,6 +25,7 @@ class SearchAvatar_Appbar extends StatelessWidget{
   Widget build(BuildContext context) {
     return SliverPadding(
       sliver: SliverAppBar(
+        elevation: 0.0,
         backgroundColor:color,
           floating: true,
           snap: true,
@@ -48,6 +49,41 @@ class SearchAvatar_Appbar extends StatelessWidget{
   }
 }
 
+class BackName_Appbar extends StatelessWidget{
+  final GlobalKey searchButton = GlobalKey();
+  final GlobalKey loginPhotoButton = GlobalKey();
+
+  final Color color;
+  final Color iconColor;
+  final String name;
+
+  BackName_Appbar({Key key, this.color:MoobTheme.mainColor, this.iconColor:MoobTheme.iconColor, this.name}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SliverPadding(
+      sliver: SliverAppBar(
+        elevation: 0.0,
+        backgroundColor:color,
+        floating: true,
+        snap: true,
+        leading:IconButton(
+          key: searchButton,
+          icon: Icon(Icons.search),
+          color: iconColor,
+          iconSize: 30,
+          onPressed: () {
+            Navigator.of(context).push(CircularRevealRoute(widget: SearchPage(),position:getContainerPosition(searchButton)));
+          },
+        ),
+        centerTitle: true,
+        title: Text(name, style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),),
+        automaticallyImplyLeading: false,
+      ), padding: EdgeInsets.only(top:0.0),
+    );
+  }
+}
+
 
 class BackAvatar_Appbar extends StatelessWidget{
   final GlobalKey searchButton = GlobalKey();
@@ -62,6 +98,7 @@ class BackAvatar_Appbar extends StatelessWidget{
   Widget build(BuildContext context) {
     return SliverPadding(
       sliver: SliverAppBar(
+        elevation: 0.0,
         backgroundColor:color,
         floating: true,
         snap: true,
@@ -150,6 +187,7 @@ class BackSetting_Appbar extends StatelessWidget{
   Widget build(BuildContext context) {
     return SliverPadding(
       sliver: SliverAppBar(
+        elevation: 0.0,
         backgroundColor:color,
         floating: true,
         snap: true,
@@ -190,6 +228,7 @@ class BackSetting_Appbar_LoggedUser extends StatelessWidget{
 
     return SliverPadding(
       sliver: SliverAppBar(
+        elevation: 0.0,
         backgroundColor:color,
         floating: true,
         snap: true,

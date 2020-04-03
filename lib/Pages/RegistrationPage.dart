@@ -22,6 +22,8 @@ class RegistrationPageState extends State<RegistrationPage> with SingleTickerPro
   String usernameValue;
   String passwordValue;
   String repeatPasswordValue;
+  bool passwordHide = true;
+  bool repeatPasswordHide = true;
 
   GlobalKey<ProgressButtonState> registrationProgressButtonKey = GlobalKey();
 
@@ -64,6 +66,7 @@ class RegistrationPageState extends State<RegistrationPage> with SingleTickerPro
                 alignRight: true,
                 icon: Icons.person,
                 elevation: 4,
+                context: context,
                 onChange: (text){
                   usernameValue=text;
                 },
@@ -79,11 +82,15 @@ class RegistrationPageState extends State<RegistrationPage> with SingleTickerPro
                 alignRight: false,
                 icon: Icons.vpn_key,
                 elevation: 4,
+                context: context,
                 onChange: (text){
                   passwordValue=text;
                 },
-                obscureText: true,
+                obscureText: passwordHide,
                 hintText:"Password",
+                othersideIcon: IconButton(icon: Icon(Icons.remove_red_eye), onPressed: (){setState(() {
+                  passwordHide=!passwordHide;
+                });},),
                 border: 0,
               ),
             ),
@@ -95,10 +102,14 @@ class RegistrationPageState extends State<RegistrationPage> with SingleTickerPro
                 alignRight: false,
                 icon: Icons.vpn_key,
                 elevation: 4,
+                context: context,
                 onChange: (text){
                   repeatPasswordValue=text;
                 },
-                obscureText: true,
+                obscureText: repeatPasswordHide,
+                othersideIcon: IconButton(icon: Icon(Icons.remove_red_eye), onPressed: (){setState(() {
+                  repeatPasswordHide=!repeatPasswordHide;
+                });},),
                 hintText:"Ripeti Password",
                 border: 0,
               ),

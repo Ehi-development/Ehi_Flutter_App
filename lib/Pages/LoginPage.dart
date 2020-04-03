@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hey_flutter/Pages/IconPageLoader.dart';
+import 'package:hey_flutter/Pages/RegistrationPage.dart';
 import 'package:hey_flutter/UtilityClass/AppLogoLogin.dart';
 import 'package:hey_flutter/UtilityClass/BordedButton.dart';
 import 'package:hey_flutter/UtilityClass/MyBehavior.dart';
@@ -21,7 +22,9 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMixin {
   
   GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-  
+  GlobalKey<ScaffoldState> _backToRegistration = new GlobalKey<ScaffoldState>();
+  bool _passwordHide = true;
+
   String usernameValue;
   String passwordValue;
 
@@ -65,6 +68,7 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                 color: MoobTheme.mainColor,
                 alignRight: true,
                 icon: Icons.person,
+                context: context,
                 elevation: 4,
                 onChange: (text){
                   usernameValue=text;
@@ -81,10 +85,15 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                 alignRight: false,
                 icon: Icons.vpn_key,
                 elevation: 4,
+                context: context,
+                othersideIcon: IconButton(icon: Icon(Icons.remove_red_eye), onPressed: (){setState(() {
+                  _passwordHide=!_passwordHide;
+                });},),
                 onChange: (text){
                   passwordValue=text;
                 },
-                obscureText: true,
+                obscureText: _passwordHide,
+
                 hintText:"Password",
                 border: 0,
               ),
@@ -101,7 +110,7 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                 child: Center(
                     child: BordedButton(
                       key: loginProgressButtonKey,
-                      child: Text("Login",style: TextStyle(color: Colors.white,fontSize: 14),),
+                      child: Text("Accedi",style: TextStyle(color: Colors.white,fontSize: 14),),
                       gradient: MoobTheme.primaryGradient,
                       strokeWidth: 2,
                       radius: 24,
@@ -116,6 +125,25 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                       },
                     )
                 ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 8.0),
+              child: InkWell(
+                key: _backToRegistration,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Text("Non hai un account?",style: TextStyle(color: Colors.white.withOpacity(0.4)),),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 8.0),
+                      child: Text("Registrati",style: TextStyle(color: Colors.white.withOpacity(0.4), fontWeight: FontWeight.bold),),
+                    ),
+                  ],
+                ),
+                onTap: (){
+                  Navigator.of(context).pushReplacement(CircularRevealRoute(widget: RegistrationPage(),position:getContainerPosition(_backToRegistration)));
+                },
+              ),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: MoobTheme.paddingHorizontal*3),

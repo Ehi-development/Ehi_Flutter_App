@@ -19,6 +19,9 @@ class CircularTextBox extends StatelessWidget{
   final double elevation;
   final String text;
   final bool isEnable;
+  final Widget othersideIcon;
+
+  @required final context;
 
    CircularTextBox({
     Key key,
@@ -38,7 +41,7 @@ class CircularTextBox extends StatelessWidget{
     this.controller,
     this.elevation=0,
     this.text,
-    this.isEnable=true,
+    this.isEnable=true, this.othersideIcon, this.context,
   }) : super(key: key);
 
   @override
@@ -81,34 +84,39 @@ class CircularTextBox extends StatelessWidget{
             flex: 7,
             child:Padding(
               padding: EdgeInsets.all(this.border),
-              child: TextField(
-                style: TextStyle(fontSize: this.fontSize),
-                keyboardType: this.keyboardType,
-                obscureText: this.obscureText,
-                cursorColor: this.color,
-                controller: this.controller,
-                enabled: this.isEnable,
-                decoration: new InputDecoration(
-                  filled: true,
-                  fillColor: Colors.white,
-                  hintText: this.hintText,
-                  contentPadding: EdgeInsets.symmetric(vertical: (this.height)/2-8-this.border,horizontal: 24.0),
-                  hintStyle: TextStyle(color: Colors.grey),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: const BorderRadius.all(Radius.circular(32.0),),
-                    borderSide: BorderSide(color: Colors.transparent, width: 1.0),
+              child: Theme(
+                data: Theme.of(this.context)
+                    .copyWith(primaryColor: Colors.redAccent,),
+                child: TextField(
+                  style: TextStyle(fontSize: this.fontSize),
+                  keyboardType: this.keyboardType,
+                  obscureText: this.obscureText,
+                  cursorColor: this.color,
+                  controller: this.controller,
+                  enabled: this.isEnable,
+                  decoration: new InputDecoration(
+                    prefixIcon: this.othersideIcon,
+                    filled: true,
+                    fillColor: Colors.white,
+                    hintText: this.hintText,
+                    contentPadding: EdgeInsets.symmetric(vertical: (this.height)/2-8-this.border,horizontal: 24.0),
+                    hintStyle: TextStyle(color: Colors.grey),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: const BorderRadius.all(Radius.circular(32.0),),
+                      borderSide: BorderSide(color: Colors.transparent, width: 1.0),
+                    ),
+                    border: new OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.transparent, width: 1.0),
+                      borderRadius: const BorderRadius.all(Radius.circular(32.0),),
+                    ),
+                    focusedBorder:OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.transparent, width: 1.0),
+                      borderRadius: BorderRadius.circular(32.0),
+                    ),
                   ),
-                  border: new OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.transparent, width: 1.0),
-                    borderRadius: const BorderRadius.all(Radius.circular(32.0),),
-                  ),
-                  focusedBorder:OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.transparent, width: 1.0),
-                    borderRadius: BorderRadius.circular(32.0),
-                  ),
+                  onChanged: this.onChange,
+                  onSubmitted: this.onSubmitted,
                 ),
-                onChanged: this.onChange,
-                onSubmitted: this.onSubmitted,
               ),
             ),
           ),
@@ -152,33 +160,38 @@ class CircularTextBox extends StatelessWidget{
             flex: 7,
             child:Padding(
               padding: EdgeInsets.all(this.border),
-              child: TextField(
-                cursorColor: this.color,
-                keyboardType: this.keyboardType,
-                obscureText: this.obscureText,
-                controller: this.controller,
-                enabled: this.isEnable,
-                decoration: new InputDecoration(
-                  filled: true,
-                  fillColor: Colors.white,
-                  hintText: this.hintText,
-                  contentPadding: EdgeInsets.symmetric(vertical: (this.height)/2-8-this.border,horizontal: 24.0),
-                  hintStyle: TextStyle(color: Colors.grey),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: const BorderRadius.all(Radius.circular(32.0),),
-                    borderSide: BorderSide(color: Colors.transparent, width: 1.0),
+              child: Theme(
+                data: Theme.of(this.context)
+                    .copyWith(primaryColor: Colors.grey[900],),
+                child: TextField(
+                  cursorColor: this.color,
+                  keyboardType: this.keyboardType,
+                  obscureText: this.obscureText,
+                  controller: this.controller,
+                  enabled: this.isEnable,
+                  decoration: new InputDecoration(
+                    suffixIcon: this.othersideIcon,
+                    filled: true,
+                    fillColor: Colors.white,
+                    hintText: this.hintText,
+                    contentPadding: EdgeInsets.symmetric(vertical: (this.height)/2-8-this.border,horizontal: 24.0),
+                    hintStyle: TextStyle(color: Colors.grey),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: const BorderRadius.all(Radius.circular(32.0),),
+                      borderSide: BorderSide(color: Colors.transparent, width: 1.0),
+                    ),
+                    border: new OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.transparent, width: 1.0),
+                      borderRadius: const BorderRadius.all(Radius.circular(32.0),),
+                    ),
+                    focusedBorder:OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.transparent, width: 1.0),
+                      borderRadius: BorderRadius.circular(32.0),
+                    ),
                   ),
-                  border: new OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.transparent, width: 1.0),
-                    borderRadius: const BorderRadius.all(Radius.circular(32.0),),
-                  ),
-                  focusedBorder:OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.transparent, width: 1.0),
-                    borderRadius: BorderRadius.circular(32.0),
-                  ),
+                  onChanged: this.onChange,
+                  onSubmitted: this.onSubmitted,
                 ),
-                onChanged: this.onChange,
-                onSubmitted: this.onSubmitted,
               ),
             ),
           ),
