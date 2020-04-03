@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:hey_flutter/UtilityClass/AccountImage.dart';
 import 'package:hey_flutter/UtilityClass/DINOAppBar.dart';
+import 'package:hey_flutter/UtilityClass/MyBehavior.dart';
 import 'package:hey_flutter/UtilityClass/StatusBarCleaner.dart';
 import '../UtilityClass/RouteBuilder.dart';
 import '../UtilityClass/Theme.dart';
@@ -32,75 +33,78 @@ class SearchPageState extends State<SearchPage> {
 
     return StatusBarCleaner(
         gradient: MoobTheme.primaryGradient,
-        child: CustomScrollView(
-            slivers:[
-                      BackSetting_Appbar(color:Colors.transparent),
-              SliverList(
-                  delegate: SliverChildListDelegate(
-                      [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: MoobTheme.paddingHorizontal,vertical: 16.0),
-                        child: CircularTextBox(
-                          key: _formKey,
-                          height: 45,
-                          color: MoobTheme.secondaryMainColor,
-                          icon: Icons.search,
-                          border: 0,
-                          hintText: "Cerca tra gli utenti",
-                          controller: this.txt,
-                          onChange: (text){token=text;},
-                          onSubmitted: (text){
-                            setState(() {
-                              token=text;
-                            });
-                          },
+        child: ScrollConfiguration(
+          behavior: MyBehavior(),
+          child: CustomScrollView(
+              slivers:[
+                        BackSetting_Appbar(color:Colors.transparent),
+                SliverList(
+                    delegate: SliverChildListDelegate(
+                        [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: MoobTheme.paddingHorizontal,vertical: 16.0),
+                          child: CircularTextBox(
+                            key: _formKey,
+                            height: 45,
+                            color: MoobTheme.secondaryMainColor,
+                            icon: Icons.search,
+                            border: 0,
+                            hintText: "Cerca tra gli utenti",
+                            controller: this.txt,
+                            onChange: (text){token=text;},
+                            onSubmitted: (text){
+                              setState(() {
+                                token=text;
+                              });
+                            },
+                          ),
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: MoobTheme.paddingHorizontal,vertical: 8.0),
-                        child: ClipRRect(
-                            borderRadius: BorderRadius.all(
-                              const Radius.circular(MoobTheme.radius),
-                            ),
-                            child: Container(
-                                color: Colors.white,
-                                child: Center(
-                                  child:token!=""?FutureBuilder<List<UserClass>>(
-                                    future: searchQuery(),
-                                    builder: (context, snapshot) {
-                                      if (snapshot.hasData)
-                                      {
-                                        if (snapshot.data.length==0)
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: MoobTheme.paddingHorizontal,vertical: 8.0),
+                          child: ClipRRect(
+                              borderRadius: BorderRadius.all(
+                                const Radius.circular(MoobTheme.radius),
+                              ),
+                              child: Container(
+                                  color: Colors.white,
+                                  child: Center(
+                                    child:token!=""?FutureBuilder<List<UserClass>>(
+                                      future: searchQuery(),
+                                      builder: (context, snapshot) {
+                                        if (snapshot.hasData)
+                                        {
+                                          if (snapshot.data.length==0)
+                                            return Padding(
+                                              padding: const EdgeInsets.all(24.0),
+                                              child: Center(child: Text("Nessun utente trovato",textAlign: TextAlign.center,)),
+                                            );
+                                          else
+                                            return searchQueryToList(snapshot.data);
+                                        }else if (snapshot.hasError) {
                                           return Padding(
                                             padding: const EdgeInsets.all(24.0),
-                                            child: Center(child: Text("Nessun utente trovato",textAlign: TextAlign.center,)),
+                                            child: Center(child: Text("Connessione al server interrotta\n Prova più tardi",textAlign: TextAlign.center,)),
                                           );
-                                        else
-                                          return searchQueryToList(snapshot.data);
-                                      }else if (snapshot.hasError) {
+                                        }
                                         return Padding(
-                                          padding: const EdgeInsets.all(24.0),
-                                          child: Center(child: Text("Connessione al server interrotta\n Prova più tardi",textAlign: TextAlign.center,)),
+                                          padding: const EdgeInsets.all(48.0),
+                                          child: Center(child:Container(child:CircularProgressIndicator(),)),
                                         );
-                                      }
-                                      return Padding(
-                                        padding: const EdgeInsets.all(48.0),
-                                        child: Center(child:Container(child:CircularProgressIndicator(),)),
-                                      );
-                                    },
-                                  ):
-                                  Padding(
-                                    padding: const EdgeInsets.all(24.0),
-                                    child: Center(child: Text("Tocca la casella di ricerca\n per iniziare una nuova ricerca",textAlign: TextAlign.center,)),
-                                  ),
+                                      },
+                                    ):
+                                    Padding(
+                                      padding: const EdgeInsets.all(24.0),
+                                      child: Center(child: Text("Tocca la casella di ricerca\n per iniziare una nuova ricerca",textAlign: TextAlign.center,)),
+                                    ),
 
-                                )
-                            )
-                        ),
-                      )
-                    ])
-            )
-            ])
+                                  )
+                              )
+                          ),
+                        )
+                      ])
+              )
+              ]),
+        )
     );
   }
 

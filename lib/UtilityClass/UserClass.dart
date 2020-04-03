@@ -1,3 +1,5 @@
+import 'package:hey_flutter/UtilityClass/getEventFromServer.dart';
+
 import 'UserServer.dart';
 
 class UserClass {
@@ -28,3 +30,4 @@ class UserClass {
   }
 
 }
+

@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:hey_flutter/Pages/RegistrationResultPage.dart';
 import 'package:hey_flutter/UtilityClass/DINOAppBar.dart';
+import 'package:hey_flutter/UtilityClass/MyBehavior.dart';
 import 'package:hey_flutter/UtilityClass/ProgressButton.dart';
 import 'package:hey_flutter/UtilityClass/UserClass.dart';
 
@@ -43,20 +44,23 @@ class AddDetailPageState extends State<AddDetailPage> {
   Widget build(BuildContext context) {
     return StatusBarCleaner(
       color: MoobTheme.darkBackgroundColor,
-      child: CustomScrollView(
-          slivers: [
-            // Richiamo l'AppBar che presenta un pulsante per tornare indietro e uno per le impostazioni
-            BackSetting_Appbar(color:MoobTheme.darkBackgroundColor,),
-            SliverList(
-                delegate: SliverChildListDelegate(
-                    [
-                      firstPage(),
-                      secondPage(),
-                      thirdPage()
-                    ]
-                )
-            ),
-          ]
+      child: ScrollConfiguration(
+          behavior: MyBehavior(),
+        child: CustomScrollView(
+            slivers: [
+              // Richiamo l'AppBar che presenta un pulsante per tornare indietro e uno per le impostazioni
+              BackSetting_Appbar(color:MoobTheme.darkBackgroundColor,),
+              SliverList(
+                  delegate: SliverChildListDelegate(
+                      [
+                        firstPage(),
+                        secondPage(),
+                        thirdPage()
+                      ]
+                  )
+              ),
+            ]
+        ),
       ),
     );
   }

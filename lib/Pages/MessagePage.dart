@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hey_flutter/UtilityClass/BordedButton.dart';
+import 'package:hey_flutter/UtilityClass/MyBehavior.dart';
 import 'package:hey_flutter/UtilityClass/StatusBarCleaner.dart';
 import '../UtilityClass/MoobNavigation.dart';
 import '../UtilityClass/DINOAppBar.dart';
@@ -32,42 +33,45 @@ class MessagePageState extends State<MessagePage> {
           key: _scaffoldKey,
           backgroundColor: MoobTheme.middleBackgroundColor,
           body: Center(
-            child: CustomScrollView(slivers: [
-              SearchAvatar_Appbar(color: MoobTheme.darkBackgroundColor,),
-              SliverList(
-                delegate: SliverChildListDelegate([
-                  Container(
-                    color: MoobTheme.darkBackgroundColor,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.only(topLeft: Radius.circular(MoobTheme.radius),topRight: Radius.circular(MoobTheme.radius),),
-                        border: Border.all(color: MoobTheme.middleBackgroundColor,width: 0),
-                        color: MoobTheme.middleBackgroundColor,
-                      ),
-                      child: Column(
-                        children: <Widget>[
-                          Padding(padding: EdgeInsets.only(bottom: MoobTheme.paddingHorizontal*3),),
-                          Center(child: Icon(Icons.chat_bubble_outline,size: 150,color: Colors.white,)),
-                          Padding(padding: EdgeInsets.only(bottom: MoobTheme.paddingHorizontal*3),),
-                          Center(child: Text("Attualmente non hai messaggi",style: TextStyle(color: Colors.white),)),
-                          Padding(padding: EdgeInsets.only(bottom: MoobTheme.paddingHorizontal*2),),
-                          Center(
-                            child: BordedButton(
-                              strokeWidth: 2,
-                              radius: 24,
-                              child: Text("Invia un messaggio",style: TextStyle(color: Colors.white),),
-                              gradient: MoobTheme.primaryGradient,
-                              onPressed: (){},
-                            ),
-                          )
-                        ],
+            child: ScrollConfiguration(
+              behavior: MyBehavior(),
+              child: CustomScrollView(slivers: [
+                SearchAvatar_Appbar(color: MoobTheme.darkBackgroundColor,),
+                SliverList(
+                  delegate: SliverChildListDelegate([
+                    Container(
+                      color: MoobTheme.darkBackgroundColor,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.only(topLeft: Radius.circular(MoobTheme.radius),topRight: Radius.circular(MoobTheme.radius),),
+                          border: Border.all(color: MoobTheme.middleBackgroundColor,width: 0),
+                          color: MoobTheme.middleBackgroundColor,
+                        ),
+                        child: Column(
+                          children: <Widget>[
+                            Padding(padding: EdgeInsets.only(bottom: MoobTheme.paddingHorizontal*3),),
+                            Center(child: Icon(Icons.chat_bubble_outline,size: 150,color: Colors.white,)),
+                            Padding(padding: EdgeInsets.only(bottom: MoobTheme.paddingHorizontal*3),),
+                            Center(child: Text("Attualmente non hai messaggi",style: TextStyle(color: Colors.white),)),
+                            Padding(padding: EdgeInsets.only(bottom: MoobTheme.paddingHorizontal*2),),
+                            Center(
+                              child: BordedButton(
+                                strokeWidth: 2,
+                                radius: 24,
+                                child: Text("Invia un messaggio",style: TextStyle(color: Colors.white),),
+                                gradient: MoobTheme.primaryGradient,
+                                onPressed: (){},
+                              ),
+                            )
+                          ],
+                        ),
                       ),
                     ),
-                  ),
 
-                ]),
-              )
-            ]),
+                  ]),
+                )
+              ]),
+            ),
           ),
           bottomNavigationBar: MoobNavigation(position: 4),
         ),

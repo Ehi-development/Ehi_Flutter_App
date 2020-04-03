@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:hey_flutter/UtilityClass/AccountImage.dart';
+import 'package:hey_flutter/UtilityClass/MyBehavior.dart';
 import 'package:hey_flutter/UtilityClass/StatusBarCleaner.dart';
 import '../UtilityClass/DINOAppBar.dart';
 import '../UtilityClass/UserClass.dart';
@@ -28,39 +29,42 @@ class ShowOthersUserPageState extends State<ShowOthersUserPage> {
     buildcontext=context;
     return StatusBarCleaner(
       gradient: MoobTheme.primaryGradient,
-      child: CustomScrollView(
-          slivers: [
-            // Richiamo l'AppBar che presenta un pulsante per tornare indietro e uno per le impostazioni
-            BackSetting_Appbar(color:Colors.transparent),
-            SliverList(
-                delegate: SliverChildListDelegate(
-                    [
-                      FutureBuilder<UserClass>(
-                        future: UserServer.fromServer(widget.username),
-                        builder: (context, snapshot) {
-                          if (snapshot.hasData) {
-                            return Container(
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  //Da qui inizio a riempire il corpo della pagina
-                                  getTopUserBar(snapshot.data),
-                                ],
-                              ),
+      child: ScrollConfiguration(
+        behavior: MyBehavior(),
+        child: CustomScrollView(
+            slivers: [
+              // Richiamo l'AppBar che presenta un pulsante per tornare indietro e uno per le impostazioni
+              BackSetting_Appbar(color:Colors.transparent),
+              SliverList(
+                  delegate: SliverChildListDelegate(
+                      [
+                        FutureBuilder<UserClass>(
+                          future: UserServer.fromServer(widget.username),
+                          builder: (context, snapshot) {
+                            if (snapshot.hasData) {
+                              return Container(
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    //Da qui inizio a riempire il corpo della pagina
+                                    getTopUserBar(snapshot.data),
+                                  ],
+                                ),
+                              );
+                            } else if (snapshot.hasError) {
+                              return Text("${snapshot.error}");
+                            }
+                            // Di default mostra un CircularProgressIndicator
+                            return Padding(
+                              padding: const EdgeInsets.only(top:48.0),
+                              child: Center(child:Container(child:CircularProgressIndicator(),)),
                             );
-                          } else if (snapshot.hasError) {
-                            return Text("${snapshot.error}");
-                          }
-                          // Di default mostra un CircularProgressIndicator
-                          return Padding(
-                            padding: const EdgeInsets.only(top:48.0),
-                            child: Center(child:Container(child:CircularProgressIndicator(),)),
-                          );
-                        },
-                      ),
-                    ])
-            ),
-          ]
+                          },
+                        ),
+                      ])
+              ),
+            ]
+        ),
       ),
     );
   }

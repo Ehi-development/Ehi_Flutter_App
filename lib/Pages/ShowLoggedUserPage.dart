@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:hey_flutter/UtilityClass/AccountImage.dart';
 import 'package:hey_flutter/UtilityClass/BordedButton.dart';
 import 'package:hey_flutter/UtilityClass/GetListEvent.dart';
+import 'package:hey_flutter/UtilityClass/MyBehavior.dart';
 import 'package:hey_flutter/UtilityClass/StatusBarCleaner.dart';
 import 'package:hey_flutter/UtilityClass/UtilityTools.dart';
 import 'package:intl/intl.dart';
@@ -26,32 +27,35 @@ class ShowLoggedUserPageState extends State<ShowLoggedUserPage> {
   Widget build(BuildContext context) {
     return StatusBarCleaner(
       color: MoobTheme.darkBackgroundColor,
-      child: CustomScrollView(
-        slivers: [
-          // Richiamo l'AppBar che presenta un pulsante per tornare indietro e uno per le impostazioni
-          BackSetting_Appbar_LoggedUser(color:MoobTheme.darkBackgroundColor,),
-          SliverList(
-            delegate: SliverChildListDelegate(
-              [
-                FutureBuilder<UserClass>(
-                  future: UtilityTools.getLoggedUserFromServer(),
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      return getUserPage(snapshot.data);
-                    } else if (snapshot.hasError) {
-                      return Text("${snapshot.error}");
-                    }
-                    // Di default mostra un CircularProgressIndicator
-                    return Padding(
-                      padding: const EdgeInsets.only(top:48.0),
-                      child: Center(child:Container(child:CircularProgressIndicator(),)),
-                    );
-                  },
-                ),
-              ]
-            )
-          ),
-        ]
+      child: ScrollConfiguration(
+        behavior: MyBehavior(),
+        child: CustomScrollView(
+          slivers: [
+            // Richiamo l'AppBar che presenta un pulsante per tornare indietro e uno per le impostazioni
+            BackSetting_Appbar_LoggedUser(color:MoobTheme.darkBackgroundColor,),
+            SliverList(
+              delegate: SliverChildListDelegate(
+                [
+                  FutureBuilder<UserClass>(
+                    future: UtilityTools.getLoggedUserFromServer(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        return getUserPage(snapshot.data);
+                      } else if (snapshot.hasError) {
+                        return Text("${snapshot.error}");
+                      }
+                      // Di default mostra un CircularProgressIndicator
+                      return Padding(
+                        padding: const EdgeInsets.only(top:48.0),
+                        child: Center(child:Container(child:CircularProgressIndicator(),)),
+                      );
+                    },
+                  ),
+                ]
+              )
+            ),
+          ]
+        ),
       ),
     );
   }
@@ -113,7 +117,7 @@ ProfileImageAndLittleMore(UserClass user){
 
 SocialNumberBar(UserClass user) {
   return Padding(
-    padding: const EdgeInsets.only(bottom: 16.0,),
+    padding: const EdgeInsets.only(bottom: 45.0,),
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: <Widget>[
@@ -201,7 +205,7 @@ DettailOfUser(UserClass user) {
       color: MoobTheme.middleBackgroundColor,
     ),
     child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
         Padding(
           padding: const EdgeInsets.only(top:MoobTheme.paddingHorizontal*2,left: MoobTheme.paddingHorizontal*2),
@@ -277,7 +281,7 @@ DettailOfUser(UserClass user) {
         ),
         Padding(
           padding: user.bio!=null && user.bio!=" "? const EdgeInsets.only(top: MoobTheme.paddingHorizontal*2, bottom: MoobTheme.paddingHorizontal, left: MoobTheme.paddingHorizontal*2, right: MoobTheme.paddingHorizontal*2):const EdgeInsets.symmetric(),
-          child: Text(user.bio,style: TextStyle(color: Colors.white,), textAlign: TextAlign.center,),
+          child: Text(user.bio,style: TextStyle(color: Colors.white, fontSize: 16), textAlign: TextAlign.center,),
         ),
       ],
     ),
@@ -290,8 +294,12 @@ CreatedEvent(UserClass user){
     alignment: Alignment.topCenter,
     padding: EdgeInsets.symmetric(vertical: MoobTheme.paddingHorizontal, horizontal: MoobTheme.paddingHorizontal),
     child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text("Eventi Creati", style: TextStyle(fontSize: 18,color: Colors.white,fontWeight: FontWeight.bold)),
+          Padding(
+            padding: const EdgeInsets.only(left: MoobTheme.paddingHorizontal),
+            child: Text("Eventi Creati", style: TextStyle(fontSize: 20,color: Colors.white,fontWeight: FontWeight.bold)),
+          ),
           Padding(padding: EdgeInsets.only(bottom: MoobTheme.paddingHorizontal),),
           GetListEvent().home(),
       ]

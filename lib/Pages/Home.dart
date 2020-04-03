@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hey_flutter/UtilityClass/MyBehavior.dart';
 import 'package:hey_flutter/UtilityClass/StatusBarCleaner.dart';
 import 'package:hey_flutter/UtilityClass/UtilityTools.dart';
 
@@ -34,37 +35,40 @@ class HomeState extends State<Home> {
                 key: _scaffoldKey,
                 backgroundColor: MoobTheme.darkBackgroundColor,
                 body: Center(
-                  child: CustomScrollView(
-                    slivers: [
-                      SearchAvatar_Appbar(color:MoobTheme.darkBackgroundColor,),
-                      SliverList(
-                        delegate: SliverChildListDelegate([
-                          getHeader(),
-                          ClipRRect(
-                            borderRadius: BorderRadius.only(
-                              topLeft: const Radius.circular(MoobTheme.radius),
-                              topRight: const Radius.circular(MoobTheme.radius),
-                            ),
-                            child: Container(
-                              color: MoobTheme.middleBackgroundColor,
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(vertical:MoobTheme.paddingHorizontal,horizontal: MoobTheme.paddingHorizontal),
-                                child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: <Widget>[
-                                      Padding(
-                                        padding: const EdgeInsets.only(left:MoobTheme.paddingHorizontal,bottom:MoobTheme.paddingHorizontal),
-                                        child: Text("Tutti gli Eventi",style: TextStyle(fontSize: 18,color: Colors.white,fontWeight: FontWeight.bold)),
-                                      ),
-                                      GetListEvent().home()
-                                    ],
-                                )
+                  child: ScrollConfiguration(
+                    behavior: MyBehavior(),
+                    child: CustomScrollView(
+                      slivers: [
+                        SearchAvatar_Appbar(color:MoobTheme.darkBackgroundColor,),
+                        SliverList(
+                          delegate: SliverChildListDelegate([
+                            getHeader(),
+                            ClipRRect(
+                              borderRadius: BorderRadius.only(
+                                topLeft: const Radius.circular(MoobTheme.radius),
+                                topRight: const Radius.circular(MoobTheme.radius),
+                              ),
+                              child: Container(
+                                color: MoobTheme.middleBackgroundColor,
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(vertical:MoobTheme.paddingHorizontal,horizontal: MoobTheme.paddingHorizontal),
+                                  child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: <Widget>[
+                                        Padding(
+                                          padding: const EdgeInsets.only(left:MoobTheme.paddingHorizontal,bottom:MoobTheme.paddingHorizontal),
+                                          child: Text("Tutti gli Eventi",style: TextStyle(fontSize: 18,color: Colors.white,fontWeight: FontWeight.bold)),
+                                        ),
+                                        GetListEvent().home()
+                                      ],
+                                  )
+                                ),
                               ),
                             ),
-                          ),
-                        ]),
-                      )
-                  ]),
+                          ]),
+                        )
+                    ]),
+                  ),
 
                 ),
                 bottomNavigationBar: MoobNavigation(position: 1),
