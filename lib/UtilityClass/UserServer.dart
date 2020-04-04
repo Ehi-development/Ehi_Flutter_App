@@ -58,7 +58,6 @@ class UserServer {
         if(username==prefs.getString("username")??""){
           prefs.setString('photo', response.data["user"]['photo']);
         }
-
         return UserClass(
           result: response.data['result'],
           username: response.data["user"]['username'],

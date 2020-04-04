@@ -115,14 +115,16 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                       gradient: MoobTheme.primaryGradient,
                       strokeWidth: 2,
                       radius: 24,
-                      onPressed: (){ContactServerWithAlert.checkLogin(
+                      onPressed: (){
+                        ContactServerWithAlert.checkLogin(
                           context:context,
                           username:usernameValue.toLowerCase(),
                           password: passwordValue).then((result){
-                        if(result==0){
-                          Navigator.of(context).pushReplacement(CircularRevealRoute(widget: IconPageLoader(),position:getContainerPosition(loginProgressButtonKey)));
-                        }
-                      });
+                            if(result==0){
+                              Navigator.of(context).pushReplacement(CircularRevealRoute(widget: IconPageLoader(),position:getContainerPosition(loginProgressButtonKey)));
+                            }
+                          }
+                        );
                       },
                     )
                 ),

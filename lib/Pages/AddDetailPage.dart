@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
-import 'package:hey_flutter/Pages/RegistrationResultPage.dart';
 import 'package:hey_flutter/UtilityClass/DINOAppBar.dart';
 import 'package:hey_flutter/UtilityClass/MyBehavior.dart';
 import 'package:hey_flutter/UtilityClass/ProgressButton.dart';
@@ -82,7 +81,12 @@ class AddDetailPageState extends State<AddDetailPage> {
       padding: const EdgeInsets.all(MoobTheme.paddingHorizontal),
       child: InkWell(
         key: circularKey,
-        onTap: (){Navigator.of(context).push(CircularRevealRoute(widget: CropImage(username: widget.username, password: widget.password, position:getContainerPosition(circularKey),),position:getContainerPosition(circularKey)));},
+        onTap: (){Navigator.of(context).push(CircularRevealRoute(
+            widget: CropImage(
+              username: widget.username,
+              password: widget.password,
+              position:getContainerPosition(circularKey),),
+            position:getContainerPosition(circularKey)));},
         child: Center(
           child: Container(
             height: 130,
@@ -414,17 +418,7 @@ class AddDetailPageState extends State<AddDetailPage> {
               context: context,
               ProgressButtonKey: progressButtonRegistrationKey,
               user: user,
-          ).then((result){
-            if(result==0){
-              Navigator.of(context).pushReplacement(CircularRevealRoute(widget: RegistrationResultPage(),position:getContainerPosition(progressButtonRegistrationKey)));
-            }else if(result==1){
-              //Navigator.pop(context, false);
-            }else if(result==2){
-              //Navigator.pop(context, false);
-            }else if(result==3){
-              //Navigator.pop(context, false);
-            }
-          });
+          );
         },
       ),
     );
@@ -448,9 +442,8 @@ class AddDetailPageState extends State<AddDetailPage> {
             TextStyle(color: Colors.grey[900], fontSize: 16)),
         onConfirm: (date) {
           _dateController = new TextEditingController(text: "${date.day}/${date.month}/${date.year}");
-          setState(() {
-            //_dateController.text = "${date.day}/${date.month}/${date.year}";
-          });
+          widget.birth = "${date.day}/${date.month}/${date.year}";
+          setState(() {});
         });
   }
 }

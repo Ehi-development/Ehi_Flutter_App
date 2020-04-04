@@ -68,13 +68,10 @@ class BackName_Appbar extends StatelessWidget{
         floating: true,
         snap: true,
         leading:IconButton(
-          key: searchButton,
-          icon: Icon(Icons.search),
+          icon: Icon(Icons.arrow_back),
           color: iconColor,
           iconSize: 30,
-          onPressed: () {
-            Navigator.of(context).push(CircularRevealRoute(widget: SearchPage(),position:getContainerPosition(searchButton)));
-          },
+          onPressed: () {Navigator.pop(context, false);},
         ),
         centerTitle: true,
         title: Text(name, style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),),
@@ -144,24 +141,7 @@ Widget generateUserImageButton(){
                     ),
                   );
                 }else{
-                  return Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: AspectRatio(
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(MoobTheme.radius*4)),
-                          border: Border.all(color: MoobTheme.middleBackgroundColor,width: 0),
-                          color: Colors.white,
-                        ),
-                        child: InkWell(
-                          key: loginPhotoButton,
-                          child: Icon(Icons.account_circle,size: 34,color: MoobTheme.darkBackgroundColor,),
-                          onTap: (){Navigator.of(context).push(CircularRevealRoute(widget: LoginPage(),position:getContainerPosition(loginPhotoButton)));},
-                        ),
-                      ),
-                      aspectRatio: 1/1,
-                    ),
-                  );
+                  return Container();
 
                 }});
         }else{

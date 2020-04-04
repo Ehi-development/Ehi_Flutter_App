@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
 import 'package:hey_flutter/Pages/LoginPage.dart';
 import 'package:hey_flutter/UtilityClass/BordedButton.dart';
 import 'package:hey_flutter/UtilityClass/MyBehavior.dart';
@@ -14,12 +15,8 @@ class RegistrationResultPage extends StatefulWidget {
 
 class RegistrationResultPageState extends State<RegistrationResultPage> {
 
-  //Data di oggi per il calendario
-  DateTime today = DateTime.now();
-
   @override
   Widget build(BuildContext context) {
-    GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey();
     GlobalKey buttonKey = new GlobalKey();
 
     return StatusBarCleaner(
@@ -31,13 +28,12 @@ class RegistrationResultPageState extends State<RegistrationResultPage> {
         ),
         child: Scaffold(
           primary: false,
-          key: _scaffoldKey,
           backgroundColor: MoobTheme.middleBackgroundColor,
           body: Center(
             child: ScrollConfiguration(
               behavior: MyBehavior(),
               child: CustomScrollView(slivers: [
-                SearchAvatar_Appbar(color: MoobTheme.darkBackgroundColor,),
+                BackName_Appbar(color: MoobTheme.darkBackgroundColor, name: "Successo",),
                 SliverList(
                   delegate: SliverChildListDelegate([
                     Container(
@@ -48,28 +44,31 @@ class RegistrationResultPageState extends State<RegistrationResultPage> {
                           border: Border.all(color: MoobTheme.middleBackgroundColor,width: 0),
                           color: MoobTheme.middleBackgroundColor,
                         ),
-                        child: Column(
-                          children: <Widget>[
-                            Padding(padding: EdgeInsets.only(bottom: MoobTheme.paddingHorizontal*3)),
-                            Center(child: Icon(Icons.check_circle_outline,size: 150,color: Colors.white,)),
-                            Padding(padding: EdgeInsets.only(bottom: MoobTheme.paddingHorizontal*3)),
-                            Center(child: Text("Registrazione effettuata con successo!",style: TextStyle(color: Colors.white))),
-                            Padding(padding: EdgeInsets.only(bottom: MoobTheme.paddingHorizontal*3),),
-                            Center(child: Text("Ti verrà inviata una mail con il codice di conferma",style: TextStyle(color: Colors.white),)),
-                            Padding(padding: EdgeInsets.only(bottom: MoobTheme.paddingHorizontal*2),),
-                            Center(
-                              child: BordedButton(
-                                key: buttonKey,
-                                strokeWidth: 2,
-                                radius: 24,
-                                child: Text("Torna al Login",style: TextStyle(color: Colors.white)),
-                                gradient: MoobTheme.primaryGradient,
-                                onPressed: (){
-                                  Navigator.of(context).pushReplacement(CircularRevealRoute(widget: LoginPage(),position:getContainerPosition(buttonKey)));
-                                },
-                              ),
-                            )
-                          ],
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: MoobTheme.paddingHorizontal),
+                          child: Column(
+                            children: <Widget>[
+                              Padding(padding: EdgeInsets.only(bottom: MoobTheme.paddingHorizontal*3)),
+                              Center(child: Icon(Icons.check_circle_outline,size: 150,color: Colors.white,)),
+                              Padding(padding: EdgeInsets.only(bottom: MoobTheme.paddingHorizontal*3)),
+                              Center(child: Text("Registrazione effettuata con successo!",style: TextStyle(color: Colors.white, fontSize: 18), textAlign: TextAlign.center,)),
+                              Padding(padding: EdgeInsets.only(bottom: MoobTheme.paddingHorizontal*3),),
+                              Center(child: Text("Ti verrà inviata una mail con il codice di conferma",style: TextStyle(color: Colors.white, fontSize: 18), textAlign: TextAlign.center,)),
+                              Padding(padding: EdgeInsets.only(bottom: MoobTheme.paddingHorizontal*2),),
+                              Center(
+                                child: BordedButton(
+                                  key: buttonKey,
+                                  strokeWidth: 2,
+                                  radius: 24,
+                                  child: Text("Torna al Login",style: TextStyle(color: Colors.white)),
+                                  gradient: MoobTheme.primaryGradient,
+                                  onPressed: (){
+                                    Navigator.of(context).pushReplacement(CircularRevealRoute(widget: LoginPage(),position:getContainerPosition(buttonKey)));
+                                  },
+                                ),
+                              )
+                            ],
+                          ),
                         ),
                       ),
                     ),

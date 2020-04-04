@@ -13,7 +13,7 @@ void main() {
 
 // ignore: must_be_immutable
 class DINO extends StatelessWidget {
-  String title="DINO";
+  String title="Ehi";
 
   @override
   Widget build(BuildContext context) {

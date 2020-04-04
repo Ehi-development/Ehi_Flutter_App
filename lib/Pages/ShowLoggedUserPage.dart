@@ -29,44 +29,42 @@ class ShowLoggedUserPageState extends State<ShowLoggedUserPage> {
       color: MoobTheme.darkBackgroundColor,
       child: ScrollConfiguration(
         behavior: MyBehavior(),
-        child: CustomScrollView(
-          slivers: [
-            // Richiamo l'AppBar che presenta un pulsante per tornare indietro e uno per le impostazioni
-            BackSetting_Appbar_LoggedUser(color:MoobTheme.darkBackgroundColor,),
-            SliverList(
-              delegate: SliverChildListDelegate(
-                [
-                  FutureBuilder<UserClass>(
-                    future: UtilityTools.getLoggedUserFromServer(),
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData) {
-                        return getUserPage(snapshot.data);
-                      } else if (snapshot.hasError) {
-                        return Text("${snapshot.error}");
-                      }
-                      // Di default mostra un CircularProgressIndicator
-                      return Padding(
-                        padding: const EdgeInsets.only(top:48.0),
-                        child: Center(child:Container(child:CircularProgressIndicator(),)),
-                      );
-                    },
-                  ),
-                ]
-              )
-            ),
-          ]
+        child: FutureBuilder<UserClass>(
+          future: UtilityTools.getLoggedUserFromServer(),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              return getUserPage(snapshot.data);
+            } else if (snapshot.hasError) {
+              return Text("${snapshot.error}");
+            }
+            // Di default mostra un CircularProgressIndicator
+            return Padding(
+              padding: const EdgeInsets.only(top:48.0),
+              child: Center(child:Container(child:CircularProgressIndicator(),)),
+            );
+          },
         ),
-      ),
+    )
     );
   }
 
   getUserPage(UserClass user){
-    List<Widget> PageContents = [];
-    PageContents.add(ProfileImageAndLittleMore(user));
-    PageContents.add(SocialNumberBar(user));
-    PageContents.add(DettailOfUser(user));
-    PageContents.add(CreatedEvent(user));
-    return Column(children: PageContents);
+    return CustomScrollView(
+      slivers: [
+      // Richiamo l'AppBar che presenta un pulsante per tornare indietro e uno per le impostazioni
+        BackSetting_Appbar_LoggedUser(color:MoobTheme.darkBackgroundColor,),
+        SliverList(
+          delegate: SliverChildListDelegate(
+            [
+              ProfileImageAndLittleMore(user),
+              SocialNumberBar(user),
+              DettailOfUser(user),
+              CreatedEvent(user)
+              ]
+          )
+        )
+      ]
+    );
   }
 }
 
@@ -191,6 +189,7 @@ SocialNumberBar(UserClass user) {
 
 DettailOfUser(UserClass user) {
   var birthDate;
+  print(user.birth);
   try{
     birthDate = new DateFormat("dd/MM/yyyy").parse(user.birth);
   }

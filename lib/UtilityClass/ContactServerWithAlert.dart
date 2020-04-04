@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hey_flutter/Pages/AddDetailPage.dart';
 import 'package:hey_flutter/Pages/RegistrationPage.dart';
+import 'package:hey_flutter/Pages/RegistrationResultPage.dart';
 import 'package:hey_flutter/UtilityClass/ProgressButton.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -43,7 +44,7 @@ class ContactServerWithAlert {
   static newUserRegistration({
     @required context,
     GlobalKey<ProgressButtonState> ProgressButtonKey,
-    UserClass user,
+    @required UserClass user,
   }) async {
 
     if (ProgressButtonKey != null) {
@@ -94,28 +95,20 @@ class ContactServerWithAlert {
             ProgressButtonKey.currentState.done();
           }
 
-          await SharedPreferences.getInstance().then((prefs){
-            prefs.setString('loggedUsername', user.username);
-            prefs.setString('loggedPass', user.password);
-          });
-
-          GenerateToast("Sei stato correttamente registrato");
-          Navigator.of(context).pushReplacement(CircularRevealRoute(widget: RegistrationPage(),position:getContainerPosition(ProgressButtonKey)));
+          Navigator.of(context).pushReplacement(CircularRevealRoute(widget: RegistrationResultPage(),position:getContainerPosition(ProgressButtonKey)));
 
           return 0;
         } else if (result == 1) {
           if (ProgressButtonKey != null) {
             ProgressButtonKey.currentState.error();
           }
-
           GenerateToast("Ti invitiamo a sceglierne un altro");
           return 1;
         }else if (result == 2) {
           if (ProgressButtonKey != null) {
             ProgressButtonKey.currentState.error();
           }
-
-          GenerateToast("Ti invitiamo a sceglierne un altra");
+          GenerateToast("La mail che hai inserito è già utilizzata");
           return 2;
         } else {
           if (ProgressButtonKey != null) {
@@ -157,7 +150,6 @@ class ContactServerWithAlert {
         if(result.result==1){
           Navigator.of(context).pushReplacement(CircularRevealRoute(widget: AddDetailPage(username: username, password: password,),position:Offset(0,0)));
         }else{
-          GenerateToast("");
           ProgressButtonKey.currentState.error();
           GenerateToast("Username già esistente");
         }

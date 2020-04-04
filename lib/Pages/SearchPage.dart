@@ -45,6 +45,7 @@ class SearchPageState extends State<SearchPage> {
                           padding: const EdgeInsets.symmetric(horizontal: MoobTheme.paddingHorizontal,vertical: 16.0),
                           child: CircularTextBox(
                             key: _formKey,
+                            context: context,
                             height: 45,
                             color: MoobTheme.secondaryMainColor,
                             icon: Icons.search,

@@ -185,7 +185,6 @@ class RegistrationPageState extends State<RegistrationPage> with SingleTickerPro
                       child: InkWell(
                         onTap: (){
                           //TODO: Aggiungere "Login con Facebook"
-                          //showFlushbar(context:context,title:"TODO",message:"Login con Facebook",icon:Icons.code,color: Colors.green);
                         },
                         child: Container(
                           width: 45,
