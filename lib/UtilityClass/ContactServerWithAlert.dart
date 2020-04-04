@@ -55,64 +55,36 @@ class ContactServerWithAlert {
         ProgressButtonKey.currentState.error();
       }
       GenerateToast("Lo username non può essere nullo");
-      /*showFlushbar(context: context,
-          title: "Username errato",
-          message: "",
-          icon: Icons.error_outline);*/
     } else if (user.username.contains(" ")) {
       if (ProgressButtonKey != null) {
         ProgressButtonKey.currentState.error();
       }
       GenerateToast("Lo username non può contenere spazi vuoti");
-      /*showFlushbar(context: context,
-          title: "Username errato",
-          message: "",
-          icon: Icons.error_outline);*/
     } else if (user.name == null) {
       if (ProgressButtonKey != null) {
         ProgressButtonKey.currentState.error();
       }
       GenerateToast("Il Nome utente non può essere nullo");
-      /*showFlushbar(context: context,
-          title: "Nome errato",
-          message: "",
-          icon: Icons.error_outline);*/
     } else if (user.surname == null) {
       if (ProgressButtonKey != null) {
         ProgressButtonKey.currentState.error();
       }
       GenerateToast("Il Cognome non può essere nullo");
-      /*showFlushbar(context: context,
-          title: "Cognome errato",
-          message: "",
-          icon: Icons.error_outline);*/
     } else if (user.email!=null && user.email.contains(' ')) {
       if (ProgressButtonKey != null) {
         ProgressButtonKey.currentState.error();
       }
       GenerateToast("La mail non può contenere spazi vuoti");
-      /*showFlushbar(context: context,
-          title: "Email errato",
-          message: "",
-          icon: Icons.error_outline);*/
     } else if(user.email!=null && !user.email.contains("@") && !user.email.contains(".")){
       if (ProgressButtonKey != null) {
         ProgressButtonKey.currentState.error();
       }
       GenerateToast("Inserire una mail valida");
-      /*showFlushbar(context: context,
-          title: "Email errato",
-          message: "",
-          icon: Icons.error_outline);*/
     }else if(user.birth==null){
       if (ProgressButtonKey != null) {
         ProgressButtonKey.currentState.error();
       }
       GenerateToast("La tua data di nascita non può essere nulla");
-      /*showFlushbar(context: context,
-          title: "",
-          message: "Inserire una data di nascita valida",
-          icon: Icons.error_outline);*/
     }else {
       UserServer.registerUser(
         user: user,
@@ -128,7 +100,6 @@ class ContactServerWithAlert {
           });
 
           GenerateToast("Sei stato correttamente registrato");
-          //showFlushbar(context:context,title:"Complimenti",message:"",icon:Icons.check_circle_outline,color: Colors.lightBlue);
           Navigator.of(context).pushReplacement(CircularRevealRoute(widget: RegistrationPage(),position:getContainerPosition(ProgressButtonKey)));
 
           return 0;
@@ -138,7 +109,6 @@ class ContactServerWithAlert {
           }
 
           GenerateToast("Ti invitiamo a sceglierne un altro");
-          /*showFlushbar(context:context,title:"Username già utilizzato",message:"",icon:Icons.error_outline);*/
           return 1;
         }else if (result == 2) {
           if (ProgressButtonKey != null) {
@@ -146,14 +116,12 @@ class ContactServerWithAlert {
           }
 
           GenerateToast("Ti invitiamo a sceglierne un altra");
-          /*showFlushbar(context:context,title:"E-mail già utilizzata",message:"",icon:Icons.error_outline);*/
           return 2;
         } else {
           if (ProgressButtonKey != null) {
             ProgressButtonKey.currentState.error();
           }
           GenerateToast("Probabilmente i nostri server hanno un problema");
-          /*showFlushbar(context:context,title:"Connessione interrotta",message:"",icon:Icons.error_outline);*/
           return 3;
         }
       });

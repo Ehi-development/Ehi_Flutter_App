@@ -29,6 +29,7 @@ dependencies:
   page_indicator:
   animated_background:
   intl:
+  flutter_datetime_picker:
 
   flutter_launcher_icons:
 

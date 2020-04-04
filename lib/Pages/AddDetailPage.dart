@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:hey_flutter/Pages/RegistrationResultPage.dart';
 import 'package:hey_flutter/UtilityClass/DINOAppBar.dart';
 import 'package:hey_flutter/UtilityClass/MyBehavior.dart';
@@ -39,9 +40,20 @@ class AddDetailPageState extends State<AddDetailPage> {
 
   PageController controller = PageController();
 
+  TextEditingController _usernameController;
+  TextEditingController _dateController;
+  DateTime date = DateTime.now();
+
+  @override
+  void initState() {
+    super.initState();
+    _usernameController = new TextEditingController(text: widget.username);
+    _dateController = new TextEditingController(text: "");
+  }
 
   @override
   Widget build(BuildContext context) {
+
     return StatusBarCleaner(
       color: MoobTheme.darkBackgroundColor,
       child: ScrollConfiguration(
@@ -94,6 +106,7 @@ class AddDetailPageState extends State<AddDetailPage> {
 
 
   Widget secondPage(){
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: MoobTheme.paddingHorizontal),
       decoration: BoxDecoration(
@@ -110,7 +123,8 @@ class AddDetailPageState extends State<AddDetailPage> {
             padding: const EdgeInsets.symmetric(horizontal: MoobTheme.paddingHorizontal,vertical: MoobTheme.paddingHorizontal/4),
             child: Center(
               child: TextField(
-                enabled: false,
+                controller: _usernameController,
+                readOnly: true,
                 style: TextStyle(color: Colors.white,),
                 cursorColor: Colors.white,
                 decoration: InputDecoration(
@@ -123,7 +137,7 @@ class AddDetailPageState extends State<AddDetailPage> {
                   suffixStyle: TextStyle(color: Colors.white),
                   fillColor: Colors.white,
                   labelStyle: TextStyle(color: Colors.grey[600]),
-                  labelText: widget.username,
+                  labelText: "Username",
                   suffixIcon: Icon(Icons.person,color: Colors.white,),
                 ),
                 onChanged: (text){
@@ -186,45 +200,68 @@ class AddDetailPageState extends State<AddDetailPage> {
                   unselectedWidgetColor: Colors.grey[600],
                   accentColor: MoobTheme.mainColor
               ),
-              child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    Row(
+              child: Column(
+                children: <Widget>[
+                  Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
-                        Radio(
-                          value: 1,
-                          groupValue: widget.gender,
-                          onChanged: (value) {
-                            setState(() {
-                              widget.gender = value;
-                            });
-                          },
+                        Row(
+                          children: <Widget>[
+                            Radio(
+                              value: 1,
+                              groupValue: widget.gender,
+                              onChanged: (value) {
+                                setState(() {
+                                  widget.gender = value;
+                                });
+                              },
+                            ),
+                            Text(
+                              "Maschio",
+                              style: TextStyle(color: Colors.white),
+                            )
+                          ],
                         ),
-                        Text(
-                          "Maschio",
-                          style: TextStyle(color: Colors.white),
-                        )
+                        Row(
+                          children: <Widget>[
+                            Radio(
+                              value: 2,
+                              groupValue: widget.gender,
+                              onChanged: (value) {
+                                setState(() {
+                                  widget.gender = value;
+                                });
+                              },
+                            ),
+                            Text(
+                              "Femmina",
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ],
+                        ),
                       ],
                     ),
-                    Row(
-                      children: <Widget>[
-                        Radio(
-                          value: 2,
-                          groupValue: widget.gender,
-                          onChanged: (value) {
-                            setState(() {
-                              widget.gender = value;
-                            });
-                          },
-                        ),
-                        Text(
-                          "Femmina",
-                          style: TextStyle(color: Colors.white),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.max,
+                    children: <Widget>[
+                      Radio(
+                        value: 3,
+                        groupValue: widget.gender,
+                        onChanged: (value) {
+                          setState(() {
+                            widget.gender = value;
+                          });
+                        },
+                      ),
+                      Text(
+                        "Preferisco non specificarlo",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ],
+                  )
+                ],
+              ),
             ),
           ),
           Padding(
@@ -256,6 +293,7 @@ class AddDetailPageState extends State<AddDetailPage> {
             padding: const EdgeInsets.symmetric(horizontal: MoobTheme.paddingHorizontal,vertical: MoobTheme.paddingHorizontal/4),
             child: Center(
                 child: TextField(
+                  controller: _dateController,
                   style: TextStyle(color: Colors.white,),
                   cursorColor: Colors.white,
                   decoration: InputDecoration(
@@ -268,9 +306,9 @@ class AddDetailPageState extends State<AddDetailPage> {
                     labelText: "Data di Nascita",
                     suffixIcon: Icon(Icons.calendar_today,color: Colors.white,),
                   ),
-                  onChanged: (text){
-                    widget.birth = text;
-                  },
+                  readOnly: true,
+
+                  onTap: () => _selectDate(context),
                 )
             ),
           ),
@@ -350,7 +388,7 @@ class AddDetailPageState extends State<AddDetailPage> {
           }else if(widget.gender==2){
             genderLocale="f";
           }else{
-            genderLocale="None";
+            genderLocale="n";
           }
 
           UserClass user = UserClass(
@@ -386,5 +424,27 @@ class AddDetailPageState extends State<AddDetailPage> {
     );
   }
 
+  DateTime selectedDate = DateTime.now();
 
+  _selectDate(BuildContext context) {
+    DatePicker.showDatePicker(context,
+        showTitleActions: true,
+        minTime: DateTime(1900, 1, 1),
+        maxTime: DateTime.now(),
+        theme: DatePickerTheme(
+            headerColor: Colors.grey[300],
+            backgroundColor: Colors.grey[100],
+            itemStyle: TextStyle(
+                color: Colors.grey[900],
+                fontWeight: FontWeight.bold,
+                fontSize: 18),
+            doneStyle:
+            TextStyle(color: Colors.grey[900], fontSize: 16)),
+        onConfirm: (date) {
+          _dateController = new TextEditingController(text: "${date.day}/${date.month}/${date.year}");
+          setState(() {
+            //_dateController.text = "${date.day}/${date.month}/${date.year}";
+          });
+        });
+  }
 }
