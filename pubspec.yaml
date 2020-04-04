@@ -30,13 +30,18 @@ dependencies:
   animated_background:
   intl:
   flutter_datetime_picker:
+  after_layout:
 
   flutter_launcher_icons:
 
 flutter_icons:
-  android: "Hey!!!"
   ios: true
-  image_path: "assets/icon/icon.jpeg"
+  android: true
+  image_path_ios: "assets/launcher/icon.png"
+  image_path_android: "assets/launcher/icon.png"
+  adaptive_icon_background: "assets/launcher/icon_back.png"
+  adaptive_icon_foreground: "assets/launcher/icon_top.png"
+
 
 dev_dependencies:
   flutter_test:
@@ -47,6 +52,7 @@ flutter:
 
   assets:
     - assets/image/
+    - assets/launcher/
 
   fonts:
     - family: OpenSans
