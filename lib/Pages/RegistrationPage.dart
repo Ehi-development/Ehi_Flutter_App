@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:hey_flutter/Pages/LoginPage.dart';
 import 'package:hey_flutter/UtilityClass/AppLogoLogin.dart';
 import 'package:hey_flutter/UtilityClass/MyBehavior.dart';
 import 'package:hey_flutter/UtilityClass/ProgressButton.dart';
+import 'package:hey_flutter/UtilityClass/RouteBuilder.dart';
 import 'package:hey_flutter/UtilityClass/StatusBarCleaner.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../UtilityClass/Theme.dart';
@@ -18,6 +20,7 @@ class RegistrationPage extends StatefulWidget {
 class RegistrationPageState extends State<RegistrationPage> with SingleTickerProviderStateMixin {
 
   GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  GlobalKey<ScaffoldState> _backToLogin = new GlobalKey<ScaffoldState>();
 
   String usernameValue;
   String passwordValue;
@@ -126,6 +129,26 @@ class RegistrationPageState extends State<RegistrationPage> with SingleTickerPro
                     ContactServerWithAlert.checkIfUsernameExist(context: context, username: usernameValue, password: passwordValue, repeatPassword: repeatPasswordValue, ProgressButtonKey: registrationProgressButtonKey);
                   },
                 )
+            ),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 8.0),
+              child: InkWell(
+                key: _backToLogin,
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Text("Hai già un account?",style: TextStyle(color: Colors.white.withOpacity(0.4)),),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 8.0),
+                      child: Text("Accedi",style: TextStyle(color: Colors.white.withOpacity(0.4), fontWeight: FontWeight.bold),),
+                    ),
+                  ],
+                ),
+                onTap: (){
+                  Navigator.of(context).pushReplacement(CircularRevealRoute(widget: LoginPage(),position:getContainerPosition(_backToLogin)));
+                },
+              ),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: MoobTheme.paddingHorizontal*3),

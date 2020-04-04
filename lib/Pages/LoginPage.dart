@@ -132,6 +132,7 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
               child: InkWell(
                 key: _backToRegistration,
                 child: Row(
+                  mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Text("Non hai un account?",style: TextStyle(color: Colors.white.withOpacity(0.4)),),
