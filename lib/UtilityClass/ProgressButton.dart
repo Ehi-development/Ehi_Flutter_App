@@ -116,6 +116,12 @@ class ProgressButtonState extends State<ProgressButton> with TickerProviderState
     });
   }
 
+  reset(){
+    setState(() {
+      widget.state=0;
+    });
+  }
+
   error(){
     setState(() {
       widget.state=3;

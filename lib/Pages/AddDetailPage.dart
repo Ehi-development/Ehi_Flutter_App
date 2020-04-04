@@ -348,9 +348,15 @@ class AddDetailPageState extends State<AddDetailPage> {
                   cursorColor: Colors.white,
                   decoration: InputDecoration(
                     enabledBorder: OutlineInputBorder(
+                      borderRadius: const BorderRadius.all(
+                        const Radius.circular(MoobTheme.radius),
+                      ),
                       borderSide: BorderSide(color: Colors.white),
                     ),
                     border: OutlineInputBorder(
+                      borderRadius: const BorderRadius.all(
+                        const Radius.circular(MoobTheme.radius),
+                      ),
                       borderSide: BorderSide(color: Colors.white),
                     ),
                     suffixIcon: Icon(Icons.mode_edit,color: Colors.white, ),

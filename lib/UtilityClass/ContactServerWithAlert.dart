@@ -142,22 +142,24 @@ class ContactServerWithAlert {
 
     if(username==null){
       if(ProgressButtonKey!=null){ProgressButtonKey.currentState.error();}
-      /*showFlushbar(context:context,title:"Username errato",message:"Lo username non può essere nullo",icon:Icons.error_outline);*/
+      GenerateToast("Lo username non può essere nullo");
     }else if(username.contains(" ")){
       if(ProgressButtonKey!=null){ProgressButtonKey.currentState.error();}
-      /*showFlushbar(context:context,title:"Username errato",message:"Lo username non può avere spazi vuoti",icon:Icons.error_outline);*/
+      GenerateToast("Lo username non può avere spazi vuoti");
     }else if(password==null){
       if(ProgressButtonKey!=null){ProgressButtonKey.currentState.error();}
-      /*showFlushbar(context:context,title:"Username errato",message:"La password non può essere nulla",icon:Icons.error_outline);*/
+      GenerateToast("La password non può essere nulla");
     }else if(password!=repeatPassword){
       if(ProgressButtonKey!=null){ProgressButtonKey.currentState.error();}
-      /*showFlushbar(context:context,title:"Le due passwords non coincidono",message:"Ti invitiamo a riprovare",icon:Icons.error_outline);*/
+      GenerateToast("Le due passwords non coincidono");
     }else{
       UserServer.fromServer(username).then((result){
         if(result.result==1){
           Navigator.of(context).pushReplacement(CircularRevealRoute(widget: AddDetailPage(username: username, password: password,),position:Offset(0,0)));
         }else{
-          /*showFlushbar(context:context,title:"Username già esistente",message:"Inserisci un altro username",icon:Icons.error_outline);*/
+          GenerateToast("");
+          ProgressButtonKey.currentState.error();
+          GenerateToast("Username già esistente");
         }
       });
     }

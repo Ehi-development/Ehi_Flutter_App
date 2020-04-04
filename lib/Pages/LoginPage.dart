@@ -86,7 +86,8 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                 icon: Icons.vpn_key,
                 elevation: 4,
                 context: context,
-                othersideIcon: IconButton(icon: Icon(Icons.remove_red_eye), onPressed: (){setState(() {
+                othersideIcon: IconButton(icon: _passwordHide ? Icon(Icons.visibility):Icon(Icons.visibility_off),
+                 onPressed: (){setState(() {
                   _passwordHide=!_passwordHide;
                 });},),
                 onChange: (text){

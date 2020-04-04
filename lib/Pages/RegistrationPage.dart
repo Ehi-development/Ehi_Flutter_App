@@ -88,7 +88,8 @@ class RegistrationPageState extends State<RegistrationPage> with SingleTickerPro
                 },
                 obscureText: passwordHide,
                 hintText:"Password",
-                othersideIcon: IconButton(icon: Icon(Icons.remove_red_eye), onPressed: (){setState(() {
+                othersideIcon: IconButton(icon: passwordHide ? Icon(Icons.visibility):Icon(Icons.visibility_off),
+                 onPressed: (){setState(() {
                   passwordHide=!passwordHide;
                 });},),
                 border: 0,
@@ -107,7 +108,8 @@ class RegistrationPageState extends State<RegistrationPage> with SingleTickerPro
                   repeatPasswordValue=text;
                 },
                 obscureText: repeatPasswordHide,
-                othersideIcon: IconButton(icon: Icon(Icons.remove_red_eye), onPressed: (){setState(() {
+                othersideIcon: IconButton(icon: repeatPasswordHide ? Icon(Icons.visibility):Icon(Icons.visibility_off),
+                  onPressed: (){setState(() {
                   repeatPasswordHide=!repeatPasswordHide;
                 });},),
                 hintText:"Ripeti Password",
