@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:hey_flutter/Pages/IconPageLoader.dart';
 import 'package:hey_flutter/Pages/RegistrationPage.dart';
-import 'package:hey_flutter/UtilityClass/AppLogoLogin.dart';
-import 'package:hey_flutter/UtilityClass/BordedButton.dart';
-import 'package:hey_flutter/UtilityClass/MyBehavior.dart';
-import 'package:hey_flutter/UtilityClass/ProgressButton.dart';
+import 'package:hey_flutter/Widget/AppLogoLogin.dart';
+import 'package:hey_flutter/Widget/BordedButton.dart';
+import 'package:hey_flutter/Widget/MyBehavior.dart';
+import 'package:hey_flutter/Widget/ProgressButton.dart';
 import 'package:hey_flutter/UtilityClass/RouteBuilder.dart';
 import 'package:hey_flutter/UtilityClass/StatusBarCleaner.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import '../UtilityClass/Theme.dart';
-import '../UtilityClass/CircularTextBox.dart';
+import '../Widget/Theme.dart';
+import '../Widget/CircularTextBox.dart';
 import '../UtilityClass/ContactServerWithAlert.dart';
 
 class LoginPage extends StatefulWidget {
@@ -86,7 +86,7 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                 icon: Icons.vpn_key,
                 elevation: 4,
                 context: context,
-                othersideIcon: IconButton(icon: _passwordHide ? Icon(Icons.visibility):Icon(Icons.visibility_off),
+                othersideIcon: IconButton(icon: _passwordHide ? Icon(Icons.visibility, color: Colors.grey[800],):Icon(Icons.visibility_off,color: Colors.grey[800]),
                  onPressed: (){setState(() {
                   _passwordHide=!_passwordHide;
                 });},),
@@ -121,7 +121,9 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                           username:usernameValue.toLowerCase(),
                           password: passwordValue).then((result){
                             if(result==0){
-                              Navigator.of(context).pushReplacement(CircularRevealRoute(widget: IconPageLoader(),position:getContainerPosition(loginProgressButtonKey)));
+                              Navigator.of(context).pushAndRemoveUntil(
+                                  CircularRevealRoute(widget: IconPageLoader(),position:getContainerPosition(loginProgressButtonKey)),
+                                  (Route<dynamic> route) => false);
                             }
                           }
                         );

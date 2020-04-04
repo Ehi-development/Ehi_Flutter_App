@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:hey_flutter/Pages/LoginPage.dart';
-import 'package:hey_flutter/UtilityClass/BordedButton.dart';
-import 'package:hey_flutter/UtilityClass/MyBehavior.dart';
+import 'package:hey_flutter/Widget/BordedButton.dart';
+import 'package:hey_flutter/Widget/MyBehavior.dart';
 import 'package:hey_flutter/UtilityClass/RouteBuilder.dart';
 import 'package:hey_flutter/UtilityClass/StatusBarCleaner.dart';
-import '../UtilityClass/DINOAppBar.dart';
-import '../UtilityClass/Theme.dart';
+import '../Widget/DINOAppBar.dart';
+import '../Widget/Theme.dart';
 
 class RegistrationResultPage extends StatefulWidget {
   @override
@@ -63,7 +63,8 @@ class RegistrationResultPageState extends State<RegistrationResultPage> {
                                   child: Text("Torna al Login",style: TextStyle(color: Colors.white)),
                                   gradient: MoobTheme.primaryGradient,
                                   onPressed: (){
-                                    Navigator.of(context).pushReplacement(CircularRevealRoute(widget: LoginPage(),position:getContainerPosition(buttonKey)));
+                                    Navigator.of(context).pushAndRemoveUntil(CircularRevealRoute(widget: LoginPage(),position:getContainerPosition(buttonKey)),
+                                            (Route<dynamic> route) => false);
                                   },
                                 ),
                               )

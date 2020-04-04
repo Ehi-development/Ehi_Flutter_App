@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:hey_flutter/Pages/LoginPage.dart';
-import 'package:hey_flutter/UtilityClass/AppLogoLogin.dart';
-import 'package:hey_flutter/UtilityClass/MyBehavior.dart';
-import 'package:hey_flutter/UtilityClass/ProgressButton.dart';
+import 'package:hey_flutter/Widget/AppLogoLogin.dart';
+import 'package:hey_flutter/Widget/BordedButton.dart';
+import 'package:hey_flutter/Widget/MyBehavior.dart';
+import 'package:hey_flutter/Widget/ProgressButton.dart';
 import 'package:hey_flutter/UtilityClass/RouteBuilder.dart';
 import 'package:hey_flutter/UtilityClass/StatusBarCleaner.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import '../UtilityClass/Theme.dart';
-import '../UtilityClass/CircularTextBox.dart';
+import '../Widget/Theme.dart';
+import '../Widget/CircularTextBox.dart';
 import '../UtilityClass/ContactServerWithAlert.dart';
 
 class RegistrationPage extends StatefulWidget {
@@ -91,7 +92,7 @@ class RegistrationPageState extends State<RegistrationPage> with SingleTickerPro
                 },
                 obscureText: passwordHide,
                 hintText:"Password",
-                othersideIcon: IconButton(icon: passwordHide ? Icon(Icons.visibility):Icon(Icons.visibility_off),
+                othersideIcon: IconButton(icon: passwordHide ? Icon(Icons.visibility, color: Colors.grey[800]):Icon(Icons.visibility_off, color: Colors.grey[800]),
                  onPressed: (){setState(() {
                   passwordHide=!passwordHide;
                 });},),
@@ -111,7 +112,7 @@ class RegistrationPageState extends State<RegistrationPage> with SingleTickerPro
                   repeatPasswordValue=text;
                 },
                 obscureText: repeatPasswordHide,
-                othersideIcon: IconButton(icon: repeatPasswordHide ? Icon(Icons.visibility):Icon(Icons.visibility_off),
+                othersideIcon: IconButton(icon: repeatPasswordHide ? Icon(Icons.visibility, color: Colors.grey[800]):Icon(Icons.visibility_off, color: Colors.grey[800]),
                   onPressed: (){setState(() {
                   repeatPasswordHide=!repeatPasswordHide;
                 });},),
@@ -121,12 +122,20 @@ class RegistrationPageState extends State<RegistrationPage> with SingleTickerPro
             ),
             Padding(
                 padding: EdgeInsets.symmetric(horizontal: MoobTheme.paddingHorizontal,vertical: 32.0),
-                child: ProgressButton(
+                child: BordedButton(
                   key: registrationProgressButtonKey,
-                  text: "Registrati",
-                  textColor: Colors.black,
+                  child: Text("Registrati",style: TextStyle(color: Colors.white,fontSize: 14),),
+                  gradient: MoobTheme.primaryGradient,
+                  strokeWidth: 2,
+                  radius: 24,
                   onPressed: (){
-                    ContactServerWithAlert.checkIfUsernameExist(context: context, username: usernameValue, password: passwordValue, repeatPassword: repeatPasswordValue, ProgressButtonKey: registrationProgressButtonKey);
+                    ContactServerWithAlert.checkIfUsernameExist(
+                        context: context,
+                        username: usernameValue,
+                        password: passwordValue,
+                        repeatPassword: repeatPasswordValue,
+                        ProgressButtonKey: registrationProgressButtonKey
+                    );
                   },
                 )
             ),

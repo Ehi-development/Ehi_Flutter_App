@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:hey_flutter/UtilityClass/MyBehavior.dart';
+import 'package:hey_flutter/Widget/MyBehavior.dart';
 import 'package:hey_flutter/UtilityClass/StatusBarCleaner.dart';
-import '../UtilityClass/MoobNavigation.dart';
-import '../UtilityClass/DINOAppBar.dart';
-import '../UtilityClass/Theme.dart';
+import '../Widget/MoobNavigation.dart';
+import '../Widget/DINOAppBar.dart';
+import '../Widget/Theme.dart';
 
 class NotificationPage extends StatefulWidget {
 

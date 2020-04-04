@@ -3,16 +3,16 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:hey_flutter/UtilityClass/AccountImage.dart';
-import 'package:hey_flutter/UtilityClass/DINOAppBar.dart';
-import 'package:hey_flutter/UtilityClass/MyBehavior.dart';
+import 'package:hey_flutter/Widget/DINOAppBar.dart';
+import 'package:hey_flutter/Widget/MyBehavior.dart';
 import 'package:hey_flutter/UtilityClass/StatusBarCleaner.dart';
 import '../UtilityClass/RouteBuilder.dart';
-import '../UtilityClass/Theme.dart';
+import '../Widget/Theme.dart';
 import '../UtilityClass/UserClass.dart';
 import 'package:http/http.dart' as http;
 import '../UtilityClass/UtilityTools.dart';
 import 'ShowOthersUserPage.dart';
-import '../UtilityClass/CircularTextBox.dart';
+import '../Widget/CircularTextBox.dart';
 
 class SearchPage extends StatefulWidget{
   @override

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'Pages/IconPageLoader.dart';
-import 'UtilityClass/Theme.dart';
+import 'Widget/Theme.dart';
 
 import 'package:flutter/foundation.dart'
     show debugDefaultTargetPlatformOverride;

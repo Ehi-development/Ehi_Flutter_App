@@ -5,7 +5,7 @@ import 'package:hey_flutter/UtilityClass/StatusBarCleaner.dart';
 import 'package:hey_flutter/UtilityClass/UtilityTools.dart';
 import 'package:loading/indicator/ball_pulse_indicator.dart';
 import 'package:loading/loading.dart';
-import '../UtilityClass/Theme.dart';
+import '../Widget/Theme.dart';
 import 'Home.dart';
 
 import 'package:after_layout/after_layout.dart';

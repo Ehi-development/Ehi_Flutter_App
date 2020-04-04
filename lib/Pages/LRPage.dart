@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:hey_flutter/UtilityClass/AppLogoLogin.dart';
+import 'package:hey_flutter/Widget/AppLogoLogin.dart';
 import 'package:hey_flutter/UtilityClass/RouteBuilder.dart';
 import 'package:hey_flutter/UtilityClass/StatusBarCleaner.dart';
-import '../UtilityClass/Theme.dart';
+import '../Widget/Theme.dart';
 import 'LoginPage.dart';
 import 'RegistrationPage.dart';
 

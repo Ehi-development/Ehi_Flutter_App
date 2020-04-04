@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hey_flutter/UtilityClass/UtilityTools.dart';
 
-import 'Theme.dart';
+import '../Widget/Theme.dart';
 
 class AccountImage extends StatelessWidget{
   final String photo;

@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:hey_flutter/Pages/LRPage.dart';
 import 'package:hey_flutter/Pages/ShowLoggedUserPage.dart';
 import 'package:hey_flutter/UtilityClass/AccountImage.dart';
-import 'package:hey_flutter/UtilityClass/AppLogoLogin.dart';
+import 'package:hey_flutter/Widget/AppLogoLogin.dart';
 import 'package:hey_flutter/UtilityClass/UtilityTools.dart';
 import '../Pages/LoginPage.dart';
-import 'RouteBuilder.dart';
+import '../UtilityClass/RouteBuilder.dart';
 import '../Pages/SearchPage.dart';
-import 'UserClass.dart';
-import 'UserServer.dart';
+import '../UtilityClass/UserClass.dart';
+import '../UtilityClass/UserServer.dart';
 import 'Theme.dart';
 
 class SearchAvatar_Appbar extends StatelessWidget{

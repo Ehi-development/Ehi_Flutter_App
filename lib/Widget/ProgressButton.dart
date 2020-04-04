@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:hey_flutter/UtilityClass/Theme.dart';
+import 'package:hey_flutter/Widget/Theme.dart';
 
 // ignore: must_be_immutable
 class ProgressButton extends StatefulWidget{

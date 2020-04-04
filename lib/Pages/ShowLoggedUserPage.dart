@@ -3,15 +3,15 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hey_flutter/UtilityClass/AccountImage.dart';
-import 'package:hey_flutter/UtilityClass/BordedButton.dart';
-import 'package:hey_flutter/UtilityClass/GetListEvent.dart';
-import 'package:hey_flutter/UtilityClass/MyBehavior.dart';
+import 'package:hey_flutter/Widget/BordedButton.dart';
+import 'package:hey_flutter/Widget/GetListEvent.dart';
+import 'package:hey_flutter/Widget/MyBehavior.dart';
 import 'package:hey_flutter/UtilityClass/StatusBarCleaner.dart';
 import 'package:hey_flutter/UtilityClass/UtilityTools.dart';
 import 'package:intl/intl.dart';
-import '../UtilityClass/DINOAppBar.dart';
+import '../Widget/DINOAppBar.dart';
 import '../UtilityClass/UserClass.dart';
-import '../UtilityClass/Theme.dart';
+import '../Widget/Theme.dart';
 
 class ShowLoggedUserPage extends StatefulWidget{
 

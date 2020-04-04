@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:hey_flutter/UtilityClass/MyBehavior.dart';
+import 'package:hey_flutter/Widget/MyBehavior.dart';
 import 'package:hey_flutter/UtilityClass/StatusBarCleaner.dart';
 import 'package:hey_flutter/UtilityClass/UtilityTools.dart';
 
-import '../UtilityClass/GetListEvent.dart';
-import '../UtilityClass/MoobNavigation.dart';
-import '../UtilityClass/DINOAppBar.dart';
-import '../UtilityClass/Theme.dart';
+import '../Widget/GetListEvent.dart';
+import '../Widget/MoobNavigation.dart';
+import '../Widget/DINOAppBar.dart';
+import '../Widget/Theme.dart';
 
 class Home extends StatefulWidget {
 

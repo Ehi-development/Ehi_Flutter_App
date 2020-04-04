@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:hey_flutter/Pages/AddDetailPage.dart';
 import 'package:hey_flutter/UtilityClass/RouteBuilder.dart';
-import 'package:hey_flutter/UtilityClass/Theme.dart';
+import 'package:hey_flutter/Widget/Theme.dart';
 import 'package:image_crop/image_crop.dart';
 import 'package:image_picker/image_picker.dart';
 

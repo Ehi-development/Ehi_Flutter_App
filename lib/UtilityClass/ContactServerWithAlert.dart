@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:hey_flutter/Pages/AddDetailPage.dart';
 import 'package:hey_flutter/Pages/RegistrationPage.dart';
 import 'package:hey_flutter/Pages/RegistrationResultPage.dart';
-import 'package:hey_flutter/UtilityClass/ProgressButton.dart';
+import 'package:hey_flutter/Widget/ProgressButton.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'GenerateToast.dart';
+import '../Widget/GenerateToast.dart';
 import 'LoginManager.dart';
 import 'RouteBuilder.dart';
 import 'UserClass.dart';
@@ -130,27 +130,27 @@ class ContactServerWithAlert {
     @required String password,
     @required String repeatPassword}) async{
 
-    if(ProgressButtonKey!=null && buttonPressed==null){buttonPressed=ProgressButtonKey;}
-    if(ProgressButtonKey!=null){ProgressButtonKey.currentState.progress();}
+    //if(ProgressButtonKey!=null && buttonPressed==null){buttonPressed=ProgressButtonKey;}
+    //if(ProgressButtonKey!=null){ProgressButtonKey.currentState.progress();}
 
     if(username==null){
-      if(ProgressButtonKey!=null){ProgressButtonKey.currentState.error();}
+      //if(ProgressButtonKey!=null){ProgressButtonKey.currentState.error();}
       GenerateToast("Lo username non può essere nullo");
     }else if(username.contains(" ")){
-      if(ProgressButtonKey!=null){ProgressButtonKey.currentState.error();}
+      //if(ProgressButtonKey!=null){ProgressButtonKey.currentState.error();}
       GenerateToast("Lo username non può avere spazi vuoti");
     }else if(password==null){
-      if(ProgressButtonKey!=null){ProgressButtonKey.currentState.error();}
+      //if(ProgressButtonKey!=null){ProgressButtonKey.currentState.error();}
       GenerateToast("La password non può essere nulla");
     }else if(password!=repeatPassword){
-      if(ProgressButtonKey!=null){ProgressButtonKey.currentState.error();}
+      //if(ProgressButtonKey!=null){ProgressButtonKey.currentState.error();}
       GenerateToast("Le due passwords non coincidono");
     }else{
       UserServer.fromServer(username).then((result){
         if(result.result==1){
-          Navigator.of(context).pushReplacement(CircularRevealRoute(widget: AddDetailPage(username: username, password: password,),position:Offset(0,0)));
+          Navigator.of(context).pushReplacement(CircularRevealRoute(widget: AddDetailPage(username: username, password: password,),position:getContainerPosition(ProgressButtonKey)));
         }else{
-          ProgressButtonKey.currentState.error();
+          //if(ProgressButtonKey!=null){ProgressButtonKey.currentState.error();}
           GenerateToast("Username già esistente");
         }
       });

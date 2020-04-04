@@ -162,7 +162,7 @@ class CircularTextBox extends StatelessWidget{
               padding: EdgeInsets.all(this.border),
               child: Theme(
                 data: Theme.of(this.context)
-                    .copyWith(primaryColor: Colors.grey[900],),
+                    .copyWith(primaryColor: Colors.grey[700],),
                 child: TextField(
                   cursorColor: this.color,
                   keyboardType: this.keyboardType,

@@ -3,12 +3,12 @@ import 'dart:ui';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:hey_flutter/UtilityClass/AccountImage.dart';
-import 'package:hey_flutter/UtilityClass/MyBehavior.dart';
+import 'package:hey_flutter/Widget/MyBehavior.dart';
 import 'package:hey_flutter/UtilityClass/StatusBarCleaner.dart';
-import '../UtilityClass/DINOAppBar.dart';
+import '../Widget/DINOAppBar.dart';
 import '../UtilityClass/UserClass.dart';
 import '../UtilityClass/UserServer.dart';
-import '../UtilityClass/Theme.dart';
+import '../Widget/Theme.dart';
 import 'dart:convert';
 
 class ShowOthersUserPage extends StatefulWidget{

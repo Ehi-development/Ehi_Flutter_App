@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hey_flutter/UtilityClass/getEventFromServer.dart';
 
-import 'EventClass.dart';
-import 'EventListItem.dart';
+import '../UtilityClass/EventClass.dart';
+import '../UtilityClass/EventListItem.dart';
 
 class GetListEvent{
   Widget home() {

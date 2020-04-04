@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hey_flutter/Pages/MessagePage.dart';
 import 'package:hey_flutter/Pages/NotificationPage.dart';
 import 'package:hey_flutter/Pages/FavoritePage.dart';
-import 'package:hey_flutter/UtilityClass/BordedButton.dart';
+import 'package:hey_flutter/Widget/BordedButton.dart';
 import 'package:hey_flutter/UtilityClass/RouteBuilder.dart';
 
 import '../Pages/Home.dart';
