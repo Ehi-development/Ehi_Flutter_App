@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hey_flutter/Pages/AddDetailPage.dart';
-import 'package:hey_flutter/Pages/RegistrationPage.dart';
 import 'package:hey_flutter/Pages/RegistrationResultPage.dart';
 import 'package:hey_flutter/Widget/ProgressButton.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../Widget/GenerateToast.dart';
 import 'LoginManager.dart';
@@ -22,7 +20,7 @@ class ContactServerWithAlert {
 
     var result =await UserServer.loginUser(username,password);
     if(result==0){
-      Login(username,password);
+      LoginManager.login(username,password);
       if(ProgressButtonKey!=null){ProgressButtonKey.currentState.done();}
       return 0;
     }else if(result==1){

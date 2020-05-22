@@ -20,7 +20,7 @@ dependencies:
   uni_links:
   dio:
   fluttertoast:
-
+  basic_utils:
   loading:
   flutter_svg:
 

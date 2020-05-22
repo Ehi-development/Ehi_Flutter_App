@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hey_flutter/UtilityClass/UtilityTools.dart';
 
-import '../Widget/Theme.dart';
+import 'Theme.dart';
 
 class AccountImage extends StatelessWidget{
   final String photo;
@@ -32,18 +32,6 @@ class AccountImage extends StatelessWidget{
               image: imageProvider,
               fit: BoxFit.cover,
           ),
-        ),
-      ),
-      placeholder: (context, url) => Container(
-        padding: const EdgeInsets.all(2),
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(MoobTheme.radius*4)),
-            border: Border.all(color: Colors.white,width: 2),
-            color: Colors.white,
-            image: DecorationImage(
-                image:AssetImage("assets/image/profile-placeholder.png"),
-                fit: BoxFit.cover
-            )
         ),
       ),
       errorWidget: (context, url, error) => Icon(Icons.error_outline,color: Colors.red,),

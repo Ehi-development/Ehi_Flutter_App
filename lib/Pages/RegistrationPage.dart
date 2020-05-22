@@ -5,7 +5,7 @@ import 'package:hey_flutter/Widget/BordedButton.dart';
 import 'package:hey_flutter/Widget/MyBehavior.dart';
 import 'package:hey_flutter/Widget/ProgressButton.dart';
 import 'package:hey_flutter/UtilityClass/RouteBuilder.dart';
-import 'package:hey_flutter/UtilityClass/StatusBarCleaner.dart';
+import 'package:hey_flutter/Widget/StatusBarCleaner.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../Widget/Theme.dart';
 import '../Widget/CircularTextBox.dart';

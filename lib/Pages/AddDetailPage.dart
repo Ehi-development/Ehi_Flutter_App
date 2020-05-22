@@ -8,7 +8,7 @@ import 'package:hey_flutter/UtilityClass/UserClass.dart';
 
 import 'package:hey_flutter/Widget/CropImage.dart';
 import 'package:hey_flutter/UtilityClass/RouteBuilder.dart';
-import 'package:hey_flutter/UtilityClass/StatusBarCleaner.dart';
+import 'package:hey_flutter/Widget/StatusBarCleaner.dart';
 import 'package:hey_flutter/Widget/Theme.dart';
 import 'package:hey_flutter/UtilityClass/ContactServerWithAlert.dart';
 

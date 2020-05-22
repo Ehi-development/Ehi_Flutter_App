@@ -2,11 +2,11 @@ import 'dart:ui';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:hey_flutter/UtilityClass/AccountImage.dart';
+import 'package:hey_flutter/Widget/AccountImage.dart';
 import 'package:hey_flutter/Widget/BordedButton.dart';
 import 'package:hey_flutter/Widget/GetListEvent.dart';
 import 'package:hey_flutter/Widget/MyBehavior.dart';
-import 'package:hey_flutter/UtilityClass/StatusBarCleaner.dart';
+import 'package:hey_flutter/Widget/StatusBarCleaner.dart';
 import 'package:hey_flutter/UtilityClass/UtilityTools.dart';
 import 'package:intl/intl.dart';
 import '../Widget/DINOAppBar.dart';
@@ -71,7 +71,7 @@ class ShowLoggedUserPageState extends State<ShowLoggedUserPage> {
 ProfileImageAndLittleMore(UserClass user){
   return Container(
     color: Colors.transparent,
-    height:140+2*MoobTheme.paddingHorizontal,
+    height:120+2*MoobTheme.paddingHorizontal,
     child: Padding(
       padding: const EdgeInsets.symmetric(horizontal: MoobTheme.paddingHorizontal,vertical: MoobTheme.paddingHorizontal),
       child: Row(
@@ -91,7 +91,7 @@ ProfileImageAndLittleMore(UserClass user){
                 children: <Widget>[
                   Flexible(flex:1,child: Container(),),
                   AutoSizeText("${user.name} ${user.surname}", style: TextStyle(color: Colors.white), minFontSize: 22, maxFontSize: 24,),
-                  Text("@${user.username}", style: TextStyle(fontSize: 16,color: Colors.white),),
+                  Text("@${user.username}", style: TextStyle(fontSize: 15,color: Colors.white),),
                   Flexible(flex:4,child: Container(),),
                   Center(
                     child: BordedButton(
@@ -189,7 +189,6 @@ SocialNumberBar(UserClass user) {
 
 DettailOfUser(UserClass user) {
   var birthDate;
-  print(user.birth);
   try{
     birthDate = new DateFormat("dd/MM/yyyy").parse(user.birth);
   }

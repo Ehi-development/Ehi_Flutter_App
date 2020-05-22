@@ -4,7 +4,7 @@ import 'package:hey_flutter/Pages/LoginPage.dart';
 import 'package:hey_flutter/Widget/BordedButton.dart';
 import 'package:hey_flutter/Widget/MyBehavior.dart';
 import 'package:hey_flutter/UtilityClass/RouteBuilder.dart';
-import 'package:hey_flutter/UtilityClass/StatusBarCleaner.dart';
+import 'package:hey_flutter/Widget/StatusBarCleaner.dart';
 import '../Widget/DINOAppBar.dart';
 import '../Widget/Theme.dart';
 

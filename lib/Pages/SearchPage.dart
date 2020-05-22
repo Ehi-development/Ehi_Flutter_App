@@ -2,10 +2,10 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:hey_flutter/UtilityClass/AccountImage.dart';
+import 'package:hey_flutter/Widget/AccountImage.dart';
 import 'package:hey_flutter/Widget/DINOAppBar.dart';
 import 'package:hey_flutter/Widget/MyBehavior.dart';
-import 'package:hey_flutter/UtilityClass/StatusBarCleaner.dart';
+import 'package:hey_flutter/Widget/StatusBarCleaner.dart';
 import '../UtilityClass/RouteBuilder.dart';
 import '../Widget/Theme.dart';
 import '../UtilityClass/UserClass.dart';

@@ -1,8 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:hey_flutter/Widget/Theme.dart';
 
-class StatusBarCleaner extends StatelessWidget{
+class StatusBarCleaner extends StatefulWidget{
   final color;
   final child;
   final gradient;
@@ -13,25 +13,33 @@ class StatusBarCleaner extends StatelessWidget{
   const StatusBarCleaner({Key key, this.color, this.child, this.scaffoldKey, this.gradient, this.image}) : super(key: key);
 
   @override
+  StatusBarCleanerState createState() => StatusBarCleanerState();
+}
+
+class StatusBarCleanerState extends State<StatusBarCleaner>{
+
+
+  @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-          color: gradient==null?color:null,
-          gradient:gradient!=null?gradient:null,
-          image: image!=null?new DecorationImage(
-            image: image,
+          color: widget.gradient==null?widget.color:null,
+          gradient:widget.gradient!=null?widget.gradient:null,
+          image: widget.image!=null?new DecorationImage(
+            image: widget.image,
             fit: BoxFit.cover,
           ):null,
       ),
       child: Scaffold(
-          key: scaffoldKey,
+          key: widget.scaffoldKey,
           backgroundColor: Colors.transparent,
           body: AnnotatedRegion<SystemUiOverlayStyle>(
               value: SystemUiOverlayStyle(
+                systemNavigationBarColor: MoobTheme.lightBackgroundColor,
                 statusBarColor: Colors.transparent,
               ),
               child: SafeArea(
-                  child: child
+                  child: widget.child
               )
           )
       ),

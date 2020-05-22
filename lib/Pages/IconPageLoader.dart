@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hey_flutter/Pages/LRPage.dart';
+import 'package:hey_flutter/UtilityClass/LoginManager.dart';
 import 'package:hey_flutter/UtilityClass/RouteBuilder.dart';
-import 'package:hey_flutter/UtilityClass/StatusBarCleaner.dart';
+import 'package:hey_flutter/Widget/AppLogoLogin.dart';
+import 'package:hey_flutter/Widget/StatusBarCleaner.dart';
 import 'package:hey_flutter/UtilityClass/UtilityTools.dart';
 import 'package:loading/indicator/ball_pulse_indicator.dart';
 import 'package:loading/loading.dart';
@@ -21,7 +23,7 @@ class IconPageLoaderState extends State<IconPageLoader> with AfterLayoutMixin<Ic
 
   @override
   void afterFirstLayout(BuildContext context) {
-    UtilityTools.getLoggedUser().then((result){
+    LoginManager.getLoggedUser().then((result){
       if(result[0]==""){
         Navigator.of(context).pushReplacement(CircularRevealRoute(widget: LRPage(),position:getContainerPosition(view)));
       }else{
@@ -35,8 +37,7 @@ class IconPageLoaderState extends State<IconPageLoader> with AfterLayoutMixin<Ic
     return StatusBarCleaner(
         key: view,
         gradient: MoobTheme.backgroundGradient,
-        child: Center(child: Loading(indicator: BallPulseIndicator(
-        ), size: 100.0)),
+        child: Center(child: AppLogoLogin()),
     );
   }
 }

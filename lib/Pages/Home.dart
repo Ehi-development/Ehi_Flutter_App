@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hey_flutter/Widget/MyBehavior.dart';
-import 'package:hey_flutter/UtilityClass/StatusBarCleaner.dart';
+import 'package:hey_flutter/Widget/StatusBarCleaner.dart';
 import 'package:hey_flutter/UtilityClass/UtilityTools.dart';
 
 import '../Widget/GetListEvent.dart';

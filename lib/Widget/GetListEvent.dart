@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:hey_flutter/UtilityClass/getEventFromServer.dart';
+import 'package:hey_flutter/UtilityClass/FakeEventFromServer.dart';
 
 import '../UtilityClass/EventClass.dart';
-import '../UtilityClass/EventListItem.dart';
+import 'EventListItem.dart';
 
 class GetListEvent{
   Widget home() {
-    List<EventClass> listevent = getEventFromServer().home();
+    List<EventClass> listevent = FakeEventFromServer().home();
     List<Widget> returnedList = [];
     for (var event in listevent) {
       returnedList.add(EventListItem(event:event));

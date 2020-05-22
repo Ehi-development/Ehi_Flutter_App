@@ -2,7 +2,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:hey_flutter/Pages/LRPage.dart';
 import 'package:hey_flutter/Pages/ShowLoggedUserPage.dart';
-import 'package:hey_flutter/UtilityClass/AccountImage.dart';
+import 'package:hey_flutter/UtilityClass/LoginManager.dart';
+import 'package:hey_flutter/Widget/AccountImage.dart';
 import 'package:hey_flutter/Widget/AppLogoLogin.dart';
 import 'package:hey_flutter/UtilityClass/UtilityTools.dart';
 import '../Pages/LoginPage.dart';
@@ -119,31 +120,32 @@ class BackAvatar_Appbar extends StatelessWidget{
 Widget generateUserImageButton(){
   GlobalKey loginPhotoButton = GlobalKey();
 
-  return FutureBuilder<List<String>>(
-      future: UtilityTools.getLoggedUser(),
+  return FutureBuilder<Map<String,String>>(
+      future: LoginManager.getLoggedUser(),
       builder: (context, snapshot) {
         if (snapshot.hasData ) {
           return FutureBuilder<UserClass>(
-              future: UserServer.fromServer(snapshot.data[0]),
-              builder: (context, snapshot) {
-                if (snapshot.hasData && snapshot.data.result==0) {
-                  return Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: AspectRatio(
-                      child: InkWell(
-                        key: loginPhotoButton,
-                        onTap: (){
-                          Navigator.of(context).push(CircularRevealRoute(widget: ShowLoggedUserPage(),position:getContainerPosition(loginPhotoButton)));
-                        },
-                        child: AccountImage(photo: snapshot.data.photo, format: 64,)
-                      ),
-                      aspectRatio: 1/1,
+            future: UserServer.fromServer(snapshot.data["username"]),
+            builder: (context, snapshot) {
+              if (snapshot.hasData && snapshot.data.result==0) {
+                return Padding(
+                  padding: const EdgeInsets.only(top: 8.0, bottom: 8.0, right: 20.0),
+                  child: AspectRatio(
+                    child: InkWell(
+                      key: loginPhotoButton,
+                      onTap: (){
+                        Navigator.of(context).push(CircularRevealRoute(widget: ShowLoggedUserPage(),position:getContainerPosition(loginPhotoButton)));
+                      },
+                      child: AccountImage(photo: snapshot.data.photo, format: 64,)
                     ),
-                  );
-                }else{
-                  return Container();
-
-                }});
+                    aspectRatio: 1/1,
+                  ),
+                );
+              }else{
+                return Container();
+              }
+            }
+          );
         }else{
           return AspectRatio(
             child:Padding(

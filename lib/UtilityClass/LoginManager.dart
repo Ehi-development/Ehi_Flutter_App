@@ -3,14 +3,28 @@ import 'package:shared_preferences/shared_preferences.dart';
 const String loggedUsername = 'loggedUsername';
 const String loggedPass='loggedPass';
 
-void Logout() async {
-  final prefs = await SharedPreferences.getInstance();
-  prefs.remove(loggedUsername);
-  prefs.remove(loggedPass);
-}
+class LoginManager {
+  static void logout() async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.remove(loggedUsername);
+    prefs.remove(loggedPass);
+  }
 
-void Login(username,password) async {
-  final prefs = await SharedPreferences.getInstance();
-  prefs.setString('loggedUsername', username);
-  prefs.setString('loggedPass', password);
+  static void login(username, password) async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setString('loggedUsername', username);
+    prefs.setString('loggedPass', password);
+  }
+
+  static Future<Map<String,String>> getLoggedUser() async {
+    final prefs = await SharedPreferences.getInstance();
+    final loggedUsername = prefs.getString('loggedUsername') ?? "";
+    final loggedPass = prefs.getString('loggedPass') ?? "";
+    final loggedPhoto = prefs.getString('photo') ?? "";
+    if (loggedUsername != "") {
+      return {"username": loggedUsername, "password": loggedPass, "photo":loggedPhoto};
+    } else {
+      return {"username": "", "password": "", "photo":""};
+    }
+  }
 }

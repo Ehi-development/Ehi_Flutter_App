@@ -16,8 +16,8 @@ class AppLogo extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-        height: 45,
-        width: 45,
+        height: 40,
+        width: 40,
         child: Center(child: SvgPicture.asset("assets/image/ehi_logo.svg",color: Colors.white,))
     );
   }

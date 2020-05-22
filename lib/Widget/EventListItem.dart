@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hey_flutter/Widget/Theme.dart';
 import 'package:hey_flutter/UtilityClass/UtilityTools.dart';
 
-import 'EventClass.dart';
+import '../UtilityClass/EventClass.dart';
 
 
 class EventListItem extends StatelessWidget{

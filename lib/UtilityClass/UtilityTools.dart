@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hey_flutter/UtilityClass/EventClass.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'LoginManager.dart';
 import 'UserClass.dart';
 import 'UserServer.dart';
 
@@ -20,20 +21,9 @@ class UtilityTools{
     prefs.remove('photo');
   }
 
-  static Future<List<String>> getLoggedUser() async {
-    final prefs = await SharedPreferences.getInstance();
-    final loggedUsername = prefs.getString('loggedUsername') ?? "";
-    final loggedPhoto = prefs.getString('photo') ?? "";
-    if (loggedUsername != "") {
-      return [loggedUsername,loggedPhoto];
-    }else{
-      return ["",""];
-    }
-  }
-
   static Future<UserClass> getLoggedUserFromServer() async{
-    List<String> loggedUser = await UtilityTools.getLoggedUser();
-    return UserServer.fromServer(loggedUser[0]);
+    var loggedUser = await LoginManager.getLoggedUser();
+    return UserServer.fromServer(loggedUser["username"]);
   }
 
   static String DayNumberToShortString(int i){

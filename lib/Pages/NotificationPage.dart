@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hey_flutter/Widget/MyBehavior.dart';
-import 'package:hey_flutter/UtilityClass/StatusBarCleaner.dart';
+import 'package:hey_flutter/Widget/StatusBarCleaner.dart';
 import '../Widget/MoobNavigation.dart';
 import '../Widget/DINOAppBar.dart';
 import '../Widget/Theme.dart';

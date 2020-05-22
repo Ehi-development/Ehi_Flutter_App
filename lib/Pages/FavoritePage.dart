@@ -1,7 +1,13 @@
+import 'package:basic_utils/basic_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:hey_flutter/Pages/ShowOthersUserPage.dart';
+import 'package:hey_flutter/UtilityClass/FollowUser.dart';
+import 'package:hey_flutter/UtilityClass/RouteBuilder.dart';
+import 'package:hey_flutter/UtilityClass/UserClass.dart';
+import 'package:hey_flutter/Widget/AccountImage.dart';
 import 'package:hey_flutter/Widget/BordedButton.dart';
 import 'package:hey_flutter/Widget/MyBehavior.dart';
-import 'package:hey_flutter/UtilityClass/StatusBarCleaner.dart';
+import 'package:hey_flutter/Widget/StatusBarCleaner.dart';
 import '../Widget/MoobNavigation.dart';
 import '../Widget/DINOAppBar.dart';
 import '../Widget/Theme.dart';
@@ -48,41 +54,52 @@ class FavoritePageState extends State<FavoritePage> {
                           color: MoobTheme.middleBackgroundColor,
                         ),
                         child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: <Widget>[
-                            Padding(padding: EdgeInsets.only(bottom: MoobTheme.paddingHorizontal*3),),
-                            Center(child: Icon(Icons.star_border,size: 150,color: Colors.white,)),
-                            Padding(padding: EdgeInsets.only(bottom: MoobTheme.paddingHorizontal*3),),
-                            Center(child: Text("Nessun contenuto presente nella lista preferiti",style: TextStyle(color: Colors.white),)),
-                            Padding(padding: EdgeInsets.only(bottom: MoobTheme.paddingHorizontal),),
-                            Center(child: Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: MoobTheme.paddingHorizontal),
-                              child: Text("Clicca la stella su un evento o su un utente per aggiungerlo alla tua lista dei preferiti",style: TextStyle(color: Colors.white),textAlign: TextAlign.center,),
-                            )),
-                            Padding(padding: EdgeInsets.only(bottom: MoobTheme.paddingHorizontal*2),),
-                            Center(
-                              child: BordedButton(
-                                strokeWidth: 2,
-                                radius: 24,
-                                child: Text("Torna alla Home",style: TextStyle(color: Colors.white),),
-                                gradient: MoobTheme.primaryGradient,
-                                onPressed: (){},
-                              ),
+                            Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.only(topLeft: Radius.circular(MoobTheme.radius),topRight: Radius.circular(MoobTheme.radius),),
+                                  border: Border.all(color: MoobTheme.middleBackgroundColor,width: 0),
+                                  color: MoobTheme.lightBackgroundColor,
+                                ),
+                                child: Padding(padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),child: Text("Persone che Segui", style: TextStyle(color: Colors.white),))
                             ),
-                            Padding(padding: EdgeInsets.only(bottom: MoobTheme.paddingHorizontal),),
-                            Center(
-                              child: BordedButton(
-                                strokeWidth: 2,
-                                radius: 24,
-                                child: Text("Trova amici",style: TextStyle(color: Colors.white),),
-                                gradient: MoobTheme.primaryGradient,
-                                onPressed: (){},
-                              ),
+                            FutureBuilder<List<UserClass>>(
+                              future: FollowUser.followingList(),
+                              builder: (context, snapshot){
+                                if (snapshot.hasData){
+                                  List<Widget> list = [];
+                                  for (UserClass element in snapshot.data) {
+                                    GlobalKey CircleAvatarButton = GlobalKey();
+                                    list.add(
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(vertical: 8.0),
+                                        child: InkWell(
+                                          onTap: (){
+                                            Navigator.of(context).push(CircularRevealRoute(widget: ShowOthersUserPage(element.username),position:getContainerPosition(CircleAvatarButton)));
+                                          },
+                                          child: ListTile(
+                                            leading: SizedBox(
+                                                width: 48,
+                                                height: 48,
+                                                child: AccountImage(photo: element.photo, format: 64, key: CircleAvatarButton,)
+                                            ),
+                                            title: Text(StringUtils.capitalize(element.name)+" "+StringUtils.capitalize(element.surname), style: TextStyle(color: Colors.white),),
+                                          ),
+                                        ),
+                                      )
+                                    );
+                                  }
+                                  return Column(children: list);
+                                }else{
+                                  return Center(child: CircularProgressIndicator());
+                                }
+                              },
                             ),
                           ],
-                        ),
+                        )
                       ),
                     ),
-
                   ]),
                 )
               ]),
