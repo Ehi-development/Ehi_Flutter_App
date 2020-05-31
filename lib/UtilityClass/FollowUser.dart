@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:hey_flutter/UtilityClass/LoginManager.dart';
+import 'package:hey_flutter/Widget/GenerateToast.dart';
 
 import 'UserClass.dart';
 import 'UtilityTools.dart';
@@ -12,12 +13,20 @@ class FollowUser {
     var form = FormData.fromMap({
       'follower': follower["username"], 'password': follower["password"], 'following': following,
     });
-    var response = await dio.post(
-        UtilityTools.getServerUrl() + "follow", data: form);
-    if (response.data["result"]==0)
-      return 0;
-    else
+    if (follower["username"].toLowerCase() != following.toLowerCase()) {
+      var response = await dio.post(
+          UtilityTools.getServerUrl() + "follow", data: form);
+      if (response.data["result"]==0){
+        GenerateToast("Hai iniziato a seguire \n ${following}");
+        return 0;
+      }else{
+        GenerateToast("Qualcosa è andato storto");
+        return 1;
+      }
+    }else{
+      GenerateToast("Non puoi seguire te stesso. \n Ti becchi una denuncia.");
       return 1;
+    }
   }
 
   static Future<int> unfollow(following) async {
@@ -29,10 +38,14 @@ class FollowUser {
     });
     var response = await dio.post(
         UtilityTools.getServerUrl() + "unfollow", data: form);
-    if (response.data["result"]==0)
+    if (response.data["result"]==0){
+      GenerateToast("Hai smesso di seguire \n ${following}");
       return 0;
-    else
+    }
+    else {
+      GenerateToast("Qualcosa è andato storto");
       return 1;
+    }
   }
 
   static Future<int> isfollower(following) async {
@@ -49,8 +62,9 @@ class FollowUser {
 
     var dio = new Dio();
     var response = await dio.get(UtilityTools.getServerUrl() + "getlistfollowings/${follower["username"]}");
+
     List<UserClass> usersList= [];
-    if(response.data["result"]==0){
+    if(response.data["result"]==0 ){
       for (var user in response.data["list_user"]){
         usersList.add(UserClass(
           username: user["username"],

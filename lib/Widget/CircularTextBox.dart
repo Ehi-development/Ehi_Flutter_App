@@ -2,13 +2,15 @@ import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
 class CircularTextBox extends StatelessWidget{
-  final Color color;
+  final Color externalColor;
+  final Color internalColor;
   final Gradient gradinet;
   final double width;
   final double height;
   final Function onChange;
   final Function onSubmitted;
   final IconData icon;
+  final IconButton iconButton;
   final String hintText;
   final bool alignRight;
   final bool obscureText;
@@ -25,12 +27,13 @@ class CircularTextBox extends StatelessWidget{
 
    CircularTextBox({
     Key key,
-    this.color,
+    this.externalColor,
     this.gradinet,
     this.width = double.infinity,
     this.height = 55.0,
     this.onChange,
     this.icon,
+    this.iconButton,
     this.hintText,
     this.alignRight=false,
     this.border=0.0,
@@ -41,7 +44,7 @@ class CircularTextBox extends StatelessWidget{
     this.controller,
     this.elevation=0,
     this.text,
-    this.isEnable=true, this.othersideIcon, this.context,
+    this.isEnable=true, this.othersideIcon, this.context, this.internalColor=Colors.white,
   }) : super(key: key);
 
   @override
@@ -62,7 +65,7 @@ class CircularTextBox extends StatelessWidget{
       width: this.width,
       height: this.height,
       decoration: BoxDecoration(
-        color: this.isEnable?this.color:Colors.grey,
+        color: this.isEnable?this.externalColor:Colors.grey,
         gradient: this.gradinet,
         borderRadius: BorderRadius.all(Radius.circular(32.0)),
         boxShadow: [
@@ -91,13 +94,13 @@ class CircularTextBox extends StatelessWidget{
                   style: TextStyle(fontSize: this.fontSize),
                   keyboardType: this.keyboardType,
                   obscureText: this.obscureText,
-                  cursorColor: this.color,
+                  cursorColor: this.externalColor,
                   controller: this.controller,
                   enabled: this.isEnable,
                   decoration: new InputDecoration(
                     prefixIcon: this.othersideIcon,
                     filled: true,
-                    fillColor: Colors.white,
+                    fillColor: internalColor,
                     hintText: this.hintText,
                     contentPadding: EdgeInsets.symmetric(vertical: (this.height)/2-8-this.border,horizontal: 24.0),
                     hintStyle: TextStyle(color: Colors.grey),
@@ -122,7 +125,7 @@ class CircularTextBox extends StatelessWidget{
           ),
           Flexible(flex: 1,child: Center(child: Padding(
             padding: const EdgeInsets.only(right: 4.0),
-            child: Icon(this.icon,color: Colors.white, size: 20,),
+            child: this.icon!=null?Icon(this.icon,color: Colors.white, size: 20,):this.iconButton,
           ))),
         ],
       ),
@@ -134,7 +137,7 @@ class CircularTextBox extends StatelessWidget{
       width: this.width,
       height: this.height,
       decoration: BoxDecoration(
-        color: this.isEnable?this.color:Colors.grey,
+        color: this.isEnable?this.externalColor:Colors.grey,
         gradient: this.gradinet,
         borderRadius: BorderRadius.all(Radius.circular(32.0)),
         boxShadow: [
@@ -154,7 +157,7 @@ class CircularTextBox extends StatelessWidget{
         children: <Widget>[
           Flexible(flex: 1,child: Center(child: Padding(
             padding: const EdgeInsets.only(left: 4.0),
-            child: Icon(this.icon,color: Colors.white, size: 20,),
+            child: this.icon!=null?Icon(this.icon,color: Colors.white, size: 20,):this.iconButton,
           ))),
           Flexible(
             flex: 7,
@@ -164,7 +167,7 @@ class CircularTextBox extends StatelessWidget{
                 data: Theme.of(this.context)
                     .copyWith(primaryColor: Colors.grey[700],),
                 child: TextField(
-                  cursorColor: this.color,
+                  cursorColor: this.externalColor,
                   keyboardType: this.keyboardType,
                   obscureText: this.obscureText,
                   controller: this.controller,
@@ -172,7 +175,7 @@ class CircularTextBox extends StatelessWidget{
                   decoration: new InputDecoration(
                     suffixIcon: this.othersideIcon,
                     filled: true,
-                    fillColor: Colors.white,
+                    fillColor: internalColor,
                     hintText: this.hintText,
                     contentPadding: EdgeInsets.symmetric(vertical: (this.height)/2-8-this.border,horizontal: 24.0),
                     hintStyle: TextStyle(color: Colors.grey),

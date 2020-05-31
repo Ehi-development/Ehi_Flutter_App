@@ -66,7 +66,7 @@ class RegistrationPageState extends State<RegistrationPage> with SingleTickerPro
               padding: EdgeInsets.symmetric(horizontal: MoobTheme.paddingHorizontal*3,vertical: 16.0),
               child: CircularTextBox(
                 height: 45,
-                color: MoobTheme.mainColor,
+                externalColor: MoobTheme.mainColor,
                 alignRight: true,
                 icon: Icons.person,
                 elevation: 4,
@@ -82,7 +82,7 @@ class RegistrationPageState extends State<RegistrationPage> with SingleTickerPro
               padding: EdgeInsets.symmetric(horizontal: MoobTheme.paddingHorizontal*3,vertical: 16.0),
               child: CircularTextBox(
                 height: 45,
-                color: MoobTheme.secondaryMainColor,
+                externalColor: MoobTheme.secondaryMainColor,
                 alignRight: false,
                 icon: Icons.vpn_key,
                 elevation: 4,
@@ -103,7 +103,7 @@ class RegistrationPageState extends State<RegistrationPage> with SingleTickerPro
               padding: EdgeInsets.only(left: MoobTheme.paddingHorizontal*3,right: MoobTheme.paddingHorizontal*3,top: 16.0),
               child: CircularTextBox(
                 height: 45,
-                color: MoobTheme.secondaryMainColor,
+                externalColor: MoobTheme.secondaryMainColor,
                 alignRight: false,
                 icon: Icons.vpn_key,
                 elevation: 4,

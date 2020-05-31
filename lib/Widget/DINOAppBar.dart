@@ -82,6 +82,33 @@ class BackName_Appbar extends StatelessWidget{
   }
 }
 
+class BackLogo_Appbar extends StatelessWidget{
+  final Color color;
+  final Color iconColor;
+
+  const BackLogo_Appbar({Key key, this.color=MoobTheme.mainColor, this.iconColor:MoobTheme.iconColor}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SliverPadding(
+      sliver: SliverAppBar(
+        elevation: 0.0,
+        backgroundColor:color,
+        floating: true,
+        snap: true,
+        leading:IconButton(
+          icon: Icon(Icons.arrow_back),
+          color: iconColor,
+          iconSize: 30,
+          onPressed: () {Navigator.pop(context, false);},
+        ),
+        centerTitle: true,
+        title: AppLogo(),
+        automaticallyImplyLeading: false,
+      ), padding: EdgeInsets.only(top:0.0),
+    );
+  }
+}
 
 class BackAvatar_Appbar extends StatelessWidget{
   final GlobalKey searchButton = GlobalKey();

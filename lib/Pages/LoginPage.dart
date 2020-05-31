@@ -65,7 +65,7 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
               padding: EdgeInsets.symmetric(horizontal: MoobTheme.paddingHorizontal*3,vertical: 16.0),
               child: CircularTextBox(
                 height: 45,
-                color: MoobTheme.mainColor,
+                externalColor: MoobTheme.mainColor,
                 alignRight: true,
                 icon: Icons.person,
                 context: context,
@@ -81,7 +81,7 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
               padding: EdgeInsets.symmetric(horizontal: MoobTheme.paddingHorizontal*3,vertical: 16.0),
               child: CircularTextBox(
                 height: 45,
-                color: MoobTheme.secondaryMainColor,
+                externalColor: MoobTheme.secondaryMainColor,
                 alignRight: false,
                 icon: Icons.vpn_key,
                 elevation: 4,
