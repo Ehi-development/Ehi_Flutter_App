@@ -109,6 +109,7 @@ class ContactServerWithAlert {
           GenerateToast("La mail che hai inserito è già utilizzata");
           return 2;
         } else {
+          print(result);
           if (ProgressButtonKey != null) {
             ProgressButtonKey.currentState.error();
           }
@@ -140,6 +141,12 @@ class ContactServerWithAlert {
     }else if(password==null){
       //if(ProgressButtonKey!=null){ProgressButtonKey.currentState.error();}
       GenerateToast("La password non può essere nulla");
+    }else if(password.length<8){
+      //if(ProgressButtonKey!=null){ProgressButtonKey.currentState.error();}
+      GenerateToast("La password è troppo corta \n Minimo 6 caratteri");
+    }else if(password.length>16){
+      //if(ProgressButtonKey!=null){ProgressButtonKey.currentState.error();}
+      GenerateToast("La password è troppo lunga \n Massimo 16 caratteri");
     }else if(password!=repeatPassword){
       //if(ProgressButtonKey!=null){ProgressButtonKey.currentState.error();}
       GenerateToast("Le due passwords non coincidono");

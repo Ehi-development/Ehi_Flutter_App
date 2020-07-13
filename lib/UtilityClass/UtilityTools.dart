@@ -7,8 +7,9 @@ import 'UserClass.dart';
 import 'UserServer.dart';
 
 class UtilityTools{
-  static String serverUrl="http://moob.bluedev.tech:5005/";
+  //static String serverUrl="http://moob.bluedev.tech:5005/";
   //static String serverUrl="http://192.168.1.89:5005/";
+  static String serverUrl="http://2.226.154.164:5005/";
 
   static String getServerUrl(){
     return serverUrl;

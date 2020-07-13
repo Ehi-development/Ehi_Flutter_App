@@ -131,7 +131,7 @@ class RegistrationPageState extends State<RegistrationPage> with SingleTickerPro
                   onPressed: (){
                     ContactServerWithAlert.checkIfUsernameExist(
                         context: context,
-                        username: usernameValue,
+                        username: usernameValue.toLowerCase(),
                         password: passwordValue,
                         repeatPassword: repeatPasswordValue,
                         ProgressButtonKey: registrationProgressButtonKey

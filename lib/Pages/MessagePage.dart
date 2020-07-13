@@ -3,7 +3,7 @@ import 'package:hey_flutter/Widget/BordedButton.dart';
 import 'package:hey_flutter/Widget/MyBehavior.dart';
 import 'package:hey_flutter/Widget/StatusBarCleaner.dart';
 import '../Widget/MoobNavigation.dart';
-import '../Widget/DINOAppBar.dart';
+import '../Widget/DinoAppBar.dart';
 import '../Widget/Theme.dart';
 
 class MessagePage extends StatefulWidget {

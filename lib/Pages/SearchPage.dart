@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:hey_flutter/Widget/AccountImage.dart';
-import 'package:hey_flutter/Widget/DINOAppBar.dart';
+import 'package:hey_flutter/Widget/DinoAppBar.dart';
 import 'package:hey_flutter/Widget/GenerateToast.dart';
 import 'package:hey_flutter/Widget/MyBehavior.dart';
 import 'package:hey_flutter/Widget/SlidingMenu.dart';
@@ -23,18 +23,19 @@ class SearchPage extends StatefulWidget{
 
 class SearchPageState extends State<SearchPage> {
 
-  static final _formKey = GlobalKey<FormState>();
+  static final GlobalKey <CircularTextBoxState> _formKey = GlobalKey<CircularTextBoxState>();
   var txt = TextEditingController();
 
   String username;
   static String token = "";
 
-  GlobalKey <SlidingMenuState> sliderKey = GlobalKey();
+  GlobalKey <SlidingMenuState> sliderKey = GlobalKey<SlidingMenuState>();
+  GlobalKey <SearchResultState> searchKey = GlobalKey<SearchResultState>();
 
   @override
   Widget build(BuildContext context) {
-    txt.text = token;
-    txt.selection = TextSelection.fromPosition(TextPosition(offset: txt.text.length));
+    this.txt.text = token;
+    this.txt.selection = TextSelection.fromPosition(TextPosition(offset: txt.text.length));
 
     return StatusBarCleaner(
         color: MoobTheme.darkBackgroundColor,
@@ -57,20 +58,25 @@ class SearchPageState extends State<SearchPage> {
                             internalColor: Colors.grey[200],
                             iconButton: IconButton(
                               icon: Icon(Icons.tune, color: Colors.grey[700],),
-                               onPressed: () {},
+                               onPressed: () {
+                               },
                             ),
                             othersideIcon: Icon(Icons.search),
                             border: 0,
                             hintText: "Cerca tra gli utenti",
                             controller: this.txt,
                             onChange: (text){
-                              setState(() {
-                                token=text;
+                              token=text;
+                              searchKey.currentState.setState(() {
+                                searchKey.currentState.token=text;
+                                searchKey.currentState.searchContext=sliderKey.currentState.selected;
                               });
-                              },
+                            },
                             onSubmitted: (text){
-                              setState(() {
-                                token=text;
+                              token=text;
+                              searchKey.currentState.setState(() {
+                                searchKey.currentState.token=text;
+                                searchKey.currentState.searchContext=sliderKey.currentState.selected;
                               });
                             },
                           ),
@@ -81,60 +87,19 @@ class SearchPageState extends State<SearchPage> {
                             context: context,
                             height: 35,
                             padding: EdgeInsets.only(left: MoobTheme.paddingHorizontal*4, right: MoobTheme.paddingHorizontal*4,  bottom: MoobTheme.paddingHorizontal),
-                            leftText: "Utenti",
-                            rightText: "Eventi",
+                            leftText: "Eventi",
+                            rightText: "Utenti",
+                            onRightTap: (){
+                              _formKey.currentState.animationController.forward();
+                            },
+                            onLeftTap: (){
+                              _formKey.currentState.animationController.reverse();
+                            },
                           ),
                         ),
-                        Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.only(topLeft: Radius.circular(MoobTheme.radius),topRight: Radius.circular(MoobTheme.radius),),
-                              border: Border.all(color: MoobTheme.middleBackgroundColor,width: 0),
-                              color: MoobTheme.middleBackgroundColor,
-                            ),
-                            child: Center(
-                              child:token!=""?FutureBuilder<List<UserClass>>(
-                                future: searchQuery(),
-                                builder: (context, snapshot) {
-                                  if (snapshot.hasData)
-                                  {
-                                    if (snapshot.data.length==0){
-                                      if (sliderKey.currentState.selected == 0) {
-                                        return Padding(
-                                          padding: const EdgeInsets.all(24.0),
-                                          child: Center(child: Text(
-                                            "Nessun utente trovato",
-                                            textAlign: TextAlign.center,)),
-                                        );
-                                      }else{
-                                        return Padding(
-                                          padding: const EdgeInsets.all(24.0),
-                                          child: Center(child: Text(
-                                            "Non si possono ancora cercare eventi",
-                                            textAlign: TextAlign.center,)),
-                                        );
-                                      }
-                                    }
-                                    else
-                                      return searchQueryToList(snapshot.data);
-                                  }else if (snapshot.hasError) {
-                                    return Padding(
-                                      padding: const EdgeInsets.all(24.0),
-                                      child: Center(child: Text("Connessione al server interrotta\n Prova più tardi",textAlign: TextAlign.center,)),
-                                    );
-                                  }
-                                  return Padding(
-                                    padding: const EdgeInsets.all(48.0),
-                                    child: Center(child:Container(child:CircularProgressIndicator(),)),
-                                  );
-                                },
-                              ):
-                              Padding(
-                                padding: const EdgeInsets.all(24.0),
-                                child: Center(child: Text("Tocca la casella di ricerca\n per iniziare una nuova ricerca",textAlign: TextAlign.center,)),
-                              ),
-
-                            )
-                        ),
+                        SearchResultWidget(
+                          key: searchKey,
+                        )
                       ])
               ),
 
@@ -149,19 +114,97 @@ class SearchPageState extends State<SearchPage> {
     );
   }
 
-  Future<List<UserClass>> searchQuery() async{
-    if (sliderKey.currentState.selected == 0){
+  imageLoader(photo){
+    if(photo==""){
+      NetworkImage("https://www.virtualdj.com/images/v9/menu/menu-login.png");
+    }
+    else{
+      MemoryImage(base64.decode(photo));
+    }
+  }
+
+}
+
+class SearchResultWidget extends StatefulWidget{
+
+  const SearchResultWidget({Key key}) : super(key: key);
+
+  @override
+  SearchResultState createState() => SearchResultState();
+}
+
+class SearchResultState extends State<SearchResultWidget>{
+
+  String token;
+  int searchContext;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.only(topLeft: Radius.circular(MoobTheme.radius),topRight: Radius.circular(MoobTheme.radius),),
+          border: Border.all(color: MoobTheme.middleBackgroundColor,width: 0),
+          color: MoobTheme.middleBackgroundColor,
+        ),
+        child: Center(
+          child:token!=""?FutureBuilder<List<UserClass>>(
+            future: searchUser(),
+            builder: (context, snapshot) {
+              if (snapshot.hasData)
+              {
+                if (snapshot.data.length==0){
+                  if (searchContext == 0) {
+                    return Padding(
+                      padding: const EdgeInsets.all(24.0),
+                      child: Center(child: Text(
+                        "Nessun utente trovato",
+                        textAlign: TextAlign.center,)),
+                    );
+                  }else{
+                    return Padding(
+                      padding: const EdgeInsets.all(24.0),
+                      child: Center(child: Text(
+                        "Non si possono ancora cercare eventi",
+                        textAlign: TextAlign.center,)),
+                    );
+                  }
+                }
+                else
+                  return searchUserToList(snapshot.data);
+              }else if (snapshot.hasError) {
+                return Padding(
+                  padding: const EdgeInsets.all(24.0),
+                  child: Center(child: Text("Connessione al server interrotta\n Prova più tardi",textAlign: TextAlign.center,)),
+                );
+              }
+              return Padding(
+                padding: const EdgeInsets.all(48.0),
+                child: Center(child:Container(child:CircularProgressIndicator(),)),
+              );
+            },
+          ):
+          Padding(
+            padding: const EdgeInsets.all(24.0),
+            child: Center(child: Text("Tocca la casella di ricerca\n per iniziare una nuova ricerca",textAlign: TextAlign.center,)),
+          ),
+
+        )
+    );
+  }
+
+  Future<List<UserClass>> searchUser() async{
+    if (searchContext == 0){
       List<UserClass> usersList= [];
-      var response = await http.get(UtilityTools.getServerUrl()+'searchusername/$token');
+      var response = await http.get(UtilityTools.getServerUrl()+'searchusername/$token?limit=10');
       final digestResponse = json.decode(response.body);
       if(digestResponse["result"]==0){
         for (var user in digestResponse["list_user"]){
           usersList.add(UserClass(
-              username: user["username"],
-              name: user["name"],
-              surname: user["surname"],
-              photo: user["photo"],
-              bio: user["bio"],
+            username: user["username"],
+            name: user["name"],
+            surname: user["surname"],
+            photo: user["photo"],
+            bio: user["bio"],
           ));
         }
         return usersList;
@@ -174,7 +217,7 @@ class SearchPageState extends State<SearchPage> {
     }
   }
 
-  searchQueryToList(List<UserClass> listOfUsers){
+  searchUserToList(List<UserClass> listOfUsers){
     List<Widget> returnedList = [];
     for (UserClass user in listOfUsers)
     {
@@ -182,36 +225,26 @@ class SearchPageState extends State<SearchPage> {
       returnedList.add(Padding(
         padding: const EdgeInsets.all(8.0),
         child: InkWell(
-            onTap: (){
-              Navigator.of(context).push(CircularRevealRoute(widget: ShowOthersUserPage(user.username),position:getContainerPosition(CircleAvatarButton)));
-              },
-            child: Padding(
-              padding: const EdgeInsets.all(4.0),
-              child: ListTile(
-                title: Text(user.name+" "+user.surname, style: TextStyle(color: Colors.white),),
-                leading: SizedBox(
+          onTap: (){
+            Navigator.of(context).push(CircularRevealRoute(widget: ShowOthersUserPage(user.username),position:getContainerPosition(CircleAvatarButton)));
+          },
+          child: Padding(
+            padding: const EdgeInsets.all(4.0),
+            child: ListTile(
+              title: Text(user.name+" "+user.surname, style: TextStyle(color: Colors.white),),
+              leading: SizedBox(
                   height: 50,
                   width: 50,
                   child: AccountImage(key: CircleAvatarButton,photo: user.photo)
-                ),
-                trailing: Icon(Icons.keyboard_arrow_right, color: Colors.white,),
               ),
+              trailing: Icon(Icons.keyboard_arrow_right, color: Colors.white,),
             ),
           ),
         ),
+      ),
       );
     }
 
     return Column(children: returnedList);
   }
-
-  imageLoader(photo){
-    if(photo==""){
-      NetworkImage("https://www.virtualdj.com/images/v9/menu/menu-login.png");
-    }
-    else{
-      MemoryImage(base64.decode(photo));
-    }
-  }
-
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
 import 'Pages/IconPageLoader.dart';
 import 'Widget/Theme.dart';
 
@@ -7,7 +8,13 @@ import 'package:flutter/foundation.dart'
     show debugDefaultTargetPlatformOverride;
 
 void main() {
-  debugDefaultTargetPlatformOverride = TargetPlatform.fuchsia;
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+      statusBarIconBrightness: Brightness.light,
+      statusBarBrightness: Brightness.light,
+      systemNavigationBarColor: MoobTheme.lightBackgroundColor,
+  ));
+
   runApp(DINO());
 }
 

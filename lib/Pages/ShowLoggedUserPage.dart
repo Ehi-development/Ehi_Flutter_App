@@ -9,7 +9,7 @@ import 'package:hey_flutter/Widget/MyBehavior.dart';
 import 'package:hey_flutter/Widget/StatusBarCleaner.dart';
 import 'package:hey_flutter/UtilityClass/UtilityTools.dart';
 import 'package:intl/intl.dart';
-import '../Widget/DINOAppBar.dart';
+import '../Widget/DinoAppBar.dart';
 import '../UtilityClass/UserClass.dart';
 import '../Widget/Theme.dart';
 
@@ -27,24 +27,30 @@ class ShowLoggedUserPageState extends State<ShowLoggedUserPage> {
   Widget build(BuildContext context) {
     return StatusBarCleaner(
       color: MoobTheme.darkBackgroundColor,
-      child: ScrollConfiguration(
-        behavior: MyBehavior(),
-        child: FutureBuilder<UserClass>(
-          future: UtilityTools.getLoggedUserFromServer(),
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              return getUserPage(snapshot.data);
-            } else if (snapshot.hasError) {
-              return Text("${snapshot.error}");
-            }
-            // Di default mostra un CircularProgressIndicator
-            return Padding(
-              padding: const EdgeInsets.only(top:48.0),
-              child: Center(child:Container(child:CircularProgressIndicator(),)),
-            );
-          },
+      child: ClipRRect(
+        borderRadius: BorderRadius.only(
+          topLeft: const Radius.circular(MoobTheme.radius),
+          topRight: const Radius.circular(MoobTheme.radius),
         ),
-    )
+        child: ScrollConfiguration(
+          behavior: MyBehavior(),
+          child: FutureBuilder<UserClass>(
+            future: UtilityTools.getLoggedUserFromServer(),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return getUserPage(snapshot.data);
+              } else if (snapshot.hasError) {
+                return Text("${snapshot.error}");
+              }
+              // Di default mostra un CircularProgressIndicator
+              return Padding(
+                padding: const EdgeInsets.only(top:48.0),
+                child: Center(child:Container(child:CircularProgressIndicator(),)),
+              );
+            },
+          ),
+    ),
+      )
     );
   }
 

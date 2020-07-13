@@ -6,12 +6,32 @@ class EventClass {
   final int id_event;
   final String name;
   final String place;
-  final DateTime date;
+  final Address address;
+  final DateTime startDate;
+  final DateTime endDate;
   final String photo;
+  final String link;
+  final double price;
   final List<Tag> tags;
+  final EventFollowList followList;
 
-  EventClass({this.result, this.name, this.place, this.date,this.photo,this.coordinate,this.creator,this.desc,this.id_event,this.tags});
+  EventClass( {this.link, this.price, this.result, this.name, this.place, this.address, this.startDate, this.endDate, this.photo,this.coordinate,this.creator,this.desc,this.id_event,this.tags, this.followList});
 
+}
+
+class EventFollowList{
+  final List<String> displaiedAccount;
+  final int numberofFollow;
+
+  EventFollowList(this.displaiedAccount, this.numberofFollow);
+
+}
+
+class Address {
+  final String number;
+  final String address;
+
+  Address({this.number="snc", this.address});
 }
 
 class Tag {

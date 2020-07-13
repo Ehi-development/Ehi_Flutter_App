@@ -24,7 +24,7 @@ class IconPageLoaderState extends State<IconPageLoader> with AfterLayoutMixin<Ic
   @override
   void afterFirstLayout(BuildContext context) {
     LoginManager.getLoggedUser().then((result){
-      if(result[0]==""){
+      if(result["username"]==""){
         Navigator.of(context).pushReplacement(CircularRevealRoute(widget: LRPage(),position:getContainerPosition(view)));
       }else{
         Navigator.of(context).pushReplacement(CircularRevealRoute(widget: Home(),position:getContainerPosition(view)));

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:hey_flutter/Pages/LRPage.dart';
 import 'package:hey_flutter/Pages/ShowLoggedUserPage.dart';
@@ -187,19 +188,78 @@ Widget generateUserImageButton(){
 }
 
 class BackSetting_Appbar extends StatelessWidget{
-  final Color color;
+  final Color backgroundColor;
   final Color iconColor;
+  final Widget title;
 
-  const BackSetting_Appbar({Key key, this.color=MoobTheme.mainColor, this.iconColor:MoobTheme.iconColor}) : super(key: key);
+  const BackSetting_Appbar({Key key, this.backgroundColor=MoobTheme.mainColor, this.iconColor:MoobTheme.iconColor, this.title}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return SliverPadding(
       sliver: SliverAppBar(
         elevation: 0.0,
-        backgroundColor:color,
+        backgroundColor:backgroundColor,
         floating: true,
         snap: true,
+        leading:IconButton(
+          icon: Icon(Icons.arrow_back),
+          color: iconColor,
+          iconSize: 30,
+          onPressed: () {Navigator.pop(context, false);},
+        ),
+        centerTitle: true,
+        title: title,
+        automaticallyImplyLeading: false,
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.more_vert),
+            color: iconColor,
+            iconSize: 30,
+            onPressed: () {},
+          ),
+        ],
+      ), padding: EdgeInsets.only(top:0.0),
+    );
+  }
+}
+
+class BackSetting_Collapsing_Appbar extends StatelessWidget{
+  final Color color;
+  final Color iconColor;
+  final Color backgroundColor;
+  final String url;
+  final double expandedHeight;
+
+  const BackSetting_Collapsing_Appbar({Key key, this.color=MoobTheme.mainColor, this.iconColor:MoobTheme.iconColor, this.url, this.backgroundColor, this.expandedHeight}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SliverPadding(
+      sliver: SliverAppBar(
+        elevation: 0.0,
+        expandedHeight: expandedHeight,
+        brightness: Brightness.dark,
+        floating: true,
+        snap: true,
+        pinned: true,
+        backgroundColor: backgroundColor,
+        flexibleSpace: FlexibleSpaceBar(
+            centerTitle: true,
+            background: Container(
+              decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                      begin: FractionalOffset.topCenter,
+                      end: FractionalOffset.bottomCenter,
+                      stops: [0, 1],
+                      colors: [
+                        Colors.black.withAlpha(200),
+                        Colors.transparent // I don't know what Color this will be, so I can't use this
+                      ]
+                  )
+              ),
+            )
+        ),
         leading:IconButton(
           icon: Icon(Icons.arrow_back),
           color: iconColor,
@@ -222,6 +282,47 @@ class BackSetting_Appbar extends StatelessWidget{
   }
 }
 
+class Image_Appbar extends StatelessWidget{
+
+  final String imageUrl;
+
+  const Image_Appbar({Key key, this.imageUrl}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    throw SliverAppBar(
+      expandedHeight: 250.0,
+      floating: false,
+      pinned: true,
+      centerTitle: true,
+      title: AppLogo(),
+      leading:IconButton(
+        icon: Icon(Icons.arrow_back),
+        color: Colors.white,
+        iconSize: 30,
+        onPressed: () {Navigator.pop(context, false);},
+      ),
+      backgroundColor: MoobTheme.darkBackgroundColor,
+      flexibleSpace: FlexibleSpaceBar(
+        background: CachedNetworkImage(
+          imageUrl: imageUrl,
+          imageBuilder: (context, imageProvider) => Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                  colorFilter:
+                  ColorFilter.mode(Colors.black.withOpacity(0.7),
+                      BlendMode.dstATop),
+                  image: imageProvider, fit: BoxFit.cover),
+            ),
+          ),
+          placeholder: (context, url) => Center(child: CircularProgressIndicator()),
+          errorWidget: (context, url, error) => Center(child: Icon(Icons.error, color: Colors.red)),
+        ),
+      ),
+    );
+  }
+
+}
 
 class BackSetting_Appbar_LoggedUser extends StatelessWidget{
   final Color color;

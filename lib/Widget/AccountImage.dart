@@ -8,8 +8,10 @@ import 'Theme.dart';
 class AccountImage extends StatelessWidget{
   final String photo;
   final int format;
+  final Color borderColor;
+  final double borderWidth;
 
-  const AccountImage({Key key, this.photo, this.format=500}) : super(key: key);
+  const AccountImage({Key key, this.photo, this.format=500, this.borderColor=Colors.white, this.borderWidth=2}) : super(key: key);
 
   getImage(){
     if(format!=null){
@@ -27,7 +29,7 @@ class AccountImage extends StatelessWidget{
         padding: const EdgeInsets.all(2),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(MoobTheme.radius*4)),
-          border: Border.all(color: Colors.white,width: 2),
+          border: Border.all(color: borderColor,width: borderWidth),
           image: DecorationImage(
               image: imageProvider,
               fit: BoxFit.cover,

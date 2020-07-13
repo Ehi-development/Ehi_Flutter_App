@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
-// ignore: must_be_immutable
-class CircularTextBox extends StatelessWidget{
+class CircularTextBox extends StatefulWidget{
+  @override
+  CircularTextBoxState createState() => CircularTextBoxState();
+
   final Color externalColor;
   final Color internalColor;
   final Gradient gradinet;
@@ -25,7 +27,7 @@ class CircularTextBox extends StatelessWidget{
 
   @required final context;
 
-   CircularTextBox({
+  CircularTextBox({
     Key key,
     this.externalColor,
     this.gradinet,
@@ -46,108 +48,133 @@ class CircularTextBox extends StatelessWidget{
     this.text,
     this.isEnable=true, this.othersideIcon, this.context, this.internalColor=Colors.white,
   }) : super(key: key);
+}
+
+// ignore: must_be_immutable
+class CircularTextBoxState extends State<CircularTextBox> with SingleTickerProviderStateMixin {
+
+  AnimationController animationController;
+  Animation _animation;
+
+  bool justAnimated = false;
+
+  @override
+  void initState() {
+    super.initState();
+    animationController = AnimationController(duration: Duration(milliseconds: 200), vsync: this);
+    _animation = IntTween(begin: 100, end: 1).animate(animationController);
+    _animation.addListener(() => setState(() {}));
+  }
 
   @override
   Widget build(BuildContext context) {
-    if(controller!=null && text != null){
-      controller.text = text;
-    }else if(controller==null && text != null){
-      controller=new TextEditingController(text: text);
+    if(widget.controller!=null && widget.text != null){
+      widget.controller.text = widget.text;
+    }else if(widget.controller==null && widget.text != null){
+      widget.controller=new TextEditingController(text: widget.text);
     }
-    if (this.alignRight)
+    if (widget.alignRight)
       return right();
     else
       return left();
   }
 
   right() {
-    return Container(
-      width: this.width,
-      height: this.height,
-      decoration: BoxDecoration(
-        color: this.isEnable?this.externalColor:Colors.grey,
-        gradient: this.gradinet,
-        borderRadius: BorderRadius.all(Radius.circular(32.0)),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.1),
-            blurRadius: this.elevation, // has the effect of softening the shadow
-            spreadRadius: this.elevation/2, // has the effect of extending the shadow
-            offset: Offset(
-              0.0, // horizontal, move right 10
-              this.elevation, // vertical, move down 10
-            ),
-          )
-        ],
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.max,
-        children: <Widget>[
-          Flexible(
-            flex: 7,
-            child:Padding(
-              padding: EdgeInsets.all(this.border),
-              child: Theme(
-                data: Theme.of(this.context)
-                    .copyWith(primaryColor: Colors.grey[900],),
-                child: TextField(
-                  style: TextStyle(fontSize: this.fontSize),
-                  keyboardType: this.keyboardType,
-                  obscureText: this.obscureText,
-                  cursorColor: this.externalColor,
-                  controller: this.controller,
-                  enabled: this.isEnable,
-                  decoration: new InputDecoration(
-                    prefixIcon: this.othersideIcon,
-                    filled: true,
-                    fillColor: internalColor,
-                    hintText: this.hintText,
-                    contentPadding: EdgeInsets.symmetric(vertical: (this.height)/2-8-this.border,horizontal: 24.0),
-                    hintStyle: TextStyle(color: Colors.grey),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: const BorderRadius.all(Radius.circular(32.0),),
-                      borderSide: BorderSide(color: Colors.transparent, width: 1.0),
+    return ClipRRect(
+      borderRadius: BorderRadius.all(Radius.circular(32.0)),
+      child: Container(
+        width: widget.width,
+        height: widget.height,
+        decoration: BoxDecoration(
+          color: widget.isEnable?widget.externalColor:Colors.grey,
+          gradient: widget.gradinet,
+          borderRadius: BorderRadius.all(Radius.circular(32.0)),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.1),
+              blurRadius: widget.elevation, // has the effect of softening the shadow
+              spreadRadius: widget.elevation/2, // has the effect of extending the shadow
+              offset: Offset(
+                0.0, // horizontal, move right 10
+                widget.elevation, // vertical, move down 10
+              ),
+            )
+          ],
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.max,
+          children: <Widget>[
+            Flexible(
+              flex: 700,
+              child:Padding(
+                padding: EdgeInsets.all(widget.border),
+                child: Theme(
+                  data: Theme.of(widget.context)
+                      .copyWith(primaryColor: Colors.grey[900],),
+                  child: TextField(
+                    style: TextStyle(fontSize: widget.fontSize),
+                    keyboardType: widget.keyboardType,
+                    obscureText: widget.obscureText,
+                    cursorColor: widget.externalColor,
+                    controller: widget.controller,
+                    enabled: widget.isEnable,
+                    decoration: new InputDecoration(
+                      prefixIcon: widget.othersideIcon,
+                      filled: true,
+                      fillColor: widget.internalColor,
+                      hintText: widget.hintText,
+                      contentPadding: EdgeInsets.symmetric(vertical: (widget.height)/2-8-widget.border,horizontal: 24.0),
+                      hintStyle: TextStyle(color: Colors.grey),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: const BorderRadius.all(Radius.circular(32.0),),
+                        borderSide: BorderSide(color: Colors.transparent, width: 1.0),
+                      ),
+                      border: new OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.transparent, width: 1.0),
+                        borderRadius: const BorderRadius.all(Radius.circular(32.0),),
+                      ),
+                      focusedBorder:OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.transparent, width: 1.0),
+                        borderRadius: BorderRadius.circular(32.0),
+                      ),
                     ),
-                    border: new OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.transparent, width: 1.0),
-                      borderRadius: const BorderRadius.all(Radius.circular(32.0),),
-                    ),
-                    focusedBorder:OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.transparent, width: 1.0),
-                      borderRadius: BorderRadius.circular(32.0),
-                    ),
+                    onChanged: widget.onChange,
+                    onSubmitted: widget.onSubmitted,
                   ),
-                  onChanged: this.onChange,
-                  onSubmitted: this.onSubmitted,
                 ),
               ),
             ),
-          ),
-          Flexible(flex: 1,child: Center(child: Padding(
-            padding: const EdgeInsets.only(right: 4.0),
-            child: this.icon!=null?Icon(this.icon,color: Colors.white, size: 20,):this.iconButton,
-          ))),
-        ],
+            Flexible(
+                flex: _animation.value,
+                child: Opacity(
+                    opacity: _animation.value/100,
+                    child: Center(
+                        child: widget.icon!=null?Icon(widget.icon,color: Colors.white, size: 20,):widget.iconButton
+                  ),
+                )
+            ),
+          ],
+        ),
       ),
     );
   }
 
   left(){
     return Container(
-      width: this.width,
-      height: this.height,
+      width: widget.width,
+      height: widget.height,
       decoration: BoxDecoration(
-        color: this.isEnable?this.externalColor:Colors.grey,
-        gradient: this.gradinet,
+        color: widget.isEnable?widget.externalColor:Colors.grey,
+        gradient: widget.gradinet,
         borderRadius: BorderRadius.all(Radius.circular(32.0)),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.1),
-            blurRadius: this.elevation, // has the effect of softening the shadow
-            spreadRadius: this.elevation/2, // has the effect of extending the shadow
+            blurRadius: widget.elevation, // has the effect of softening the shadow
+            spreadRadius: widget.elevation/2, // has the effect of extending the shadow
             offset: Offset(
               0.0, // horizontal, move right 10
-              this.elevation, // vertical, move down 10
+              widget.elevation, // vertical, move down 10
             ),
           )
         ],
@@ -157,27 +184,27 @@ class CircularTextBox extends StatelessWidget{
         children: <Widget>[
           Flexible(flex: 1,child: Center(child: Padding(
             padding: const EdgeInsets.only(left: 4.0),
-            child: this.icon!=null?Icon(this.icon,color: Colors.white, size: 20,):this.iconButton,
+            child: widget.icon!=null?Icon(widget.icon,color: Colors.white, size: 20,):widget.iconButton,
           ))),
           Flexible(
             flex: 7,
             child:Padding(
-              padding: EdgeInsets.all(this.border),
+              padding: EdgeInsets.all(widget.border),
               child: Theme(
-                data: Theme.of(this.context)
+                data: Theme.of(widget.context)
                     .copyWith(primaryColor: Colors.grey[700],),
                 child: TextField(
-                  cursorColor: this.externalColor,
-                  keyboardType: this.keyboardType,
-                  obscureText: this.obscureText,
-                  controller: this.controller,
-                  enabled: this.isEnable,
+                  cursorColor: widget.externalColor,
+                  keyboardType: widget.keyboardType,
+                  obscureText: widget.obscureText,
+                  controller: widget.controller,
+                  enabled: widget.isEnable,
                   decoration: new InputDecoration(
-                    suffixIcon: this.othersideIcon,
+                    suffixIcon: widget.othersideIcon,
                     filled: true,
-                    fillColor: internalColor,
-                    hintText: this.hintText,
-                    contentPadding: EdgeInsets.symmetric(vertical: (this.height)/2-8-this.border,horizontal: 24.0),
+                    fillColor: widget.internalColor,
+                    hintText: widget.hintText,
+                    contentPadding: EdgeInsets.symmetric(vertical: (widget.height)/2-8-widget.border,horizontal: 24.0),
                     hintStyle: TextStyle(color: Colors.grey),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: const BorderRadius.all(Radius.circular(32.0),),
@@ -192,8 +219,8 @@ class CircularTextBox extends StatelessWidget{
                       borderRadius: BorderRadius.circular(32.0),
                     ),
                   ),
-                  onChanged: this.onChange,
-                  onSubmitted: this.onSubmitted,
+                  onChanged: widget.onChange,
+                  onSubmitted: widget.onSubmitted,
                 ),
               ),
             ),

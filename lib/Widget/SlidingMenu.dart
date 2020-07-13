@@ -8,10 +8,11 @@ class SlidingMenu extends StatefulWidget {
   final double fontSize;
   final String leftText;
   final String rightText;
-  final Function onChange;
+  final Function onRightTap;
+  final Function onLeftTap;
 
 
-  const SlidingMenu({Key key, this.padding = const EdgeInsets.all(0), this.context, this.height = 50, this.leftText, this.rightText, this.onChange, this.fontSize=12}) : super(key: key);
+  const SlidingMenu({Key key, this.padding = const EdgeInsets.all(0), this.context, this.height = 50, this.leftText, this.rightText, this.onRightTap, this.fontSize=12, this.onLeftTap}) : super(key: key);
 
   @override
   SlidingMenuState createState() => SlidingMenuState();
@@ -50,49 +51,41 @@ class SlidingMenuState extends State<SlidingMenu> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
               Expanded(
-                child: FlatButton(
-                  splashColor: Colors.transparent,
-                  highlightColor: Colors.transparent,
-                  onPressed: (){},
-                  child: MaterialButton(
-                    onPressed: () {
-                      setState(() {
-                        selected = 0;
-                        rightColor = Colors.grey[700];
-                        leftColor = Colors.grey[900];
-                      });
-                    },
-                    child: Text(
-                      widget.leftText,
-                      style: TextStyle(
-                          color: leftColor,
-                          fontSize: widget.fontSize,
-                          fontFamily: "WorkSansSemiBold"),
-                    ),
-                  )
+                child: MaterialButton(
+                  onPressed: () {
+                    setState(() {
+                      widget.onLeftTap();
+                      selected = 0;
+                      rightColor = Colors.grey[700];
+                      leftColor = Colors.grey[900];
+                    });
+                  },
+                  child: Text(
+                    widget.leftText,
+                    style: TextStyle(
+                        color: leftColor,
+                        fontSize: widget.fontSize,
+                        fontFamily: "WorkSansSemiBold"),
+                  ),
                 ),
               ),
               Expanded(
-                child: FlatButton(
-                  splashColor: Colors.transparent,
-                  highlightColor: Colors.transparent,
-                  onPressed: (){},
-                  child: MaterialButton(
-                    onPressed: () {
-                      setState(() {
-                        selected = 1;
-                        leftColor = Colors.grey[700];
-                        rightColor = Colors.grey[900];
-                      });
-                    },
-                    child: Text(
-                      widget.rightText,
-                      style: TextStyle(
-                          color: rightColor,
-                          fontSize: widget.fontSize,
-                          fontFamily: "WorkSansSemiBold"),
-                    ),
-                  )
+                child: MaterialButton(
+                  onPressed: () {
+                    setState(() {
+                      widget.onRightTap();
+                      selected = 1;
+                      leftColor = Colors.grey[700];
+                      rightColor = Colors.grey[900];
+                    });
+                  },
+                  child: Text(
+                    widget.rightText,
+                    style: TextStyle(
+                        color: rightColor,
+                        fontSize: widget.fontSize,
+                        fontFamily: "WorkSansSemiBold"),
+                  ),
                 ),
               ),
             ],

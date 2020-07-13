@@ -10,6 +10,7 @@ dependencies:
   flutter:
     sdk: flutter
 
+  parallax_image:
   animator:
   flutter_statusbarcolor:
   shared_preferences:
@@ -33,6 +34,7 @@ dependencies:
   after_layout:
 
   flutter_launcher_icons:
+  google_maps_flutter:
 
 flutter_icons:
   ios: true

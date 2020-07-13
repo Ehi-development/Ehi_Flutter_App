@@ -5,7 +5,7 @@ import 'package:hey_flutter/UtilityClass/UtilityTools.dart';
 
 import '../Widget/GetListEvent.dart';
 import '../Widget/MoobNavigation.dart';
-import '../Widget/DINOAppBar.dart';
+import '../Widget/DinoAppBar.dart';
 import '../Widget/Theme.dart';
 
 class Home extends StatefulWidget {
@@ -25,6 +25,7 @@ class HomeState extends State<Home> {
 
     return StatusBarCleaner(
       color: MoobTheme.darkBackgroundColor,
+      safeArea: true,
       child: ClipRRect(
               borderRadius: BorderRadius.only(
                 topLeft: const Radius.circular(MoobTheme.radius),
