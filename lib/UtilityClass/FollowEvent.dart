@@ -5,41 +5,39 @@ import 'package:hey_flutter/Widget/GenerateToast.dart';
 import 'UserClass.dart';
 import 'UtilityTools.dart';
 
-class FollowUser {
-  static Future<int> follow(following) async {
+class FollowEvent {
+
+  static Future<int> follow(event_id) async {
     var follower = await LoginManager.getLoggedUser();
 
     var dio = new Dio();
     var form = FormData.fromMap({
-      'follower': follower["username"], 'password': follower["password"], 'following': following,
+      'follower': follower["username"], 'password': follower["password"], 'event_id': event_id,
     });
-    if (follower["username"].toLowerCase() != following.toLowerCase()) {
-      var response = await dio.post(
-          UtilityTools.getServerUrl() + "user/follow", data: form);
-      if (response.data["result"]==0){
-        GenerateToast("Hai iniziato a seguire \n ${following}");
-        return 0;
-      }else{
-        GenerateToast("Qualcosa è andato storto");
-        return 1;
-      }
+
+    var response = await dio.post(
+        UtilityTools.getServerUrl() + "event/follow", data: form);
+    if (response.data["result"]==0){
+      GenerateToast("Hai iniziato a seguire questo evento");
+      return 0;
     }else{
-      GenerateToast("Non puoi seguire te stesso. \n Ti becchi una denuncia.");
+      GenerateToast("Qualcosa è andato storto");
       return 1;
     }
   }
 
-  static Future<int> unfollow(following) async {
+
+  static Future<int> unfollow(event_id) async {
     var follower = await LoginManager.getLoggedUser();
 
     var dio = new Dio();
     var form = FormData.fromMap({
-      'follower': follower["username"], 'password': follower["password"], 'following': following,
+      'follower': follower["username"], 'password': follower["password"], 'event_id': event_id,
     });
     var response = await dio.post(
-        UtilityTools.getServerUrl() + "user/unfollow", data: form);
+        UtilityTools.getServerUrl() + "event/unfollow", data: form);
     if (response.data["result"]==0){
-      GenerateToast("Hai smesso di seguire \n ${following}");
+      GenerateToast("Hai smesso di seguire questo evento");
       return 0;
     }
     else {
@@ -48,13 +46,13 @@ class FollowUser {
     }
   }
 
-  static Future<int> isfollower(following) async {
+  static Future<bool> isfollower(event_id) async {
     var follower = await LoginManager.getLoggedUser();
 
     var dio = new Dio();
-    var response = await dio.get(UtilityTools.getServerUrl() + "user/isfollower/${follower["username"]}/${following}");
+    var response = await dio.get(UtilityTools.getServerUrl() + "event/isfollower/${follower["username"]}/${event_id}");
 
-    return response.data["result"];
+    return response.data["result"]==0;
   }
 
   static Future<List<UserClass>> followingList() async {

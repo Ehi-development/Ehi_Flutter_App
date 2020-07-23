@@ -15,9 +15,9 @@ class AccountImage extends StatelessWidget{
 
   getImage(){
     if(format!=null){
-      return "${UtilityTools.getServerUrl()}getuserphoto/$photo?$format";
+      return "${UtilityTools.getServerUrl()}getphoto/user/id/$photo?$format";
     }else{
-      return "${UtilityTools.getServerUrl()}getuserphoto/$photo";
+      return "${UtilityTools.getServerUrl()}getphoto/user/id/$photo";
     }
   }
 

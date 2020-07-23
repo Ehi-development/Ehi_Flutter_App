@@ -23,7 +23,7 @@ class EventListItem extends StatelessWidget{
       child: InkWell(
         key: key,
         onTap: () {
-          Navigator.of(context).push(CircularRevealRoute(widget: EventPage(event: this.event,),position:getContainerPosition(key)));
+          Navigator.of(context).push(CircularRevealRoute(widget: EventPage(event_id: this.event.id_event,),position:getContainerPosition(key)));
         },
         child: Container(
           decoration: BoxDecoration(

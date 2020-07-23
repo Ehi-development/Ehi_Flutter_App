@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:hey_flutter/UtilityClass/EventFromServer.dart';
 import 'package:hey_flutter/UtilityClass/UserClass.dart';
 import 'package:hey_flutter/UtilityClass/UserServer.dart';
 import 'package:hey_flutter/UtilityClass/UtilityTools.dart';
@@ -10,6 +11,7 @@ import 'package:hey_flutter/Widget/AccountImage.dart';
 import 'package:hey_flutter/Widget/AppLogoLogin.dart';
 import 'package:hey_flutter/Widget/BordedButton.dart';
 import 'package:hey_flutter/Widget/DinoAppBar.dart';
+import 'package:hey_flutter/Widget/FollowButton.dart';
 import 'package:hey_flutter/Widget/MyBehavior.dart';
 import 'package:hey_flutter/Widget/ParallaxContainer.dart';
 import 'package:hey_flutter/Widget/StatusBarCleaner.dart';
@@ -18,10 +20,9 @@ import 'package:hey_flutter/Widget/Theme.dart';
 import '../UtilityClass/EventClass.dart';
 
 class EventPage extends StatefulWidget{
-  final String event_id;
-  final EventClass event;
+  final int event_id;
 
-  const EventPage({Key key, this.event_id, this.event,});
+  const EventPage({Key key, this.event_id,});
 
   @override
   EventPageState createState() => EventPageState();
@@ -54,7 +55,17 @@ class EventPageState extends State<EventPage> with SingleTickerProviderStateMixi
 
   @override
   Widget build(BuildContext context) {
-    return fakeEvent(widget.event);
+    return StatusBarCleaner(
+      color: MoobTheme.darkBackgroundColor,
+      safeArea: true,
+      child: ClipRRect(
+          borderRadius: BorderRadius.only(
+            topLeft: const Radius.circular(MoobTheme.radius),
+            topRight: const Radius.circular(MoobTheme.radius),
+          ),
+          child: getFutureEvent(widget.event_id)
+      ),
+    );
   }
 
   ReturnTags(ListOfTags){
@@ -65,82 +76,55 @@ class EventPageState extends State<EventPage> with SingleTickerProviderStateMixi
     return listofWidget;
   }
 
-  Widget fakeEvent(EventClass event){
-    return StatusBarCleaner(
-      color: MoobTheme.darkBackgroundColor,
-      safeArea: true,
-      child: ClipRRect(
-        borderRadius: BorderRadius.only(
-          topLeft: const Radius.circular(MoobTheme.radius),
-          topRight: const Radius.circular(MoobTheme.radius),
-        ),
-        child: Stack(
-          children: <Widget>[
+  Widget getFutureEvent(int event_id){
+    return FutureBuilder<EventClass>(
+      future: EventFromServer().event(event_id),
+      builder: (context, snapshot){
+        if (snapshot.hasData){
+          return getEventPage(snapshot.data);
+        }else{
+          return Center(child: CircularProgressIndicator());
+        }
+      },
+    );
+  }
 
-            ScrollConfiguration(
-              behavior: MyBehavior(),
-              child: CustomScrollView(
-                  controller: _controller,
-                  slivers: [
-                    /*SliverAppBar(
-                        expandedHeight: 250.0,
-                        floating: false,
-                        pinned: true,
-                        centerTitle: true,
-                        title: AppLogo(),
-                        leading:IconButton(
-                          icon: Icon(Icons.arrow_back),
-                          color: Colors.white,
-                          iconSize: 30,
-                          onPressed: () {Navigator.pop(context, false);},
-                        ),
-                        backgroundColor: MoobTheme.darkBackgroundColor,
-                        flexibleSpace: FlexibleSpaceBar(
-                          background: CachedNetworkImage(
-                            imageUrl: event.photo,
-                            imageBuilder: (context, imageProvider) => Container(
-                              decoration: BoxDecoration(
-                                image: DecorationImage(
-                                    colorFilter:
-                                    ColorFilter.mode(Colors.black.withOpacity(0.7),
-                                        BlendMode.dstATop),
-                                    image: imageProvider, fit: BoxFit.cover),
-                              ),
-                            ),
-                            placeholder: (context, url) => Center(child: CircularProgressIndicator()),
-                            errorWidget: (context, url, error) => Center(child: Icon(Icons.error, color: Colors.red)),
-                          ),
-                        ),
-                    ),*/
-                    BackSetting_Appbar(
-                      title: AppLogo(),
-                      backgroundColor: MoobTheme.darkBackgroundColor,
+  Widget getEventPage(EventClass event){
+    return Stack(
+      children: <Widget>[
+        ScrollConfiguration(
+          behavior: MyBehavior(),
+          child: CustomScrollView(
+              controller: _controller,
+              slivers: [
+                BackSetting_Appbar(
+                  title: AppLogo(),
+                  backgroundColor: MoobTheme.darkBackgroundColor,
+                ),
+                SliverList(
+                  delegate: SliverChildListDelegate([
+                    ParallaxContainer(
+                      key: parallaxKey,
+                      imageUrl: event.photo,
+                      height: this.parallaxHeight,
+                      controller: _controller,
                     ),
-                    SliverList(
-                      delegate: SliverChildListDelegate([
-
-                        ParallaxContainer(
-                          key: parallaxKey,
-                          imageUrl: event.photo,
-                          height: this.parallaxHeight,
-                          controller: _controller,
-                        ),
-                        Container(
+                    Container(
 //                      transform: Matrix4.translationValues(0.0, -MoobTheme.radius, 0.0),
-                          padding: EdgeInsets.only(top: MoobTheme.paddingHorizontal, left: MoobTheme.paddingHorizontal, right: MoobTheme.paddingHorizontal),
-                          child: Text(event.name, style: TextStyle(color: Colors.white, fontSize: 28),),
-                          decoration: BoxDecoration(
-                              color: MoobTheme.middleBackgroundColor,
-//                          borderRadius: BorderRadius.only(topLeft: Radius.circular(MoobTheme.radius), topRight: Radius.circular(MoobTheme.radius))
-                          ),
-                        ),
-                        Container(
+                      padding: EdgeInsets.only(top: MoobTheme.paddingHorizontal, left: MoobTheme.paddingHorizontal, right: MoobTheme.paddingHorizontal),
+                      child: Text(event.name, style: TextStyle(color: Colors.white, fontSize: 28),),
+                      decoration: BoxDecoration(
+                        color: MoobTheme.middleBackgroundColor,
+//                        borderRadius: BorderRadius.only(topLeft: Radius.circular(MoobTheme.radius), topRight: Radius.circular(MoobTheme.radius))
+                      ),
+                    ),
+                    Container(
 //                        transform: Matrix4.translationValues(0.0, -MoobTheme.radius, 0.0),
-                            padding: EdgeInsets.all(MoobTheme.paddingHorizontal),
-                          color: MoobTheme.middleBackgroundColor,
-                          child: getDetail(event)
-                        ),
-                        /*Transform.scale(
+                        padding: EdgeInsets.all(MoobTheme.paddingHorizontal),
+                        color: MoobTheme.middleBackgroundColor,
+                        child: getDetail(event)
+                    ),
+                    /*Transform.scale(
                           scale:MoobTheme.radius*2+1,
                           child: Container(
                             height: 1,
@@ -149,40 +133,38 @@ class EventPageState extends State<EventPage> with SingleTickerProviderStateMixi
                             ),
                           ),
                         ),*/
-                        Container(
-                          padding: EdgeInsets.symmetric(horizontal: MoobTheme.paddingHorizontal, vertical: 8.0),
-                          color: MoobTheme.middleBackgroundColor,
-                          child: displayAccount(event.followList),
-                        ),
-                        Container(
-                          color: MoobTheme.middleBackgroundColor,
-                          child: getDescription(event)
-                        ),
-                        Container(
+                    Container(
+                      padding: EdgeInsets.symmetric(horizontal: MoobTheme.paddingHorizontal, vertical: 8.0),
+                      color: MoobTheme.middleBackgroundColor,
+                      child: displayAccount(event.followList),
+                    ),
+                    Container(
+                        color: MoobTheme.middleBackgroundColor,
+                        child: getDescription(event)
+                    ),
+                    Container(
 //                        transform: Matrix4.translationValues(0.0, -MoobTheme.radius, 0.0),
-                            padding: EdgeInsets.all(MoobTheme.paddingHorizontal),
-                            color: MoobTheme.middleBackgroundColor,
-                            child: getOtherDetail(event)
-                        ),
-                      ]),
+                        padding: EdgeInsets.all(MoobTheme.paddingHorizontal),
+                        color: MoobTheme.middleBackgroundColor,
+                        child: getOtherDetail(event)
                     ),
-                    SliverFillRemaining(
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: Colors.red,
-                          ),
-                        )
-                    ),
-                  ]
-              ),
-            ),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: EventNavigation(event),
-            ),
-          ],
+                  ]),
+                ),
+                SliverFillRemaining(
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.red,
+                      ),
+                    )
+                ),
+              ]
+          ),
         ),
-      ),
+        Align(
+          alignment: Alignment.bottomCenter,
+          child: EventNavigation(event),
+        ),
+      ],
     );
   }
 
@@ -302,14 +284,6 @@ class EventPageState extends State<EventPage> with SingleTickerProviderStateMixi
             ],
           ),
         ),
-        /*GoogleMap(
-          onMapCreated: _onMapCreated,
-          initialCameraPosition: CameraPosition(
-            target: _center,
-            zoom: 11.0,
-          ),
-        ),*/
-
       ],
     );
   }
@@ -361,34 +335,6 @@ class EventPageState extends State<EventPage> with SingleTickerProviderStateMixi
             ],
           ),
         ),
-        /*Padding(
-          padding: const EdgeInsets.only(top:MoobTheme.paddingHorizontal),
-          child: Row(
-            mainAxisSize: MainAxisSize.max,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Flexible(
-                flex: 1,
-                child:Icon(Icons.star, color: Colors.white, size: 26,),
-              ),
-              Container(
-                width: MoobTheme.paddingHorizontal,
-              ),
-              Flexible(
-                flex: 3,
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    Text(tagtoString(event.tags), style: TextStyle(color: Colors.white,fontSize: 16),),
-                    Text("Preferenze", style: TextStyle(color: Colors.white,fontSize: 10),),
-                  ],
-                ),
-              )
-            ],
-          ),
-        ),*/
         getTagCips(event.tags)
       ],
     );
@@ -456,20 +402,7 @@ class EventPageState extends State<EventPage> with SingleTickerProviderStateMixi
         children: <Widget>[
           Padding(
               padding: const EdgeInsets.only(left: MoobTheme.paddingHorizontal/4, right: MoobTheme.paddingHorizontal/4),
-              child: SizedBox(
-                width: 48,
-                height: 48,
-                child: RawMaterialButton(
-                  onPressed: () {},
-                  fillColor: Colors.grey,
-                  child: Icon(
-                    Icons.star_border,
-                    size: 24.0,
-                    color: Colors.white,
-                  ),
-                  shape: CircleBorder(),
-                ),
-              )
+              child: FollowButton(event_id: event.id_event,)
           ),
           Padding(
             padding: const EdgeInsets.only(left: MoobTheme.paddingHorizontal/4, right: MoobTheme.paddingHorizontal/4),

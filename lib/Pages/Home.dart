@@ -60,7 +60,16 @@ class HomeState extends State<Home> {
                                           padding: const EdgeInsets.only(left:MoobTheme.paddingHorizontal,bottom:MoobTheme.paddingHorizontal),
                                           child: Text("Tutti gli Eventi",style: TextStyle(fontSize: 18,color: Colors.white,fontWeight: FontWeight.bold)),
                                         ),
-                                        GetListEvent().home()
+                                        FutureBuilder<Widget>(
+                                          future: GetListEvent().home(),
+                                          builder: (context, snapshot){
+                                            if (snapshot.hasData){
+                                              return snapshot.data;
+                                            }else{
+                                              return Center(child: CircularProgressIndicator());
+                                            }
+                                          },
+                                        ),
                                       ],
                                   )
                                 ),

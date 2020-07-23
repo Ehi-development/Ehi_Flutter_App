@@ -342,7 +342,16 @@ class ShowOthersUserPageState extends State<ShowOthersUserPage> {
                 child: Text("Eventi Creati", style: TextStyle(fontSize: 20,color: Colors.white,fontWeight: FontWeight.bold)),
               ),
               Padding(padding: EdgeInsets.only(bottom: MoobTheme.paddingHorizontal),),
-              GetListEvent().home(),
+              FutureBuilder<Widget>(
+                future: GetListEvent().user(user.username),
+                builder: (context, snapshot){
+                  if (snapshot.hasData){
+                    return snapshot.data;
+                  }else{
+                    return Center(child: CircularProgressIndicator());
+                  }
+                },
+              ),
             ]
         )
     );

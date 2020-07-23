@@ -19,7 +19,6 @@ class LoginManager {
   static Future<Map<String,String>> getLoggedUser() async {
     final prefs = await SharedPreferences.getInstance();
     final loggedUsername = prefs.getString('loggedUsername') ?? "";
-    print(loggedUsername);
     final loggedPass = prefs.getString('loggedPass') ?? "";
     final loggedPhoto = prefs.getString('photo') ?? "";
     if (loggedUsername != "") {

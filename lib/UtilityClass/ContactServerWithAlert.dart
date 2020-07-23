@@ -109,7 +109,6 @@ class ContactServerWithAlert {
           GenerateToast("La mail che hai inserito è già utilizzata");
           return 2;
         } else {
-          print(result);
           if (ProgressButtonKey != null) {
             ProgressButtonKey.currentState.error();
           }

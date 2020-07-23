@@ -1,9 +1,11 @@
 class EventClass {
   final int result;
-  final String coordinate;
   final String creator;
-  final String desc;
   final int id_event;
+  final EventFollowList followList;
+
+  final String coordinate;
+  final String desc;
   final String name;
   final String place;
   final Address address;
@@ -13,9 +15,9 @@ class EventClass {
   final String link;
   final double price;
   final List<Tag> tags;
-  final EventFollowList followList;
+  final bool trusted;
 
-  EventClass( {this.link, this.price, this.result, this.name, this.place, this.address, this.startDate, this.endDate, this.photo,this.coordinate,this.creator,this.desc,this.id_event,this.tags, this.followList});
+  EventClass( {this.trusted = false, this.link, this.price, this.result, this.name, this.place, this.address, this.startDate, this.endDate, this.photo,this.coordinate,this.creator,this.desc,this.id_event,this.tags, this.followList});
 
 }
 
