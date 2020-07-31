@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:hey_flutter/UtilityClass/EventFromServer.dart';
-
-import '../UtilityClass/EventClass.dart';
+import 'package:heiserver_connector/Implementation/Event.dart';
+import 'package:heiserver_connector/Implementation/User.dart';
+import 'package:heiserver_connector/Structure/EventClass.dart';
 import 'EventListItem.dart';
 
 class GetListEvent{
@@ -17,7 +17,7 @@ class GetListEvent{
   }
 
   Future<Widget> user(user) async {
-    List<EventClass> listevent = await EventFromServer().user(user);
+    List<EventClass> listevent = await User().getCreatedEvent(user);
     List<Widget> returnedList = [];
     for (EventClass event in listevent) {
       returnedList.add(EventListItem(event:event));

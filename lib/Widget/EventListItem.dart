@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:heiserver_connector/Structure/EventClass.dart';
 import 'package:hey_flutter/Pages/EventPage.dart';
 import 'package:hey_flutter/UtilityClass/RouteBuilder.dart';
 import 'package:hey_flutter/Widget/Theme.dart';
 import 'package:hey_flutter/UtilityClass/UtilityTools.dart';
-
-import '../UtilityClass/EventClass.dart';
-
 
 class EventListItem extends StatelessWidget{
   final EventClass event;

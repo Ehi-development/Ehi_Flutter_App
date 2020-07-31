@@ -2,17 +2,15 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:heiserver_connector/Implementation/Search.dart';
+import 'package:heiserver_connector/Structure/UserClass.dart';
 import 'package:hey_flutter/Widget/AccountImage.dart';
 import 'package:hey_flutter/Widget/DinoAppBar.dart';
-import 'package:hey_flutter/Widget/GenerateToast.dart';
 import 'package:hey_flutter/Widget/MyBehavior.dart';
 import 'package:hey_flutter/Widget/SlidingMenu.dart';
 import 'package:hey_flutter/Widget/StatusBarCleaner.dart';
 import '../UtilityClass/RouteBuilder.dart';
 import '../Widget/Theme.dart';
-import '../UtilityClass/UserClass.dart';
-import 'package:http/http.dart' as http;
-import '../UtilityClass/UtilityTools.dart';
 import 'ShowOthersUserPage.dart';
 import '../Widget/CircularTextBox.dart';
 
@@ -148,7 +146,7 @@ class SearchResultState extends State<SearchResultWidget>{
         ),
         child: Center(
           child:token!=""?FutureBuilder<List<UserClass>>(
-            future: searchUser(),
+            future: search(),
             builder: (context, snapshot) {
               if (snapshot.hasData)
               {
@@ -192,26 +190,9 @@ class SearchResultState extends State<SearchResultWidget>{
     );
   }
 
-  Future<List<UserClass>> searchUser() async{
+  Future<List<UserClass>> search() async{
     if (searchContext == 0){
-      List<UserClass> usersList= [];
-      var response = await http.get(UtilityTools.getServerUrl()+'searchusername/$token?limit=10');
-      final digestResponse = json.decode(response.body);
-      if(digestResponse["result"]==0){
-        for (var user in digestResponse["list_user"]){
-          usersList.add(UserClass(
-            username: user["username"],
-            name: user["name"],
-            surname: user["surname"],
-            photo: user["photo"],
-            bio: user["bio"],
-          ));
-        }
-        return usersList;
-      }
-      else{
-        return [];
-      }
+      return await Search().searchUser(token);
     } else {
       return [];
     }

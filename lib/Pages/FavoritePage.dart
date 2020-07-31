@@ -1,11 +1,10 @@
 import 'package:basic_utils/basic_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:heiserver_connector/Implementation/FollowUser.dart';
+import 'package:heiserver_connector/Structure/UserClass.dart';
 import 'package:hey_flutter/Pages/ShowOthersUserPage.dart';
-import 'package:hey_flutter/UtilityClass/FollowUser.dart';
 import 'package:hey_flutter/UtilityClass/RouteBuilder.dart';
-import 'package:hey_flutter/UtilityClass/UserClass.dart';
 import 'package:hey_flutter/Widget/AccountImage.dart';
-import 'package:hey_flutter/Widget/BordedButton.dart';
 import 'package:hey_flutter/Widget/MyBehavior.dart';
 import 'package:hey_flutter/Widget/StatusBarCleaner.dart';
 import '../Widget/MoobNavigation.dart';
@@ -65,7 +64,7 @@ class FavoritePageState extends State<FavoritePage> {
                                 child: Padding(padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),child: Text("Persone che Segui", style: TextStyle(color: Colors.white),))
                             ),
                             FutureBuilder<List<UserClass>>(
-                              future: FollowUser.followingList(),
+                              future: FollowUser().followingList(),
                               builder: (context, snapshot){
                                 if (snapshot.hasData){
                                   List<Widget> list = [];

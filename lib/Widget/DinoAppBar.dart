@@ -1,17 +1,16 @@
 import 'dart:async';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:heiserver_connector/Implementation/User.dart';
+import 'package:heiserver_connector/Structure/UserClass.dart';
+import 'package:heiserver_connector/Utility/LocalLoginData.dart';
 import 'package:hey_flutter/Pages/LRPage.dart';
 import 'package:hey_flutter/Pages/ShowLoggedUserPage.dart';
-import 'package:hey_flutter/UtilityClass/LoginManager.dart';
 import 'package:hey_flutter/Widget/AccountImage.dart';
 import 'package:hey_flutter/Widget/AppLogoLogin.dart';
 import 'package:hey_flutter/UtilityClass/UtilityTools.dart';
-import '../Pages/LoginPage.dart';
 import '../UtilityClass/RouteBuilder.dart';
 import '../Pages/SearchPage.dart';
-import '../UtilityClass/UserClass.dart';
-import '../UtilityClass/UserServer.dart';
 import 'Theme.dart';
 
 class SearchAvatar_Appbar extends StatelessWidget{
@@ -149,11 +148,11 @@ Widget generateUserImageButton(){
   GlobalKey loginPhotoButton = GlobalKey();
 
   return FutureBuilder<Map<String,String>>(
-      future: LoginManager.getLoggedUser(),
+      future: LocalLoginData.getLoggedUser(),
       builder: (context, snapshot) {
         if (snapshot.hasData ) {
           return FutureBuilder<UserClass>(
-            future: UserServer.fromServer(snapshot.data["username"]),
+            future: User().fromServer(snapshot.data["username"]),
             builder: (context, snapshot) {
               if (snapshot.hasData && snapshot.data.result==0) {
                 return Padding(
@@ -423,7 +422,7 @@ class BackSetting_Appbar_LoggedUser extends StatelessWidget{
                   leading: Icon(Icons.exit_to_app, color: Colors.red,),
                   title:Text("Logout",style: TextStyle(color: Colors.red)),
                   onTap: (){
-                    UtilityTools.logoutUser();
+                    LocalLoginData.logout();
                     //Navigator.of(context)..pop(true);
                     Navigator.of(context).pushReplacement(CircularRevealRoute(widget: LRPage(),position:Offset(50,50)));
                   },

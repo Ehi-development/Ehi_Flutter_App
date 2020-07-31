@@ -2,6 +2,11 @@ import 'dart:ui';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:heiserver_connector/Implementation/FollowUser.dart';
+import 'package:heiserver_connector/Implementation/User.dart';
+import 'package:heiserver_connector/Structure/TagClass.dart';
+import 'package:heiserver_connector/Structure/UserClass.dart';
+import 'package:heiserver_connector/Utility/LocalLoginData.dart';
 import 'package:hey_flutter/Widget/AccountImage.dart';
 import 'package:hey_flutter/Widget/BordedButton.dart';
 import 'package:hey_flutter/Widget/GetListEvent.dart';
@@ -10,7 +15,6 @@ import 'package:hey_flutter/Widget/StatusBarCleaner.dart';
 import 'package:hey_flutter/UtilityClass/UtilityTools.dart';
 import 'package:intl/intl.dart';
 import '../Widget/DinoAppBar.dart';
-import '../UtilityClass/UserClass.dart';
 import '../Widget/Theme.dart';
 
 class ShowLoggedUserPage extends StatefulWidget{
@@ -35,7 +39,7 @@ class ShowLoggedUserPageState extends State<ShowLoggedUserPage> {
         child: ScrollConfiguration(
           behavior: MyBehavior(),
           child: FutureBuilder<UserClass>(
-            future: UtilityTools.getLoggedUserFromServer(),
+            future: LocalLoginData.getAllLoggedUserData(),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 return getUserPage(snapshot.data);
@@ -132,7 +136,7 @@ SocialNumberBar(UserClass user) {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: FutureBuilder(
-                  future: user.getEventCratedNumber(),
+                  future: User().getCreatedEventNumber(user.username),
                   builder: (context,snapshot){
                     if(snapshot.hasData){
                       return Text(snapshot.data.toString(),style: TextStyle(color: Colors.white, fontSize: 32, fontWeight: FontWeight.bold),);
@@ -153,7 +157,7 @@ SocialNumberBar(UserClass user) {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: FutureBuilder(
-                  future: user.getFollowingNumber(),
+                  future: FollowUser().getFollowingNumber(user.username),
                   builder: (context,snapshot){
                     if(snapshot.hasData){
                       return Text(snapshot.data.toString(),style: TextStyle(color: Colors.white, fontSize: 32, fontWeight: FontWeight.bold),);
@@ -174,7 +178,7 @@ SocialNumberBar(UserClass user) {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: FutureBuilder(
-                  future: user.getFollowerNumber(),
+                  future: FollowUser().getFollowerNumber(user.username),
                   builder: (context,snapshot){
                     if(snapshot.hasData){
                       return Text(snapshot.data.toString(),style: TextStyle(color: Colors.white, fontSize: 32, fontWeight: FontWeight.bold),);
@@ -190,6 +194,29 @@ SocialNumberBar(UserClass user) {
         ),
       ],
     ),
+  );
+}
+
+Widget getTagCips(List<Tag> tags){
+  List<Widget> tagcips = [];
+  for (Tag elmnt in tags){
+    tagcips.add(
+        Padding(
+          padding: const EdgeInsets.only(right: 8.0),
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 8,vertical: 4),
+            decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.all(Radius.circular(MoobTheme.radius))
+            ),
+            child: Text(elmnt.tag, style: TextStyle(fontWeight: FontWeight.bold, color: MoobTheme.middleBackgroundColor),),
+          ),
+        )
+    );
+  }
+  return Padding(
+    padding: const EdgeInsets.only(top: MoobTheme.paddingHorizontal),
+    child: Row(children: tagcips),
   );
 }
 
@@ -209,10 +236,10 @@ DettailOfUser(UserClass user) {
       color: MoobTheme.middleBackgroundColor,
     ),
     child: Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Padding(
-          padding: const EdgeInsets.only(top:MoobTheme.paddingHorizontal*2,left: MoobTheme.paddingHorizontal*2),
+          padding: const EdgeInsets.only(top:MoobTheme.paddingHorizontal*2,left: MoobTheme.paddingHorizontal),
           child: Row(
             mainAxisSize: MainAxisSize.max,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -234,7 +261,7 @@ DettailOfUser(UserClass user) {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.only(top:MoobTheme.paddingHorizontal,left: MoobTheme.paddingHorizontal*2),
+          padding: const EdgeInsets.only(top:MoobTheme.paddingHorizontal,left: MoobTheme.paddingHorizontal),
           child: Row(
             mainAxisSize: MainAxisSize.max,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -255,38 +282,52 @@ DettailOfUser(UserClass user) {
             ],
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.only(top:MoobTheme.paddingHorizontal,left: MoobTheme.paddingHorizontal*2),
-          child: Row(
-            mainAxisSize: MainAxisSize.max,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Flexible(
-                flex: 1,
-                child:Icon(Icons.star, color: Colors.white, size: 26,),
-              ),
-              Container(
-                width: MoobTheme.paddingHorizontal,
-              ),
-              Flexible(
-                flex: 3,
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    Text("Sport, Musica, Cibo", style: TextStyle(color: Colors.white,fontSize: 16),),
-                    Text("Preferenze", style: TextStyle(color: Colors.white,fontSize: 10),),
-                  ],
-                ),
-              )
-            ],
+//        Padding(
+//          padding: const EdgeInsets.only(top:MoobTheme.paddingHorizontal,left: MoobTheme.paddingHorizontal*2),
+//          child: Row(
+//            mainAxisSize: MainAxisSize.max,
+//            crossAxisAlignment: CrossAxisAlignment.center,
+//            children: <Widget>[
+//              Flexible(
+//                flex: 1,
+//                child:Icon(Icons.star, color: Colors.white, size: 26,),
+//              ),
+//              Container(
+//                width: MoobTheme.paddingHorizontal,
+//              ),
+//              Flexible(
+//                flex: 3,
+//                child: Column(
+//                  mainAxisSize: MainAxisSize.max,
+//                  crossAxisAlignment: CrossAxisAlignment.start,
+//                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//                  children: <Widget>[
+//                    Text(tagString, style: TextStyle(color: Colors.white,fontSize: 16),),
+//                    Text("Preferenze", style: TextStyle(color: Colors.white,fontSize: 10),),
+//                  ],
+//                ),
+//              )
+//            ],
+//          ),
+//        ),
+        user.preference!=null?Padding(
+          padding: const EdgeInsets.only(left: MoobTheme.paddingHorizontal),
+          child: getTagCips(user.preference),
+        ):Container(),
+        user.bio!=null?Padding(
+          padding: const EdgeInsets.only(top: MoobTheme.paddingHorizontal*2, left: MoobTheme.paddingHorizontal, right: MoobTheme.paddingHorizontal),
+          child: Text("Biografia", style: TextStyle(fontSize: 20,
+              color: Colors.white,
+              fontWeight: FontWeight.bold)),
+        ):Container(),
+        user.bio!=null?Padding(
+          padding: const EdgeInsets.only(top: 8.0, left: MoobTheme.paddingHorizontal, right: MoobTheme.paddingHorizontal),
+          child: Text(user.bio,
+              style: TextStyle(
+                  color: Colors.white.withOpacity(0.6)),
+              textAlign: TextAlign.justify
           ),
-        ),
-        Padding(
-          padding: user.bio!=null && user.bio!=" "? const EdgeInsets.only(top: MoobTheme.paddingHorizontal*2, bottom: MoobTheme.paddingHorizontal, left: MoobTheme.paddingHorizontal*2, right: MoobTheme.paddingHorizontal*2):const EdgeInsets.symmetric(),
-          child: Text(user.bio,style: TextStyle(color: Colors.white, fontSize: 16), textAlign: TextAlign.center,),
-        ),
+        ):Container(),
       ],
     ),
   );
@@ -296,14 +337,11 @@ CreatedEvent(UserClass user){
   return Container(
     color: MoobTheme.middleBackgroundColor,
     alignment: Alignment.topCenter,
-    padding: EdgeInsets.symmetric(vertical: MoobTheme.paddingHorizontal, horizontal: MoobTheme.paddingHorizontal),
+    padding: EdgeInsets.symmetric(vertical: MoobTheme.paddingHorizontal*2, horizontal: MoobTheme.paddingHorizontal),
     child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
-            padding: const EdgeInsets.only(left: MoobTheme.paddingHorizontal),
-            child: Text("Eventi Creati", style: TextStyle(fontSize: 20,color: Colors.white,fontWeight: FontWeight.bold)),
-          ),
+          Text("Eventi Creati", style: TextStyle(fontSize: 20,color: Colors.white,fontWeight: FontWeight.bold)),
           Padding(padding: EdgeInsets.only(bottom: MoobTheme.paddingHorizontal),),
           FutureBuilder<Widget>(
             future: GetListEvent().user(user.username),

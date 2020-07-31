@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:heiserver_connector/Utility/LocalLoginData.dart';
 import 'package:hey_flutter/Pages/LRPage.dart';
-import 'package:hey_flutter/UtilityClass/LoginManager.dart';
 import 'package:hey_flutter/UtilityClass/RouteBuilder.dart';
 import 'package:hey_flutter/Widget/AppLogoLogin.dart';
 import 'package:hey_flutter/Widget/StatusBarCleaner.dart';
-import 'package:hey_flutter/UtilityClass/UtilityTools.dart';
-import 'package:loading/indicator/ball_pulse_indicator.dart';
-import 'package:loading/loading.dart';
 import '../Widget/Theme.dart';
 import 'Home.dart';
 
@@ -23,7 +20,7 @@ class IconPageLoaderState extends State<IconPageLoader> with AfterLayoutMixin<Ic
 
   @override
   void afterFirstLayout(BuildContext context) {
-    LoginManager.getLoggedUser().then((result){
+    LocalLoginData.getLoggedUser().then((result){
       if(result["username"]==""){
         Navigator.of(context).pushReplacement(CircularRevealRoute(widget: LRPage(),position:getContainerPosition(view)));
       }else{

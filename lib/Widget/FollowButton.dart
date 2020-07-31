@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hey_flutter/UtilityClass/FollowEvent.dart';
-import 'package:hey_flutter/Widget/Theme.dart';
+import 'package:heiserver_connector/Implementation/FollowEvent.dart';
 
 class FollowButton extends StatefulWidget{
   final int event_id;
@@ -17,7 +16,7 @@ class FollowButtonState extends State<FollowButton>{
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: FollowEvent.isfollower(widget.event_id),
+        future: FollowEvent().isfollower(widget.event_id),
         builder: (context, snapshot){
           if (snapshot.hasData){
             return SizedBox(
@@ -26,9 +25,9 @@ class FollowButtonState extends State<FollowButton>{
               child: RawMaterialButton(
                 onPressed: () async {
                   if (snapshot.data)
-                    FollowEvent.unfollow(widget.event_id).then((value) => setState(() {}));
+                    FollowEvent().unfollow(widget.event_id).then((value) => setState(() {}));
                   else
-                    FollowEvent.follow(widget.event_id).then((value) => setState(() {}));
+                    FollowEvent().follow(widget.event_id).then((value) => setState(() {}));
                 },
                 fillColor: Colors.grey,
                 child: snapshot.data?Icon(
@@ -49,7 +48,7 @@ class FollowButtonState extends State<FollowButton>{
               height: 48,
               child: RawMaterialButton(
                 onPressed: () async {
-                  await FollowEvent.isfollower(widget.event_id);
+                  await FollowEvent().isfollower(widget.event_id);
                 },
                 fillColor: Colors.grey,
                 shape: CircleBorder(),

@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:hey_flutter/UtilityClass/UtilityTools.dart';
+import 'package:heiserver_connector/Utility/ServerPath.dart';
 
 import 'Theme.dart';
 
@@ -15,9 +15,9 @@ class AccountImage extends StatelessWidget{
 
   getImage(){
     if(format!=null){
-      return "${UtilityTools.getServerUrl()}getphoto/user/id/$photo?$format";
+      return "${Server.basepath()}getphoto/user/id/$photo?$format";
     }else{
-      return "${UtilityTools.getServerUrl()}getphoto/user/id/$photo";
+      return "${Server.basepath()}getphoto/user/id/$photo";
     }
   }
 

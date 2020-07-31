@@ -3,9 +3,13 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:hey_flutter/UtilityClass/EventFromServer.dart';
-import 'package:hey_flutter/UtilityClass/UserClass.dart';
-import 'package:hey_flutter/UtilityClass/UserServer.dart';
+import 'package:heiserver_connector/Implementation/Event.dart';
+import 'package:heiserver_connector/Implementation/FollowEvent.dart';
+import 'package:heiserver_connector/Implementation/User.dart';
+import 'package:heiserver_connector/Structure/AddressClass.dart';
+import 'package:heiserver_connector/Structure/EventClass.dart';
+import 'package:heiserver_connector/Structure/TagClass.dart';
+import 'package:heiserver_connector/Structure/UserClass.dart';
 import 'package:hey_flutter/UtilityClass/UtilityTools.dart';
 import 'package:hey_flutter/Widget/AccountImage.dart';
 import 'package:hey_flutter/Widget/AppLogoLogin.dart';
@@ -16,8 +20,6 @@ import 'package:hey_flutter/Widget/MyBehavior.dart';
 import 'package:hey_flutter/Widget/ParallaxContainer.dart';
 import 'package:hey_flutter/Widget/StatusBarCleaner.dart';
 import 'package:hey_flutter/Widget/Theme.dart';
-
-import '../UtilityClass/EventClass.dart';
 
 class EventPage extends StatefulWidget{
   final int event_id;
@@ -66,14 +68,6 @@ class EventPageState extends State<EventPage> with SingleTickerProviderStateMixi
           child: getFutureEvent(widget.event_id)
       ),
     );
-  }
-
-  ReturnTags(ListOfTags){
-    List<Widget> listofWidget = [];
-    for (Tag tag in ListOfTags){
-      listofWidget.add(Text(tag.tag));
-    }
-    return listofWidget;
   }
 
   Widget getFutureEvent(int event_id){
@@ -136,7 +130,7 @@ class EventPageState extends State<EventPage> with SingleTickerProviderStateMixi
                     Container(
                       padding: EdgeInsets.symmetric(horizontal: MoobTheme.paddingHorizontal, vertical: 8.0),
                       color: MoobTheme.middleBackgroundColor,
-                      child: displayAccount(event.followList),
+                      child: displayAccount(event.id_event),
                     ),
                     Container(
                         color: MoobTheme.middleBackgroundColor,
@@ -148,14 +142,11 @@ class EventPageState extends State<EventPage> with SingleTickerProviderStateMixi
                         color: MoobTheme.middleBackgroundColor,
                         child: getOtherDetail(event)
                     ),
-                  ]),
-                ),
-                SliverFillRemaining(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.red,
-                      ),
+                    Container(
+                      padding: EdgeInsets.only(bottom: MoobTheme.paddingHorizontal*3),
+                      color: MoobTheme.middleBackgroundColor,
                     )
+                  ]),
                 ),
               ]
           ),
@@ -182,7 +173,8 @@ class EventPageState extends State<EventPage> with SingleTickerProviderStateMixi
               padding: const EdgeInsets.only(top: 8.0),
               child: Text(event.desc,
                   style: TextStyle(
-                  color: Colors.white.withOpacity(0.6))),
+                  color: Colors.white.withOpacity(0.6)),
+                  textAlign: TextAlign.justify),
             )
           ],
         ),
@@ -267,7 +259,7 @@ class EventPageState extends State<EventPage> with SingleTickerProviderStateMixi
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
                     FutureBuilder<UserClass>(
-                      future: UserServer.fromServer(event.creator), // a previously-obtained Future<String> or null
+                      future: User().fromServer(event.creator), // a previously-obtained Future<String> or null
                       builder: (BuildContext context, AsyncSnapshot<UserClass> snapshot) {
                         if (snapshot.hasData) {
                           return Text("${snapshot.data.name} ${snapshot.data.surname}", style: TextStyle(color: Colors.white,fontSize: 16),);
@@ -379,17 +371,44 @@ class EventPageState extends State<EventPage> with SingleTickerProviderStateMixi
     return "${address.address}, ${address.number}";
   }
 
-  Widget displayAccount(EventFollowList followList){
+  Widget displayAccount(int event_id){
+    double leftSpacing = 0.0;
     return Stack(
       children: <Widget>[
-        Padding(padding: const EdgeInsets.only(left: 51.0),child: SizedBox(height:40,width: 40, child: AccountImage(photo: followList.displaiedAccount[3], format: 64, borderColor: Colors.white,borderWidth: 1))),
-        Padding(padding: const EdgeInsets.only(left: 34.0),child: SizedBox(height:40,width: 40, child: AccountImage(photo: followList.displaiedAccount[2], format: 64, borderColor: Colors.white,borderWidth: 1))),
-        Padding(padding: const EdgeInsets.only(left: 17.0),child: SizedBox(height:40,width: 40, child: AccountImage(photo: followList.displaiedAccount[1], format: 64, borderColor: Colors.white,borderWidth: 1))),
-        Padding(padding: const EdgeInsets.only(left: 0.0),child: SizedBox(height:40,width: 40, child: AccountImage(photo: followList.displaiedAccount[0], format: 64, borderColor: Colors.white,borderWidth: 1))),
-        Padding(
-          padding: const EdgeInsets.only(left: 70.0, top:12),
-          child: Center(child: Text("+${followList.numberofFollow-4} utenti seguono questo evento", style: TextStyle(color: Colors.white),)),
-        )
+        FutureBuilder<List<String>>(
+          future: FollowEvent().getPhotoOFFolloweroFrinds(event_id),
+          builder: (context, snapshot){
+            if (snapshot.hasData){
+              List<Widget> photoList = [];
+              leftSpacing = 0.0;
+              for (String photo in snapshot.data){
+                photoList.add(
+                  Padding(padding: EdgeInsets.only(left: leftSpacing),child: SizedBox(height:40,width: 40, child: AccountImage(photo: photo, format: 64, borderColor: Colors.white,borderWidth: 1)))
+                );
+                leftSpacing += 17.0;
+              }
+              return Stack(
+                children: photoList,
+              );
+            }else{
+              return Center(child: CircularProgressIndicator());
+            }
+          },
+        ),
+        FutureBuilder<int>(
+          future: FollowEvent().getnumberfollowers(event_id),
+          builder: (context, snapshot){
+            if (snapshot.hasData){
+              return Padding(
+                padding: EdgeInsets.only(left: 100, top:12),
+                child: Text("${snapshot.data} utenti seguono questo evento", style: TextStyle(color: Colors.white)),
+              );
+            }else{
+              return Center(child: CircularProgressIndicator());
+            }
+          },
+        ),
+
       ],
     );
   }
@@ -436,3 +455,4 @@ class EventPageState extends State<EventPage> with SingleTickerProviderStateMixi
     );
   }
 }
+

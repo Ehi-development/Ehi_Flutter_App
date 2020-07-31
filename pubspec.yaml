@@ -10,29 +10,34 @@ dependencies:
   flutter:
     sdk: flutter
 
+  heiserver_connector:
+    git: git@github.com:tadsdcz50/heiserver_connector.git
+
+  shared_preferences:
+  auto_size_text:
+  circular_reveal_animation:
+  cached_network_image:
+  dio:
+  flutter_svg:
+  image_picker:
+  image_crop:
+  flutter_datetime_picker:
+
+
+# Dependency to check
+
   parallax_image:
   animator:
   flutter_statusbarcolor:
-  shared_preferences:
-  auto_size_text:
   font_awesome_flutter:
-  circular_reveal_animation:
-  cached_network_image:
   uni_links:
-  dio:
   fluttertoast:
   basic_utils:
   loading:
-  flutter_svg:
-
-  image_picker:
-  image_crop:
   page_indicator:
   animated_background:
   intl:
-  flutter_datetime_picker:
   after_layout:
-
   flutter_launcher_icons:
   google_maps_flutter:
 

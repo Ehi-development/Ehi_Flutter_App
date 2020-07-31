@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:heiserver_connector/Implementation/User.dart';
+import 'package:heiserver_connector/Structure/UserClass.dart';
+import 'package:heiserver_connector/Utility/LocalLoginData.dart';
 import 'package:hey_flutter/Pages/AddDetailPage.dart';
 import 'package:hey_flutter/Pages/RegistrationResultPage.dart';
 import 'package:hey_flutter/Widget/ProgressButton.dart';
 
 import '../Widget/GenerateToast.dart';
-import 'LoginManager.dart';
 import 'RouteBuilder.dart';
-import 'UserClass.dart';
-import 'UserServer.dart';
 
 class ContactServerWithAlert {
 
@@ -18,9 +18,9 @@ class ContactServerWithAlert {
 
     if(ProgressButtonKey!=null){ProgressButtonKey.currentState.progress();}
 
-    var result =await UserServer.loginUser(username,password);
+    var result =await User().loginUser(username,password);
     if(result==0){
-      LoginManager.login(username,password);
+      LocalLoginData.login(username,password);
       if(ProgressButtonKey!=null){ProgressButtonKey.currentState.done();}
       return 0;
     }else if(result==1){
@@ -85,9 +85,7 @@ class ContactServerWithAlert {
       }
       GenerateToast("La tua data di nascita non può essere nulla");
     }else {
-      UserServer.registerUser(
-        user: user,
-      ).then((result) async {
+      User().registerUser(user).then((result) async {
         if (result == 0) {
           if (ProgressButtonKey != null) {
             ProgressButtonKey.currentState.done();
@@ -150,7 +148,7 @@ class ContactServerWithAlert {
       //if(ProgressButtonKey!=null){ProgressButtonKey.currentState.error();}
       GenerateToast("Le due passwords non coincidono");
     }else{
-      UserServer.fromServer(username).then((result){
+      User().fromServer(username).then((result){
         if(result.result==1){
           Navigator.of(context).pushReplacement(CircularRevealRoute(widget: AddDetailPage(username: username, password: password,),position:getContainerPosition(ProgressButtonKey)));
         }else{
