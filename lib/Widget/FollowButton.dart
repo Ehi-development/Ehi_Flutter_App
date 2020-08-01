@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:heiserver_connector/Implementation/FollowEvent.dart';
+import 'package:hey_flutter/Widget/GenerateToast.dart';
 
 class FollowButton extends StatefulWidget{
   final int event_id;
@@ -25,9 +26,22 @@ class FollowButtonState extends State<FollowButton>{
               child: RawMaterialButton(
                 onPressed: () async {
                   if (snapshot.data)
-                    FollowEvent().unfollow(widget.event_id).then((value) => setState(() {}));
+                    FollowEvent().unfollow(widget.event_id).then((value){
+                      if (value==0)
+                        GenerateToast("Hai smesso di seguire questo evento");
+                      else
+                        GenerateToast("Qualcosa è andato storto \n Riprova più tardi");
+                      setState(() {});
+                    });
                   else
-                    FollowEvent().follow(widget.event_id).then((value) => setState(() {}));
+                    FollowEvent().follow(widget.event_id).then((value){
+                      if (value==0)
+                        GenerateToast("Hai iniziato a seguire questo evento");
+                      else
+                        GenerateToast("Qualcosa è andato storto \n Riprova più tardi");
+                      setState(() {});
+                    });
+
                 },
                 fillColor: Colors.grey,
                 child: snapshot.data?Icon(

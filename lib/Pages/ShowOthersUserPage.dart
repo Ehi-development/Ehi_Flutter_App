@@ -10,6 +10,7 @@ import 'package:heiserver_connector/Structure/UserClass.dart';
 
 import 'package:hey_flutter/Widget/AccountImage.dart';
 import 'package:hey_flutter/Widget/BordedButton.dart';
+import 'package:hey_flutter/Widget/GenerateToast.dart';
 import 'package:hey_flutter/Widget/GetListEvent.dart';
 import 'package:hey_flutter/Widget/MyBehavior.dart';
 import 'package:hey_flutter/Widget/StatusBarCleaner.dart';
@@ -106,7 +107,7 @@ class ShowOthersUserPageState extends State<ShowOthersUserPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Flexible(flex:1,child: Container(),),
-                    AutoSizeText("${user.name} ${user.surname}", style: TextStyle(color: Colors.white), minFontSize: 22, maxFontSize: 24,),
+                    AutoSizeText("${user.name} ${user.surname}", style: TextStyle(color: Colors.white, fontSize: 24), maxLines: 1,),
                     Text("@${user.username}", style: TextStyle(fontSize: 15,color: Colors.white),),
                     Flexible(flex:4,child: Container(),),
                     FutureBuilder(
@@ -129,10 +130,22 @@ class ShowOthersUserPageState extends State<ShowOthersUserPage> {
                                     radius: 24,
                                     onPressed: (){
                                       if (snapshot.data==1) {
-                                        FollowUser().follow(user.username);
+                                        FollowUser().follow(user.username).then((value){
+                                          if (value==0)
+                                            GenerateToast("Hai iniziato a seguire \n ${user.username}");
+                                          else if (value == 2)
+                                            GenerateToast("Non puoi seguire te stesso. \n Ti becchi una denuncia.");
+                                          else
+                                            GenerateToast("Qualcosa è andato storto \n Riprova più tardi");
+                                        });
                                       }
                                       else {
-                                        FollowUser().unfollow(user.username);
+                                        FollowUser().unfollow(user.username).then((value){
+                                          if (value==0)
+                                            GenerateToast("Hai smesso di seguire \n ${user.username}");
+                                          else
+                                            GenerateToast("Qualcosa è andato storto \n Riprova più tardi");
+                                        });
                                       }
                                       setState(() {});
                                     },
@@ -323,7 +336,7 @@ class ShowOthersUserPageState extends State<ShowOthersUserPage> {
 //              ],
 //            ),
 //          ),
-          user.preference!=null?Padding(
+          user.preference.length!=0?Padding(
             padding: const EdgeInsets.only(left: MoobTheme.paddingHorizontal),
             child: getTagCips(user.preference),
           ):Container(),
@@ -354,8 +367,6 @@ class ShowOthersUserPageState extends State<ShowOthersUserPage> {
         child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("Eventi Creati", style: TextStyle(fontSize: 20,color: Colors.white,fontWeight: FontWeight.bold)),
-              Padding(padding: EdgeInsets.only(bottom: MoobTheme.paddingHorizontal),),
               FutureBuilder<Widget>(
                 future: GetListEvent().user(user.username),
                 builder: (context, snapshot){

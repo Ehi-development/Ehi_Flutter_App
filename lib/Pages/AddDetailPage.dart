@@ -15,18 +15,9 @@ import 'package:hey_flutter/UtilityClass/ContactServerWithAlert.dart';
 // ignore: must_be_immutable
 class AddDetailPage extends StatefulWidget {
 
-  String username;
-  String password;
-  final String image;
-  String name;
-  String surname;
-  String email;
-  String bio;
-  String birth;
-  String place;
-  int gender = 1;
+  final UserClass user;
 
-  AddDetailPage({Key key, this.username, this.password, this.image}) : super(key: key);
+  AddDetailPage({Key key, this.user}) : super(key: key);
 
   @override
   AddDetailPageState createState() => AddDetailPageState();
@@ -40,14 +31,33 @@ class AddDetailPageState extends State<AddDetailPage> {
   PageController controller = PageController();
 
   TextEditingController _usernameController;
+  TextEditingController _nameController;
+  TextEditingController _surnameController;
+  TextEditingController _emailController;
+  TextEditingController _placeController;
+  TextEditingController _bioController;
   TextEditingController _dateController;
   DateTime date = DateTime.now();
 
   @override
   void initState() {
     super.initState();
-    _usernameController = new TextEditingController(text: widget.username);
-    _dateController = new TextEditingController(text: "");
+    _usernameController = new TextEditingController(text: widget.user.username);
+
+    if (widget.user.birth != null)
+      _dateController = new TextEditingController(text: widget.user.birth);
+
+    if (widget.user.name != null)
+      print(widget.user.name);
+      _nameController = new TextEditingController(text: widget.user.name);
+    if (widget.user.surname != null)
+    _surnameController = new TextEditingController(text: widget.user.surname);
+    if (widget.user.email != null)
+    _emailController = new TextEditingController(text: widget.user.email);
+    if (widget.user.place != null)
+    _placeController = new TextEditingController(text: widget.user.place);
+    if (widget.user.bio != null)
+    _bioController = new TextEditingController(text: widget.user.bio);
   }
 
   @override
@@ -83,8 +93,7 @@ class AddDetailPageState extends State<AddDetailPage> {
         key: circularKey,
         onTap: (){Navigator.of(context).push(CircularRevealRoute(
             widget: CropImage(
-              username: widget.username,
-              password: widget.password,
+              user: widget.user,
               position:getContainerPosition(circularKey),),
             position:getContainerPosition(circularKey)));},
         child: Center(
@@ -94,13 +103,13 @@ class AddDetailPageState extends State<AddDetailPage> {
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               border: Border.all(color: Colors.white,width: 2),
-              image: widget.image==null?
+              image: widget.user.photo==null?
               null
-                  :DecorationImage(image: MemoryImage(base64.decode(widget.image)),
+                  :DecorationImage(image: MemoryImage(base64.decode(widget.user.photo)),
                   fit: BoxFit.cover,
               ),
             ),
-            child: Center(child: widget.image==null?Icon(Icons.camera_alt,size: 35,color: Colors.white,):null),
+            child: Center(child: widget.user.photo==null?Icon(Icons.camera_alt,size: 35,color: Colors.white,):null),
           ),
         ),
       ),
@@ -145,7 +154,7 @@ class AddDetailPageState extends State<AddDetailPage> {
                   suffixIcon: Icon(Icons.person,color: Colors.white,),
                 ),
                 onChanged: (text){
-                  widget.username = text;
+                  widget.user.username = text;
                 },
               )
             ),
@@ -154,6 +163,7 @@ class AddDetailPageState extends State<AddDetailPage> {
             padding: const EdgeInsets.symmetric(horizontal: MoobTheme.paddingHorizontal,vertical: MoobTheme.paddingHorizontal/4),
             child: Center(
                 child: TextField(
+                  controller: _nameController,
                   style: TextStyle(color: Colors.white,),
                   cursorColor: Colors.white,
                   decoration: InputDecoration(
@@ -167,7 +177,7 @@ class AddDetailPageState extends State<AddDetailPage> {
                     suffixIcon: Icon(Icons.person,color: Colors.white,),
                   ),
                   onChanged: (text){
-                    widget.name = text;
+                    widget.user.name = text;
                   },
                 )
             ),
@@ -176,6 +186,7 @@ class AddDetailPageState extends State<AddDetailPage> {
             padding: const EdgeInsets.symmetric(horizontal: MoobTheme.paddingHorizontal,vertical: MoobTheme.paddingHorizontal/4),
             child: Center(
                 child: TextField(
+                  controller: _surnameController,
                   style: TextStyle(color: Colors.white,),
                   cursorColor: Colors.white,
                   decoration: InputDecoration(
@@ -189,7 +200,7 @@ class AddDetailPageState extends State<AddDetailPage> {
                     suffixIcon: Icon(Icons.person,color: Colors.white,),
                   ),
                   onChanged: (text){
-                    widget.surname = text;
+                    widget.user.surname = text;
                   },
                 )
             ),
@@ -212,11 +223,11 @@ class AddDetailPageState extends State<AddDetailPage> {
                         Row(
                           children: <Widget>[
                             Radio(
-                              value: 1,
-                              groupValue: widget.gender,
+                              value: "m",
+                              groupValue: widget.user.gender,
                               onChanged: (value) {
                                 setState(() {
-                                  widget.gender = value;
+                                  widget.user.gender = value;
                                 });
                               },
                             ),
@@ -229,11 +240,11 @@ class AddDetailPageState extends State<AddDetailPage> {
                         Row(
                           children: <Widget>[
                             Radio(
-                              value: 2,
-                              groupValue: widget.gender,
+                              value: "f",
+                              groupValue: widget.user.gender,
                               onChanged: (value) {
                                 setState(() {
-                                  widget.gender = value;
+                                  widget.user.gender = value;
                                 });
                               },
                             ),
@@ -250,11 +261,11 @@ class AddDetailPageState extends State<AddDetailPage> {
                     mainAxisSize: MainAxisSize.max,
                     children: <Widget>[
                       Radio(
-                        value: 3,
-                        groupValue: widget.gender,
+                        value: "n",
+                        groupValue: widget.user.gender,
                         onChanged: (value) {
                           setState(() {
-                            widget.gender = value;
+                            widget.user.gender = value;
                           });
                         },
                       ),
@@ -275,6 +286,7 @@ class AddDetailPageState extends State<AddDetailPage> {
             padding: const EdgeInsets.symmetric(horizontal: MoobTheme.paddingHorizontal,vertical: MoobTheme.paddingHorizontal/4),
             child: Center(
                 child: TextField(
+                  controller: _emailController,
                   style: TextStyle(color: Colors.white,),
                   cursorColor: Colors.white,
                   decoration: InputDecoration(
@@ -288,7 +300,7 @@ class AddDetailPageState extends State<AddDetailPage> {
                     suffixIcon: Icon(Icons.mail_outline,color: Colors.white,),
                   ),
                   onChanged: (text){
-                    widget.email = text;
+                    widget.user.email = text;
                   },
                 )
             ),
@@ -320,6 +332,7 @@ class AddDetailPageState extends State<AddDetailPage> {
             padding: const EdgeInsets.symmetric(horizontal: MoobTheme.paddingHorizontal,vertical: MoobTheme.paddingHorizontal/4),
             child: Center(
                 child: TextField(
+                  controller: _placeController,
                   style: TextStyle(color: Colors.white,),
                   cursorColor: Colors.white,
                   decoration: InputDecoration(
@@ -333,7 +346,7 @@ class AddDetailPageState extends State<AddDetailPage> {
                     suffixIcon: Icon(Icons.place,color: Colors.white,),
                   ),
                   onChanged: (text){
-                    widget.place = text;
+                    widget.user.place = text;
                   },
                 )
             ),
@@ -345,6 +358,7 @@ class AddDetailPageState extends State<AddDetailPage> {
             padding: const EdgeInsets.symmetric(horizontal: MoobTheme.paddingHorizontal,vertical: MoobTheme.paddingHorizontal/4),
             child: Center(
                 child: TextField(
+                  controller: _bioController,
                   keyboardType: TextInputType.multiline,
                   minLines: 5,
                   maxLines: null,
@@ -369,7 +383,7 @@ class AddDetailPageState extends State<AddDetailPage> {
                     labelText: "Biografia",
                   ),
                   onChanged: (text){
-                    widget.bio = text;
+                    widget.user.bio = text;
                   },
                 )
             ),
@@ -391,38 +405,18 @@ class AddDetailPageState extends State<AddDetailPage> {
         text: "Fine",
         key: progressButtonRegistrationKey,
         onPressed: (){
-          String genderLocale;
 
-          if(widget.gender==1){
-            genderLocale="m";
-          }else if(widget.gender==2){
-            genderLocale="f";
-          }else{
-            genderLocale="n";
-          }
-
-          UserClass user = UserClass(
-              username: widget.username,
-              password: widget.password,
-              surname: widget.surname,
-              name: widget.name,
-              photo: widget.image,
-              email: widget.email,
-              bio: widget.bio,
-              place: widget.place,
-              birth: widget.birth,
-              gender: genderLocale,
-          );
 
           ContactServerWithAlert.newUserRegistration(
               context: context,
               ProgressButtonKey: progressButtonRegistrationKey,
-              user: user,
+              user: widget.user,
           );
         },
       ),
     );
   }
+
 
   DateTime selectedDate = DateTime.now();
 
@@ -442,7 +436,7 @@ class AddDetailPageState extends State<AddDetailPage> {
             TextStyle(color: Colors.grey[900], fontSize: 16)),
         onConfirm: (date) {
           _dateController = new TextEditingController(text: "${date.day}/${date.month}/${date.year}");
-          widget.birth = "${date.day}/${date.month}/${date.year}";
+          widget.user.birth = "${date.day}/${date.month}/${date.year}";
           setState(() {});
         });
   }

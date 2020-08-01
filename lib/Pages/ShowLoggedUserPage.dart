@@ -100,7 +100,7 @@ ProfileImageAndLittleMore(UserClass user){
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
                   Flexible(flex:1,child: Container(),),
-                  AutoSizeText("${user.name} ${user.surname}", style: TextStyle(color: Colors.white), minFontSize: 22, maxFontSize: 24,),
+                  AutoSizeText("${user.name} ${user.surname}", style: TextStyle(color: Colors.white, fontSize: 24), maxLines: 1,),
                   Text("@${user.username}", style: TextStyle(fontSize: 15,color: Colors.white),),
                   Flexible(flex:4,child: Container(),),
                   Center(
@@ -310,7 +310,7 @@ DettailOfUser(UserClass user) {
 //            ],
 //          ),
 //        ),
-        user.preference!=null?Padding(
+        user.preference.length!=0?Padding(
           padding: const EdgeInsets.only(left: MoobTheme.paddingHorizontal),
           child: getTagCips(user.preference),
         ):Container(),
@@ -341,8 +341,6 @@ CreatedEvent(UserClass user){
     child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text("Eventi Creati", style: TextStyle(fontSize: 20,color: Colors.white,fontWeight: FontWeight.bold)),
-          Padding(padding: EdgeInsets.only(bottom: MoobTheme.paddingHorizontal),),
           FutureBuilder<Widget>(
             future: GetListEvent().user(user.username),
             builder: (context, snapshot){

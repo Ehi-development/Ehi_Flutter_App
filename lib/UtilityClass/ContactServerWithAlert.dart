@@ -150,7 +150,8 @@ class ContactServerWithAlert {
     }else{
       User().fromServer(username).then((result){
         if(result.result==1){
-          Navigator.of(context).pushReplacement(CircularRevealRoute(widget: AddDetailPage(username: username, password: password,),position:getContainerPosition(ProgressButtonKey)));
+          UserClass user = UserClass(username: username,password: password);
+          Navigator.of(context).pushReplacement(CircularRevealRoute(widget: AddDetailPage(user: user,),position:getContainerPosition(ProgressButtonKey)));
         }else{
           //if(ProgressButtonKey!=null){ProgressButtonKey.currentState.error();}
           GenerateToast("Username già esistente");

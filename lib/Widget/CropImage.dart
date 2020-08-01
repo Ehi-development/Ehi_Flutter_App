@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:heiserver_connector/Structure/UserClass.dart';
 import 'package:hey_flutter/Pages/AddDetailPage.dart';
 import 'package:hey_flutter/UtilityClass/RouteBuilder.dart';
 import 'package:hey_flutter/Widget/Theme.dart';
@@ -9,11 +10,10 @@ import 'package:image_crop/image_crop.dart';
 import 'package:image_picker/image_picker.dart';
 
 class CropImage extends StatefulWidget {
-  final username;
-  final password;
+  final UserClass user;
   final Offset position;
 
-  const CropImage({Key key, this.username, this.password, this.position}) : super(key: key);
+  const CropImage({Key key, this.user, this.position}) : super(key: key);
 
   @override
   CropImageState createState() => CropImageState();
@@ -89,7 +89,8 @@ class CropImageState extends State<CropImage> {
                   ),
                   onPressed: () => _cropImage().then((image){
                     List<int> imageBytes = image.readAsBytesSync();
-                    Navigator.of(context).pushReplacement(CircularRevealRoute(widget: AddDetailPage(username: widget.username, password: widget.password, image: base64.encode(imageBytes),),position:widget.position));
+                    widget.user.photo = base64.encode(imageBytes);
+                    Navigator.of(context).pushReplacement(CircularRevealRoute(widget: AddDetailPage(user: widget.user),position:widget.position));
                   })
               ),
             ],
